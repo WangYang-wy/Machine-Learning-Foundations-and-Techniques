@@ -2,15 +2,15 @@
 
 ## 延伸阅读
 
-預備知識
+### 預備知識
 
 作業零 (機率統計、線性代數、微分之基本知識)
 
-參考書籍
+### 參考書籍
 
 Learning from Data: A Short Course , Abu-Mostafa, Magdon-Ismail, Lin, 2013.
 
-經典文獻
+### 經典文獻
 
 F. Rosenblatt. The perceptron: A probabilistic model for information storage and organization in the brain. Psychological Review, 65(6):386-408, 1958. (第二講：Perceptron 的出處)
 
