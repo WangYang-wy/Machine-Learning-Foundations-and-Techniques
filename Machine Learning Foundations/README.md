@@ -53,3 +53,8 @@ D. Wolpert. The lack of a priori distinctions between learning algorithms. Neura
 T. M. Cover. Geometrical and statistical properties of systems of linear inequalities with applications in pattern recognition. IEEE Transactions on Electronic Computers, 14(3):326–334, 1965. (第五到六講：Growth Function)
 
 B. Zadrozny, J. Langford, N. Abe. Cost sensitive learning by cost-proportionate example weighting. IEEE International Conference on Data Mining, 2003. (第八講：Weighted Classification)
+
+## 网络资源参考
+
+1. [機器學習基石 机器学习基石（Machine Learning Foundations） 作业1 习题解答](http://blog.csdn.net/a1015553840/article/details/50986313)
+1. [台大林轩田《机器学习基石》学习笔记：重要工具一（Feature transform）](http://blog.csdn.net/qq_22717679/article/details/51179198)
