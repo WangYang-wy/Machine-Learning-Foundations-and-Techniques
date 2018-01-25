@@ -58,3 +58,6 @@ B. Zadrozny, J. Langford, N. Abe. Cost sensitive learning by cost-proportionate 
 
 1. [機器學習基石 机器学习基石（Machine Learning Foundations） 作业1 习题解答](http://blog.csdn.net/a1015553840/article/details/50986313)
 1. [台大林轩田《机器学习基石》学习笔记：重要工具一（Feature transform）](http://blog.csdn.net/qq_22717679/article/details/51179198)
+1. [台大林轩田机器学习课程笔记3----机器学习的可行性](http://blog.csdn.net/SteveYinger/article/details/51171828)
+1. [台大林轩田·机器学习基石记要](http://blog.csdn.net/qiusuoxiaozi/article/details/51558497)
+1. [林轩田--机器学习基石&机器学习技法](http://blog.csdn.net/youyuyixiu/article/details/54317895)
