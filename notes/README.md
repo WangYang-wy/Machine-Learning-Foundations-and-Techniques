@@ -33,28 +33,32 @@ VC维反映了函数集的学习能力，VC维越大则学习机器越复杂（�
 第十五周：cross validation and model selection
 
 When Can Machines Learn? [何时可以使用机器学习]
--- The Learning Problem [机器学习问题]
--- Learning to Answer Yes/No [二元分类]
--- Types of Learning [各式机器学习问题]
--- Feasibility of Learning [机器学习的可行性]
+
+- The Learning Problem [机器学习问题]
+- Learning to Answer Yes/No [二元分类]
+- Types of Learning [各式机器学习问题]
+- Feasibility of Learning [机器学习的可行性]
 
 Why Can Machines Learn? [为什么机器可以学习]
--- Training versus Testing [训练与测试]
--- Theory of Generalization [举一反三的一般化理论]
--- The VC Dimension [VC 维度]
--- Noise and Error [噪声一错误]
+
+- Training versus Testing [训练与测试]
+- Theory of Generalization [举一反三的一般化理论]
+- The VC Dimension [VC 维度]
+- Noise and Error [噪声一错误]
 
 How Can Machines Learn? [机器可以怎么样学习]
--- Linear Regression [线性回归]
--- Linear `Soft' Classification [软性的线性分类]
--- Linear Classification beyond Yes/No [二元分类以外的分类问题]
--- Nonlinear Transformation [非线性转换]
+
+- Linear Regression [线性回归]
+- Linear `Soft' Classification [软性的线性分类]
+- Linear Classification beyond Yes/No [二元分类以外的分类问题]
+- Nonlinear Transformation [非线性转换]
 
 How Can Machines Learn Better? [机器可以怎么样学得更好]
--- Hazard of Overfitting [过度训练的危险]
--- Preventing Overfitting I: Regularization [避免过度训练一：控制调适]
--- Preventing Overfitting II: Validation [避免过度训练二：自我检测]
--- Three Learning Principles [三个机器学习的重要原则]
+
+- Hazard of Overfitting [过度训练的危险]
+- Preventing Overfitting I: Regularization [避免过度训练一：控制调适]
+- Preventing Overfitting II: Validation [避免过度训练二：自我检测]
+- Three Learning Principles [三个机器学习的重要原则]
 
 ## 参考
 

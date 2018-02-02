@@ -54,6 +54,36 @@ Occam’s Razor反映到机器学习领域中，指的是在所有可能选择�
 - Artificial Intelligence
 - Statistics
 
+我们还介绍了三个理论保证：
+
+- Hoeffding
+- Multi-Bin Hoeffding
+- VC
+
+然后，我们又介绍了三种线性模型：
+
+- PLA/pocket
+- linear regression
+- logistic regression
+
+同时，我们介绍了三种重要的工具：
+
+- Feature Transform
+- Regularization
+- Validation
+
+还有我们本节课介绍的三个锦囊妙计：
+
+- Occam’s Razer
+- Sampling Bias
+- Data Snooping
+
+最后，我们未来机器学习的方向也分为三种：
+
+- More Transform
+- More Regularization
+- Less Label
+
 ## 总结
 
 本节课主要介绍了机器学习三个重要的锦囊妙计：Occam’s Razor, Sampling Bias, Data Snooping。并对《机器学习基石》课程中介绍的所有知识和方法进行“三的威力”这种形式的概括与总结，“三的威力”也就构成了坚固的机器学习基石。
