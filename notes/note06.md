@@ -113,13 +113,11 @@ N > k的情况较为复杂，下面给出推导过程：
 
 这里写图片描述
 
-对于2D perceptrons，它的break point是4，那么成长函数 ${m_{H}(N)}$ =O(N3)。所以，我们可以说2D perceptrons是可以进行机器学习的，只要找到hypothesis能让Ein≈0，就能保证Ein≈Eout。
+对于2D perceptrons，它的break point是4，那么成长函数 ${m_{H}(N) =O(N^3)}$ 。所以，我们可以说2D perceptrons是可以进行机器学习的，只要找到hypothesis能让 ${E_{in} ≈0}$ ，就能保证 ${E_{in} ≈ E_{out}}$ 。
 
 ## 总结
 
-本节课我们主要介绍了只要存在break point，那么其成长函数 ${m_{H}(N)}$ 就满足poly(N)。推导过程是先引入 ${m_{H}(N)}$ 的上界 ${B(N,K)}$ ， ${B(N,K)}$ 的上界是N的k-1阶多项式，从而得到 ${m_{H}(N)}$ 的上界就是N的k-1阶多项式。然后，我们通过简单的三步证明，将 ${m_{H}(N)}$ 代入了Hoffding不等式中，推导出了Vapnik-Chervonenkis(VC) bound，最终证明了只要break point存在，那么机器学习就是可行的。
-
-
+本节课我们主要介绍了只要存在break point，那么其成长函数 ${m_{H}(N)}$ 就满足poly(N)。推导过程是先引入 ${m_{H}(N)}$ 的上界 ${B(N,K)}$ ， ${B(N,K)}$ 的上界是N的k-1阶多项式，从而得到 ${m_{H}(N)}$ 的上界就是 ${N}$ 的 ${k-1}$ 阶多项式。然后，我们通过简单的三步证明，将 ${m_{H}(N)}$ 代入了Hoffding不等式中，推导出了Vapnik-Chervonenkis(VC) bound，最终证明了只要break point存在，那么机器学习就是可行的。
 
 ## 参考
 

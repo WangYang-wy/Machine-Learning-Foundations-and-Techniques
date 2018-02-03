@@ -7,13 +7,13 @@
 之前介绍几种线性模型都有一个共同点，就是都有样本特征x的加权运算，我们引入一个线性得分函数s：
 
 s=wTx
-三种线性模型，第一种是linear classification。线性分类模型的hypothesis为h(x)=sign(s),取值范围为{-1,+1}两个值，它的err是0/1的，所以对应的 ${E_{in}(w)}$ 是离散的，并不好解，这是个NP-hard问题。第二种是linear regression。线性回归模型的hypothesis为h(x)=s，取值范围为整个实数空间，它的err是squared的，所以对应的 ${E_{in}(w)}$ 是开口向上的二次曲线，其解是closed-form的，直接用线性最小二乘法求解即可。第三种是logistic regression。逻辑回归模型的hypothesis为h(x)=θ(s)，取值范围为(-1,1)之间，它的err是cross-entropy的，所有对应的 ${E_{in}(w)}$ 是平滑的凸函数，可以使用梯度下降算法求最小值。
+三种线性模型，第一种是linear classification。线性分类模型的hypothesis为 ${h(x)=sign(s)}$ ,取值范围为 ${\{-1,+1\}}$ 两个值，它的err是0/1的，所以对应的 ${E_{in}(w)}$ 是离散的，并不好解，这是个NP-hard问题。第二种是linear regression。线性回归模型的hypothesis为 ${h(x) = s}$ ，取值范围为整个实数空间，它的err是squared的，所以对应的 ${E_{in}(w)}$ 是开口向上的二次曲线，其解是closed-form的，直接用线性最小二乘法求解即可。第三种是logistic regression。逻辑回归模型的hypothesis为 ${h(x)=\theta(s)}$ ，取值范围为 ${(-1,1)}$ 之间，它的err是cross-entropy的，所有对应的 ${E_{in}(w)}$ 是平滑的凸函数，可以使用梯度下降算法求最小值。
 
 从上图中，我们发现，linear regression和logistic regression的error function都有最小解。那么可不可以用这两种方法来求解linear classification问题呢？下面，我们来对这三种模型的error function进行分析，看看它们之间有什么联系。
 
 对于linear classification，它的error function可以写成： 
 
-err0/1(s,y)=|sign(s)≠y|=|sign(ys)≠1|
+ ${err_{0/1}}$ (s,y)=|sign(s)≠y|=|sign(ys)≠1|
 
 对于linear regression，它的error function可以写成： 
 errSQR(s,y)=(s−y)2=(ys−1)2
@@ -25,11 +25,11 @@ errCE(s,y)=ln(1+exp(−ys))
 
 下面，我们用图形化的方式来解释三种模型的error function到底有什么关系：
 
-从上图中可以看出，ys是横坐标轴，err0/1是呈阶梯状的，在ys>0时，err0/1恒取最小值0。errSQR呈抛物线形式，在ys=1时，取得最小值，且在ys=1左右很小区域内，err0/1和errSQR近似。errCE是呈指数下降的单调函数，ys越大，其值越小。同样在ys=1左右很小区域内，err0/1和errCE近似。但是我们发现errCE并不是始终在err0/1之上，所以为了计算讨论方便，我们把errCE做幅值上的调整，引入errSCE=log2(1+exp(−ys))=1ln2errCE，这样能保证errSCE始终在err0/1上面，如下图所示：
+从上图中可以看出， ${ys}$ 是横坐标轴， ${err_{0/1}}$ 是呈阶梯状的，在 ${ys>0}$ 时， ${err_{0/1}}$ 恒取最小值0。 ${err_{SQR}}$ 呈抛物线形式，在 ${ys=1}$ 时，取得最小值，且在 ${ys=1}$ 左右很小区域内， ${err_{0/1}}$ 和errSQR近似。errCE是呈指数下降的单调函数，ys越大，其值越小。同样在ys=1左右很小区域内， ${err_{0/1}}$ 和errCE近似。但是我们发现errCE并不是始终在 ${err_{0/1}}$ 之上，所以为了计算讨论方便，我们把errCE做幅值上的调整，引入errSCE=log2(1+exp(−ys))=1ln2errCE，这样能保证errSCE始终在 ${err_{0/1}}$ 上面，如下图所示：
 
 由上图可以看出： 
 
-err0/1(s,y)≤errSCE(s,y)=1ln2errCE(s,y)
+ ${err_{0/1}(s,y) <= err_{SCE}(s,y)= \frace{1}{ln_{2}^{err_{SCE(s,y)}}}}$ 
 
  ${E_{in}^{0/1}(w)}$ ≤ESC ${E_{in}(w)}$ =1ln2EC ${E_{in}(w)}$ 
 
@@ -49,7 +49,7 @@ err0/1(s,y)≤errSCE(s,y)=1ln2errCE(s,y)
 
 ## Stochastic Gradient Descent
 
-之前介绍的PLA算法和logistic regression算法，都是用到了迭代操作。PLA每次迭代只会更新一个点，它每次迭代的时间复杂度是O(1)；而logistic regression每次迭代要对所有N个点都进行计算，它的每时间复杂度是O(N)。为了提高logistic regression中gradient descent算法的速度，可以使用另一种算法：随机梯度下降算法(Stochastic Gradient Descent)。
+之前介绍的PLA算法和logistic regression算法，都是用到了迭代操作。PLA每次迭代只会更新一个点，它每次迭代的时间复杂度是 ${O(1)}$ ；而logistic regression每次迭代要对所有N个点都进行计算，它的每时间复杂度是 ${O(N)}$ 。为了提高logistic regression中gradient descent算法的速度，可以使用另一种算法：随机梯度下降算法(Stochastic Gradient Descent)。
 
 随机梯度下降算法每次迭代只找到一个点，计算该点的梯度，作为我们下一步更新w的依据。这样就保证了每次迭代的计算量大大减小，我们可以把整体的梯度看成这个随机过程的一个期望值。
 
@@ -62,7 +62,9 @@ wt+1←wt+ηθ(−ynwTtxn)(ynxn)
 
 我们把SGD logistic regression称之为’soft’ PLA，因为PLA只对分类错误的点进行修正，而SGD logistic regression每次迭代都会进行或多或少的修正。另外，当η=1，且wTtxn足够大的时候，PLA近似等于SGD。
 
-除此之外，还有两点需要说明：1、SGD的终止迭代条件。没有统一的终止条件，一般让迭代次数足够多；2、学习速率η。η的取值是根据实际情况来定的，一般取值0.1就可以了。
+除此之外，还有两点需要说明：
+1. SGD的终止迭代条件。没有统一的终止条件，一般让迭代次数足够多；
+1. 学习速率η。η的取值是根据实际情况来定的，一般取值0.1就可以了。
 
 ## Multiclass via Logistic Regression
 

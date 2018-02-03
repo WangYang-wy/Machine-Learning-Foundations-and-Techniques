@@ -114,15 +114,15 @@ P[| ${E_{in}(g)}$ − ${E_{out}(g)}$ |>ϵ]≤2⋅effective(N)⋅exp(−2ϵ2N)
 
 这里写图片描述
 
-其中，positive rays和positive intervals的成长函数都是polynomial的，如果用mH代替M的话，这两种情况是比较好的。而convex sets的成长函数是exponential的，即等于M，并不能保证机器学习的可行性。那么，对于2D perceptrons，它的成长函数究竟是polynomial的还是exponential的呢？
+其中，positive rays和positive intervals的成长函数都是polynomial的，如果用mH代替M的话，这两种情况是比较好的。而convex sets的成长函数是exponential的，即等于 ${M}$ ，并不能保证机器学习的可行性。那么，对于2D perceptrons，它的成长函数究竟是polynomial的还是exponential的呢？
 
 对于2D perceptrons，我们之前分析了3个点，可以做出8种所有的dichotomy，而4个点，就无法做出所有16个点的dichotomy了。所以，我们就把4称为2D perceptrons的break point（5、6、7等都是break point）。令有k个点，如果k大于等于break point时，它的成长函数一定小于2的k次方。
 
-根据break point的定义，我们知道满足mH(k)≠2k的k的最小值就是break point。对于我们之前介绍的四种成长函数，他们的break point分别是：
+根据break point的定义，我们知道满足 ${m_{H}(k)≠2k}$ 的k的最小值就是break point。对于我们之前介绍的四种成长函数，他们的break point分别是：
 
 这里写图片描述
 
-通过观察，我们猜测成长函数可能与break point存在某种关系：对于convex sets，没有break point，它的成长函数是2的N次方；对于positive rays，break point k=2，它的成长函数是O(N)；对于positive intervals，break point k=3，它的成长函数是O(N2)。则根据这种推论，我们猜测2D perceptrons，它的成长函数mH(N)=O(Nk−1) 。如果成立，那么就可以用mH代替M，就满足了机器能够学习的条件。关于上述猜测的证明，我们下节课再详细介绍。
+通过观察，我们猜测成长函数可能与break point存在某种关系：对于convex sets，没有break point，它的成长函数是2的N次方；对于positive rays，break point k=2，它的成长函数是 ${O(N)}$ ；对于positive intervals，break point k=3，它的成长函数是O(N2)。则根据这种推论，我们猜测2D perceptrons，它的成长函数mH(N)=O(Nk−1) 。如果成立，那么就可以用mH代替M，就满足了机器能够学习的条件。关于上述猜测的证明，我们下节课再详细介绍。
 
 ## 总结
 

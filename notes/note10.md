@@ -66,13 +66,13 @@ Logistic Regression的Ein是连续、可微、二次可微的凸曲线（开口�
 
 之前所说的Linear Regression有closed-form解，可以说是“一步登天”的；但是PLA算法是一步一步修正迭代进行的，每次对错误点进行修正，不断更新w值。PLA的迭代优化过程表示如下：
 
-w每次更新包含两个内容：一个是每次更新的方向ynxn，用v表示，另一个是每次更新的步长η。参数(v,η)和终止条件决定了我们的迭代优化算法。
+w每次更新包含两个内容：一个是每次更新的方向 ${y_{n}x_{n}}$ ，用 ${v}$ 表示，另一个是每次更新的步长 ${\ita}$。参数 ${(v,η)}$ 和终止条件决定了我们的迭代优化算法。
 
 ## Gradient Descent
 
-根据上一小节PLA的思想，迭代优化让每次w都有更新：
+根据上一小节PLA的思想，迭代优化让每次 ${w}$ 都有更新：
 
-我们把Ein(w)曲线看做是一个山谷的话，要求Ein(w)最小，即可比作下山的过程。整个下山过程由两个因素影响：一个是下山的单位方向v；另外一个是下山的步长η。
+我们把 ${E_{in}(w)}$ 曲线看做是一个山谷的话，要求 ${E_{in}(w)}$ 最小，即可比作下山的过程。整个下山过程由两个因素影响：一个是下山的单位方向v；另外一个是下山的步长η。
 
 利用微分思想和线性近似，假设每次下山我们只前进一小步，即η很小，那么根据泰勒Taylor一阶展开，可以得到： 
 
@@ -101,7 +101,7 @@ wt+1←wt−η∇Ein(wt)||∇Ein(wt)||
 
 ## 总结
 
-我们今天介绍了Logistic Regression。首先，从逻辑回归的问题出发，将P(+1|x)作为目标函数，将θ(wTx)作为hypothesis。接着，我们定义了logistic regression的err function，称之为cross-entropy error交叉熵误差。然后，我们计算logistic regression error的梯度，最后，通过梯度下降算法，计算∇Ein(wt)≈0时对应的wt值。
+我们今天介绍了Logistic Regression。首先，从逻辑回归的问题出发，将 ${P(+1|x)}$ 作为目标函数，将 ${θ(w^{T}x)}$ 作为hypothesis。接着，我们定义了logistic regression的err function，称之为cross-entropy error交叉熵误差。然后，我们计算logistic regression error的梯度，最后，通过梯度下降算法，计算∇Ein(wt)≈0时对应的wt值。
 
 ## 参考
 
