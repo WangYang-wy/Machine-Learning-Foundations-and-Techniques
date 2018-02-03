@@ -46,6 +46,21 @@ Learning from Data: A Short Course , Abu-Mostafa, Magdon-Ismail, Lin, 2013.
 - D. Wolpert. The lack of a priori distinctions between learning algorithms. Neural Computation, 8(7): 1341-1390. (第四講：No free lunch 的正式版)
 - T. M. Cover. Geometrical and statistical properties of systems of linear inequalities with applications in pattern recognition. IEEE Transactions on Electronic Computers, 14(3):326–334, 1965. (第五到六講：Growth Function)
 - B. Zadrozny, J. Langford, N. Abe. Cost sensitive learning by cost-proportionate example weighting. IEEE International Conference on Data Mining, 2003. (第八講：Weighted Classification)
+- G. Sever, A. Lee. Linear Regression Analysis, 2nd Edition, Wiley, 2003. (第九講：Linear Regression 由統計學的角度來分析；第十二到十三講：Polynomial Transform 後再做 Linear Regression)
+- D. C. Hoaglin, R. E. Welsch. The hat matrix in regression and ANOVA. American Statistician, 32:17–22, 1978. (第九講：Linear Regression 的 Hat Matrix)
+- D. W. Hosmer, Jr., S. Lemeshow, R. X. Sturdivant. Applied Logistic Regression, 3rd Edition, Wiley, 2013 (第十講：Logistic Regression 由統計學的角度來分析)
+- T. Zhang. Solving large scale linear prediction problems using stochastic gradient descent algorithms. International Conference on Machine Learning, (第十一講：Stochastic Gradient Descent 用在線性模型的理論分析)
+- R. Rifkin, A. Klautau. In Defense of One-Vs-All Classification. Journal of Machine Learning Research, 5: 101-141, 2004. (第十一講：One-versus-all)
+- J. Fürnkranz. Round Robin Classification. Journal of Machine Learning Research, 2: 721-747, 2002. (第十一講：One-versus-one)
+- L. Li, H.-T. Lin. Optimizing 0/1 loss for perceptrons by random coordinate descent. In Proceedings of the 2007 International Joint Conference on Neural Networks (IJCNN ’07), pages 749–754, 2007. (第十一講：一個由最佳化角度出發的 Perceptron Algorithm)
+- G.-X. Yuan, C.-H. Ho, C.-J. Lin. Recent advances of large-scale linear classification. Proceedings of IEEE, 2012. (第十一講：更先進的線性分類方法)
+- Y.-W. Chang, C.-J. Hsieh, K.-W. Chang, M. Ringgaard, C.-J. Lin. Training and testing low-degree polynomial data mappings via linear SVM. Journal of Machine Learning Research, 11(2010), 1471-1490. (第十二講：一個使用多項式轉換加上線性分類模型的方法)
+- M. Magdon-Ismail, A. Nicholson, Y. S. Abu-Mostafa. Learning in the presence of noise. In Intelligent Signal Processing. IEEE Press, 2001. (第十三講：Noise 和 Learning)
+- A. Neumaier, Solving ill-conditioned and singular linear systems: A tutorial on regularization, SIAM Review 40 (1998), 636-666. (第十四講：Regularization)
+- T. Poggio, S. Smale. The mathematics of learning: Dealing with data. Notices of the American Mathematical Society, 50(5):537–544, 2003. (第十四講：Regularization)
+- P. Burman. A comparative study of ordinary cross-validation, v-fold cross-validation and the repeated learning-testing methods. Biometrika, 76(3): 503–514, 1989. (第十五講：Cross Validation)
+- R. Kohavi. A study of cross-validation and bootstrap for accuracy estimation and model selection. In Proceedings of the 14th International Joint Conference on Artificial intelligence (IJCAI ’95), volume 2, 1137–1143, 1995. (第十五講：Cross Validation)
+- A. Blumer, A. Ehrenfeucht, D. Haussler, and M. K. Warmuth. Occam’s razor. Information Processing Letters, 24(6):377–380, 1987. (第十六講：Occam's Razor)
 
 ## 网络资源参考
 
