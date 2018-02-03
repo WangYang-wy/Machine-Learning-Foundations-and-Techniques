@@ -1,6 +1,6 @@
 # note06
 
-上一节课，我们主要探讨了当M的数值大小对机器学习的影响。如果M很大，那么就不能保证机器学习有很好的泛化能力，所以问题转换为验证M有限，即最好是按照多项式成长。然后通过引入了成长函数mH(N)和dichotomy以及break point的概念，提出2D perceptrons的成长函数mH(N)是多项式级别的猜想。这就是本节课将要深入探讨和证明的内容。
+上一节课，我们主要探讨了当M的数值大小对机器学习的影响。如果M很大，那么就不能保证机器学习有很好的泛化能力，所以问题转换为验证M有限，即最好是按照多项式成长。然后通过引入了成长函数 ${m_{H}(N)}$ 和dichotomy以及break point的概念，提出2D perceptrons的成长函数 ${m_{H}(N)}$ 是多项式级别的猜想。这就是本节课将要深入探讨和证明的内容。
 
 ## Restriction of Break Point
 
@@ -8,37 +8,37 @@
 
 这里写图片描述
 
-下面引入一个例子，如果k=2，那么当N取不同值的时候，计算其成长函数mH(N)是多少。很明显，当N=1时，mH(N)=2,；当N=2时，由break point为2可知，任意两点都不能被shattered（shatter的意思是对N个点，能够分解为2N种dichotomies）；mH(N)最大值只能是3；当N=3时，简单绘图分析可得其mH(N)=4，即最多只有4种dichotomies。
+下面引入一个例子，如果k=2，那么当N取不同值的时候，计算其成长函数 ${m_{H}(N)}$ 是多少。很明显，当N=1时， ${m_{H}(N) = 2}$ ；当N=2时，由break point为2可知，任意两点都不能被shattered（shatter的意思是对N个点，能够分解为2N种dichotomies）； ${m_{H}(N)}$ 最大值只能是3；当N=3时，简单绘图分析可得其 ${m_{H}(N)}$ =4，即最多只有4种dichotomies。
 
 这里写图片描述
 
-所以，我们发现当N>k时，break point限制了mH(N)值的大小，也就是说影响成长函数mH(N)的因素主要有两个：
+所以，我们发现当N>k时，break point限制了 ${m_{H}(N)}$ 值的大小，也就是说影响成长函数 ${m_{H}(N)}$ 的因素主要有两个：
 
 抽样数据集N
 
 break point k（这个变量确定了假设的类型）
 
-那么，如果给定N和k，能够证明其mH(N)的最大值的上界是多项式的，则根据霍夫丁不等式，就能用mH(N)代替M，得到机器学习是可行的。所以，证明mH(N)的上界是poly(N)，是我们的目标。
+那么，如果给定N和k，能够证明其 ${m_{H}(N)}$ 的最大值的上界是多项式的，则根据霍夫丁不等式，就能用 ${m_{H}(N)}$ 代替M，得到机器学习是可行的。所以，证明 ${m_{H}(N)}$ 的上界是poly(N)，是我们的目标。
 
 这里写图片描述
 
 ## Bounding Function: Basic Cases
 
-现在，我们引入一个新的函数：bounding function，B(N,k)。Bound Function指的是当break point为k的时候，成长函数mH(N)可能的最大值。也就是说B(N,k)是mH(N)的上界，对应mH(N)最多有多少种dichotomy。那么，我们新的目标就是证明：
+现在，我们引入一个新的函数：bounding function， ${B(N,K)}$ 。Bound Function指的是当break point为k的时候，成长函数 ${m_{H}(N)}$ 可能的最大值。也就是说 ${B(N,K)}$ 是 ${m_{H}(N)}$ 的上界，对应 ${m_{H}(N)}$ 最多有多少种dichotomy。那么，我们新的目标就是证明：
 
 
-B(N,k)≤poly(N)
-这里值得一提的是，B(N,k)的引入不考虑是1D postive intrervals问题还是2D perceptrons问题，而只关心成长函数的上界是多少，从而简化了问题的复杂度。
+ ${B(N,K)}$ ≤poly(N)
+这里值得一提的是， ${B(N,K)}$ 的引入不考虑是1D postive intrervals问题还是2D perceptrons问题，而只关心成长函数的上界是多少，从而简化了问题的复杂度。
 
 这里写图片描述
 
-求解B(N,k)的过程十分巧妙：
+求解 ${B(N,K)}$ 的过程十分巧妙：
 
 当k=1时，B(N,1)恒为1。
 
-当N < k时，根据break point的定义，很容易得到B(N,k)=2N。
+当N < k时，根据break point的定义，很容易得到 ${B(N,K)}$ =2N。
 
-当N = k时，此时N是第一次出现不能被shatter的值，所以最多只能有2N−1个dichotomies，则B(N,k)=2N−1。
+当N = k时，此时N是第一次出现不能被shatter的值，所以最多只能有2N−1个dichotomies，则 ${B(N,K)}$ =2N−1。
 
 这里写图片描述
 
@@ -73,25 +73,25 @@ N > k的情况较为复杂，下面给出推导过程：
 
 这里写图片描述
 
-根据推导公式，下表给出B(N,K)值
+根据推导公式，下表给出 ${B(N,K)}$ 值
 
 这里写图片描述
 
-根据递推公式，推导出B(N,K)满足下列不等式：
+根据递推公式，推导出 ${B(N,K)}$ 满足下列不等式：
 
 这里写图片描述
 
-上述不等式的右边是最高阶为k-1的N多项式，也就是说成长函数mH(N)的上界B(N,K)的上界满足多项式分布poly(N)，这就是我们想要得到的结果。
+上述不等式的右边是最高阶为k-1的N多项式，也就是说成长函数 ${m_{H}(N)}$ 的上界 ${B(N,K)}$ 的上界满足多项式分布poly(N)，这就是我们想要得到的结果。
 
-得到了mH(N)的上界B(N,K)的上界满足多项式分布poly(N)后，我们回过头来看看之前介绍的几种类型它们的mH(N)与break point的关系：
+得到了 ${m_{H}(N)}$ 的上界 ${B(N,K)}$ 的上界满足多项式分布poly(N)后，我们回过头来看看之前介绍的几种类型它们的 ${m_{H}(N)}$ 与break point的关系：
 
 这里写图片描述
 
-我们得到的结论是，对于2D perceptrons，break point为k=4，mH(N)的上界是Nk−1。推广一下，也就是说，如果能找到一个模型的break point，且是有限大的，那么就能推断出其成长函数mH(N)有界。
+我们得到的结论是，对于2D perceptrons，break point为k=4， ${m_{H}(N)}$ 的上界是Nk−1。推广一下，也就是说，如果能找到一个模型的break point，且是有限大的，那么就能推断出其成长函数 ${m_{H}(N)}$ 有界。
 
 ## A Pictorial Proof
 
-我们已经知道了成长函数的上界是poly(N)的，下一步，如果能将mH(N)代替M，代入到Hoffding不等式中，就能得到Eout≈Ein的结论：
+我们已经知道了成长函数的上界是poly(N)的，下一步，如果能将 ${m_{H}(N)}$ 代替M，代入到Hoffding不等式中，就能得到Eout≈Ein的结论：
 
 这里写图片描述
 
@@ -113,11 +113,11 @@ N > k的情况较为复杂，下面给出推导过程：
 
 这里写图片描述
 
-对于2D perceptrons，它的break point是4，那么成长函数mH(N)=O(N3)。所以，我们可以说2D perceptrons是可以进行机器学习的，只要找到hypothesis能让Ein≈0，就能保证Ein≈Eout。
+对于2D perceptrons，它的break point是4，那么成长函数 ${m_{H}(N)}$ =O(N3)。所以，我们可以说2D perceptrons是可以进行机器学习的，只要找到hypothesis能让Ein≈0，就能保证Ein≈Eout。
 
 ## 总结
 
-本节课我们主要介绍了只要存在break point，那么其成长函数mH(N)就满足poly(N)。推导过程是先引入mH(N)的上界B(N,k)，B(N,k)的上界是N的k-1阶多项式，从而得到mH(N)的上界就是N的k-1阶多项式。然后，我们通过简单的三步证明，将mH(N)代入了Hoffding不等式中，推导出了Vapnik-Chervonenkis(VC) bound，最终证明了只要break point存在，那么机器学习就是可行的。
+本节课我们主要介绍了只要存在break point，那么其成长函数 ${m_{H}(N)}$ 就满足poly(N)。推导过程是先引入 ${m_{H}(N)}$ 的上界 ${B(N,K)}$ ， ${B(N,K)}$ 的上界是N的k-1阶多项式，从而得到 ${m_{H}(N)}$ 的上界就是N的k-1阶多项式。然后，我们通过简单的三步证明，将 ${m_{H}(N)}$ 代入了Hoffding不等式中，推导出了Vapnik-Chervonenkis(VC) bound，最终证明了只要break point存在，那么机器学习就是可行的。
 
 
 

@@ -58,11 +58,11 @@ H(0)⊂H(1.126)⊂⋯⊂H(1126)⊂⋯⊂H(∞)=H10
 
 这里写图片描述
 
-我们的目的是计算Ein(w)的最小值，限定条件是||w2||≤C。这个限定条件从几何角度上的意思是，权重w被限定在半径为C−−√的圆内，而球外的w都不符合要求，即便它是靠近Ein(w)梯度为零的w。
+我们的目的是计算 ${E_{in}(w)}$ 的最小值，限定条件是||w2||≤C。这个限定条件从几何角度上的意思是，权重w被限定在半径为C−−√的圆内，而球外的w都不符合要求，即便它是靠近 ${E_{in}(w)}$ 梯度为零的w。
 
 这里写图片描述
 
-下面用一张图来解释在限定条件下，最小化Ein(w)的过程：
+下面用一张图来解释在限定条件下，最小化 ${E_{in}(w)}$ 的过程：
 
 这里写图片描述
 
@@ -95,10 +95,10 @@ wREG=(ZTZ+λI)−1ZTy
 已知∇Ein是Ein对wREG的导数，而2λNwREG也可以看成是λNw2REG的导数。那么平行等式左边可以看成一个函数的导数，导数为零，即求该函数的最小值。也就是说，问题转换为最小化该函数：
 
 
-Eaug(w)=Ein(w)+λNwTw
+Eaug(w)= ${E_{in}(w)}$ +λNwTw
 该函数中第二项就是限定条件regularizer，也称为weight-decay regularization。我们把这个函数称为Augmented Error，即Eaug(w)。
 
-如果λ不为零，对应于加上了限定条件，若λ等于零，则对应于没有任何限定条件，问题转换成之前的最小化Ein(w)。
+如果λ不为零，对应于加上了限定条件，若λ等于零，则对应于没有任何限定条件，问题转换成之前的最小化 ${E_{in}(w)}$ 。
 
 下面给出一个曲线拟合的例子，λ取不同的值时，得到的曲线也不相同：
 
@@ -116,11 +116,10 @@ Eaug(w)=Ein(w)+λNwTw
 下面我们研究一下Regularization与VC理论之间的关系。Augmented Error表达式如下：
 
 
-Eaug(w)=Ein(w)+λNwTw
+Eaug(w)= ${E_{in}(w)}$ +λNwTw
 VC Bound表示为：
 
-
-Eout(w)≤Ein(w)+Ω(H)
+Eout(w)≤ ${E_{in}(w)}$ +Ω(H)
 其中wTw表示的是单个hypothesis的复杂度，记为Ω(w)；而Ω(H)表示整个hypothesis set的复杂度。根据Augmented Error和VC Bound的表达式，Ω(w)包含于Ω(H)之内，所以，Eaug(w)比Ein更接近于Eout，即更好地代表Eout，Eaug(w)与Eout之间的误差更小。
 
 这里写图片描述
@@ -186,8 +185,6 @@ L1计算的不是w的平方和，而是绝对值和，即长度和，也是凸�
 ## 总结
 
 本节课主要介绍了Regularization。首先，原来的hypothesis set加上一些限制条件，就成了Regularized Hypothesis Set。加上限制条件之后，我们就可以把问题转化为Eaug最小化问题，即把w的平方加进去。这种过程，实际上回降低VC Dimension。最后，介绍regularization是通用的机器学习工具，设计方法通常包括target-dependent，plausible，friendly等等。下节课将介绍如何选取合适的λ来建立最佳拟合模型。
-
-
 
 ## 参考
 

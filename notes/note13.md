@@ -4,7 +4,7 @@
 
 ## What is Overfitting?
 
-首先，我们通过一个例子来介绍什么bad generalization。假设平面上有5个点，目标函数f(x)是2阶多项式，如果hypothesis是二阶多项式加上一些小的noise的话，那么这5个点很靠近这个hypothesis，Ein很小。如果hypothesis是4阶多项式，那么这5点会完全落在hypothesis上，Ein=0。虽然4阶hypothesis的Ein比2阶hypothesis的要好很多，但是它的Eout很大。因为根据VC Bound理论，阶数越大，即VC Dimension越大，就会让模型复杂度更高，Eout更大。我们把这种Ein很小，Eout很大的情况称之为bad generation，即泛化能力差。
+首先，我们通过一个例子来介绍什么bad generalization。假设平面上有5个点，目标函数f(x)是2阶多项式，如果hypothesis是二阶多项式加上一些小的noise的话，那么这5个点很靠近这个hypothesis， ${E_{in}}$ 很小。如果hypothesis是4阶多项式，那么这5点会完全落在hypothesis上， ${E_{in}  =0}$ 。虽然4阶hypothesis的 ${E_{in}}$ 比2阶hypothesis的要好很多，但是它的 ${E_{out}}$ 很大。因为根据VC Bound理论，阶数越大，即VC Dimension越大，就会让模型复杂度更高， ${E_{out}}$ 更大。我们把这种 ${E_{in}}$ 很小， ${E_{out}}$ 很大的情况称之为bad generation，即泛化能力差。
 
 这里写图片描述
 
@@ -12,7 +12,7 @@
 
 这里写图片描述
 
-hypothesis的阶数越高，表示VC Dimension越大。随着VC Dimension增大，Ein是一直减小的，而Eout先减小后增大。在d∗位置，Eout取得最小值。在d∗VC右侧，随着VC Dimension越来越大，Ein越来越小，接近于0，Eout越来越大。即当VC Dimension很大的时候，这种对训练样本拟合过分好的情况称之为过拟合（overfitting）。另一方面，在d∗VC左侧，随着VC Dimension越来越小，Ein和Eout都越来越大，这种情况称之为欠拟合（underfitting），即模型对训练样本的拟合度太差，VC Dimension太小了。
+hypothesis的阶数越高，表示VC Dimension越大。随着VC Dimension增大， ${E_{in}}$ 是一直减小的，而 ${E_{out}}$ 先减小后增大。在d∗位置， ${E_{out}}$ 取得最小值。在d∗VC右侧，随着VC Dimension越来越大， ${E_{in}}$ 越来越小，接近于0， ${E_{out}}$ 越来越大。即当VC Dimension很大的时候，这种对训练样本拟合过分好的情况称之为过拟合（overfitting）。另一方面，在d∗VC左侧，随着VC Dimension越来越小， ${E_{in}}$ 和 ${E_{out}}$ 都越来越大，这种情况称之为欠拟合（underfitting），即模型对训练样本的拟合度太差，VC Dimension太小了。
 
 这里写图片描述
 
@@ -20,7 +20,7 @@ bad generation和overfitting的关系可以理解为：overfitting是VC Dimensio
 
 这里写图片描述
 
-一个好的fit，Ein和Eout都比较小，尽管Ein没有足够接近零；而对overfitting来说，Ein≈0，但是Eout很大。那么，overfitting的原因有哪些呢？
+一个好的fit， ${E_{in}}$ 和 ${E_{out}}$ 都比较小，尽管 ${E_{in}}$ 没有足够接近零；而对overfitting来说， ${E_{in}}$ ≈0，但是 ${E_{out}}$ 很大。那么，overfitting的原因有哪些呢？
 
 我们举个开车的例子，把发生车祸比作成overfitting，那么造成车祸的原因包括：
 
@@ -48,30 +48,30 @@ bad generation和overfitting的关系可以理解为：overfitting是VC Dimensio
 
 这里写图片描述
 
-由上图可知，2阶多项式的学习模型Ein=0.050，Eout=0.127；10阶多项式的学习模型Ein=0.034，Eout=9.00。虽然10阶模型的Ein比2阶的小，但是其Eout要比2阶的大得多，而2阶的Ein和Eout相差不大，很明显用10阶的模型发生了过拟合。
+由上图可知，2阶多项式的学习模型 ${E_{in}}$ =0.050， ${E_{out}}$ =0.127；10阶多项式的学习模型 ${E_{in}}$ =0.034， ${E_{out}}$ =9.00。虽然10阶模型的 ${E_{in}}$ 比2阶的小，但是其 ${E_{out}}$ 要比2阶的大得多，而2阶的 ${E_{in}}$ 和 ${E_{out}}$ 相差不大，很明显用10阶的模型发生了过拟合。
 
 然后，对于第二个目标函数是50阶多项式没有noise的问题，这两个学习模型的效果如下图所示：
 
 这里写图片描述
 
-由上图可知，2阶多项式的学习模型Ein=0.029，Eout=0.120；10阶多项式的学习模型Ein=0.00001，Eout=7680。虽然10阶模型的Ein比2阶的小，但是其Eout要比2阶的大得多的多，而2阶的Ein和Eout相差不大，很明显用10阶的模型仍然发生了明显的过拟合。
+由上图可知，2阶多项式的学习模型 ${E_{in}}$ =0.029， ${E_{out}}$ =0.120；10阶多项式的学习模型 ${E_{in}}$ =0.00001， ${E_{out}}$ =7680。虽然10阶模型的 ${E_{in}}$ 比2阶的小，但是其 ${E_{out}}$ 要比2阶的大得多的多，而2阶的 ${E_{in}}$ 和 ${E_{out}}$ 相差不大，很明显用10阶的模型仍然发生了明显的过拟合。
 
 上面两个问题中，10阶模型都发生了过拟合，反而2阶的模型却表现得相对不错。这好像违背了我们的第一感觉，比如对于目标函数是10阶多项式，加上noise的模型，按道理来说应该是10阶的模型更能接近于目标函数，因为它们阶数相同。但是，事实却是2阶模型泛化能力更强。这种现象产生的原因，从哲学上来说，就是“以退为进”。有时候，简单的学习模型反而能表现的更好。
 
-下面从learning curve来分析一下具体的原因，learning curve描述的是Ein和Eout随着数据量N的变化趋势。下图中左边是2阶学习模型的learning curve，右边是10阶学习模型的learning curve。
+下面从learning curve来分析一下具体的原因，learning curve描述的是 ${E_{in}}$ 和 ${E_{out}}$ 随着数据量N的变化趋势。下图中左边是2阶学习模型的learning curve，右边是10阶学习模型的learning curve。
 
 这里写图片描述
 
-我们的第9次课的笔记 NTU林轩田机器学习基石课程学习笔记9 – Linear Regression已经介绍过了learning curve。在learning curve中，横轴是样本数量N，纵轴是Error。Ein和Eout可表示为：
+我们的第9次课的笔记 NTU林轩田机器学习基石课程学习笔记9 – Linear Regression已经介绍过了learning curve。在learning curve中，横轴是样本数量N，纵轴是Error。 ${E_{in}}$ 和 ${E_{out}}$ 可表示为：
 
-Ein=noiselevel∗(1−d+1N)
+ ${E_{in}}$ =noiselevel∗(1−d+1N)
 
-Eout=noiselevel∗(1+d+1N)
+ ${E_{out}}$ =noiselevel∗(1+d+1N)
 其中d为模型阶次，左图中d=2，右图中d=10。
 
-本节的实验问题中，数据量N不大，即对应于上图中的灰色区域。左图的灰色区域中，因为d=2，Ein和Eout相对来说比较接近；右图中的灰色区域中，d=10，根据Ein和Eout的表达式，Ein很小，而Eout很大。这就解释了之前2阶多项式模型的Ein更接近Eout，泛化能力更好。
+本节的实验问题中，数据量N不大，即对应于上图中的灰色区域。左图的灰色区域中，因为d=2， ${E_{in}}$ 和 ${E_{out}}$ 相对来说比较接近；右图中的灰色区域中，d=10，根据 ${E_{in}}$ 和 ${E_{out}}$ 的表达式， ${E_{in}}$ 很小，而 ${E_{out}}$ 很大。这就解释了之前2阶多项式模型的 ${E_{in}}$ 更接近 ${E_{out}}$ ，泛化能力更好。
 
-值得一提的是，如果数据量N很大的时候，上面两图中Ein和Eout都比较接近，但是对于高阶模型，z域中的特征很多的时候，需要的样本数量N很大，且容易发生维度灾难。关于维度灾难的详细生动解释，请参考我另一篇博文：
+值得一提的是，如果数据量N很大的时候，上面两图中 ${E_{in}}$ 和 ${E_{out}}$ 都比较接近，但是对于高阶模型，z域中的特征很多的时候，需要的样本数量N很大，且容易发生维度灾难。关于维度灾难的详细生动解释，请参考我另一篇博文：
 
 机器学习中的维度灾难
 
@@ -85,7 +85,7 @@ Eout=noiselevel∗(1+d+1N)
 
 这里写图片描述
 
-那么下面我们分析不同的(N,σ2)和(N,Qf)对overfit的影响。overfit可以量化为Eout−Ein。结果如下：
+那么下面我们分析不同的(N,σ2)和(N,Qf)对overfit的影响。overfit可以量化为 ${E_{out}}$ − ${E_{in}}$ 。结果如下：
 
 这里写图片描述
 
@@ -131,7 +131,7 @@ data hinting是针对N不够大的情况，如果没有办法获得更多的训�
 
 ## 总结
 
-本节课主要介绍了overfitting的概念，即当Ein很小，Eout很大的时候，会出现overfitting。详细介绍了overfitting发生的四个常见原因data size N、stochastic noise、deterministic noise和excessive power。解决overfitting的方法有很多，本节课主要介绍了data cleaning/pruning和data hinting两种简单的方法，之后的课程将会详细介绍regularization和validataion两种更重要的方法。
+本节课主要介绍了overfitting的概念，即当 ${E_{in}}$ 很小， ${E_{out}}$ 很大的时候，会出现overfitting。详细介绍了overfitting发生的四个常见原因data size N、stochastic noise、deterministic noise和excessive power。解决overfitting的方法有很多，本节课主要介绍了data cleaning/pruning和data hinting两种简单的方法，之后的课程将会详细介绍regularization和validataion两种更重要的方法。
 
 
 
