@@ -32,15 +32,15 @@ $${err_{CE}(s,y) = \ln(1 + \exp(-ys))}$$
 
 由上图可以看出：
 
- ${err_{0/1}(s,y) \leq err_{SCE}(s,y)= \frace{1}{ln_{2}^{err_{SCE(s,y)}}}}$
+ ${err_{0/1}(s,y) \leq err_{SCE}(s,y)= \frac{1}{ln_{2}^{err_{SCE(s,y)}}}}$
 
- ${E_{in}^{0/1}(w)}$ ≤ESC ${E_{in}(w)}$ =1ln2EC ${E_{in}(w)}$ 
+ ${E_{in}^{0/1}(w) \leq ESC E_{in}(w)}$ =1ln2EC ${E_{in}(w)}$
 
- ${E_{out}^{0/1}(w)}$ ≤ESCEout(w)=1ln2ECEout(w)
+ ${E_{out}^{0/1}(w) \leq ESCEout(w)=1ln2ECEout(w)
 
-那么由VC理论可以知道： 
+那么由VC理论可以知道：
 
-从0/1出发： 
+从0/1出发：
  ${E_{out}^{0/1}(w)} \leq E_{in}^{0/1}(w)}$ +Ω0/1≤1ln2EC ${E_{in}(w)}$ + Ω0/1
 
 从CE出发： 
@@ -60,10 +60,11 @@ $${err_{CE}(s,y) = \ln(1 + \exp(-ys))}$$
 
 对于logistic regression的SGD，它的表达式为：
 
-wt+1←wt+ηθ(−ynwTtxn)(ynxn)
+$${w_{t+1} \leftarrow w_t +\eta \theta(-y_n w^T tx_n)(y_n x_n)}$$
+
 我们发现，SGD与PLA的迭代公式有类似的地方，如下图所示：
 
-我们把SGD logistic regression称之为'soft' PLA，因为PLA只对分类错误的点进行修正，而SGD logistic regression每次迭代都会进行或多或少的修正。另外，当 ${η=1}$ ，且 ${wTtxn}$ 足够大的时候，PLA近似等于SGD。
+我们把SGD logistic regression称之为'soft' PLA，因为PLA只对分类错误的点进行修正，而SGD logistic regression每次迭代都会进行或多或少的修正。另外，当 ${η=1}$ ，且 ${w^T t_xn}$ 足够大的时候，PLA近似等于SGD。
 
 除此之外，还有两点需要说明：
 

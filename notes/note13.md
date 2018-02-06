@@ -4,7 +4,7 @@
 
 ## What is Overfitting?
 
-首先，我们通过一个例子来介绍什么bad generalization。假设平面上有5个点，目标函数f(x)是2阶多项式，如果hypothesis是二阶多项式加上一些小的noise的话，那么这5个点很靠近这个hypothesis， ${E_{in}}$ 很小。如果hypothesis是4阶多项式，那么这5点会完全落在hypothesis上， ${E_{in}  =0}$ 。虽然4阶hypothesis的 ${E_{in}}$ 比2阶hypothesis的要好很多，但是它的 ${E_{out}}$ 很大。因为根据VC Bound理论，阶数越大，即VC Dimension越大，就会让模型复杂度更高， ${E_{out}}$ 更大。我们把这种 ${E_{in}}$ 很小， ${E_{out}}$ 很大的情况称之为bad generation，即泛化能力差。
+首先，我们通过一个例子来介绍什么bad generalization。假设平面上有5个点，目标函数f(x)是2阶多项式，如果hypothesis是二阶多项式加上一些小的noise的话，那么这5个点很靠近这个hypothesis，${E_{in}}$ 很小。如果hypothesis是4阶多项式，那么这5点会完全落在hypothesis上，${E_{in} =0}$ 。虽然4阶hypothesis的 ${E_{in}}$ 比2阶hypothesis的要好很多，但是它的 ${E_{out}}$ 很大。因为根据VC Bound理论，阶数越大，即VC Dimension越大，就会让模型复杂度更高，${E_{out}}$ 更大。我们把这种 ${E_{in}}$ 很小，${E_{out}}$ 很大的情况称之为bad generation，即泛化能力差。
 
 这里写图片描述
 
@@ -12,7 +12,7 @@
 
 这里写图片描述
 
-hypothesis的阶数越高，表示VC Dimension越大。随着VC Dimension增大， ${E_{in}}$ 是一直减小的，而 ${E_{out}}$ 先减小后增大。在d∗位置， ${E_{out}}$ 取得最小值。在d∗VC右侧，随着VC Dimension越来越大， ${E_{in}}$ 越来越小，接近于0， ${E_{out}}$ 越来越大。即当VC Dimension很大的时候，这种对训练样本拟合过分好的情况称之为过拟合（overfitting）。另一方面，在d∗VC左侧，随着VC Dimension越来越小， ${E_{in}}$ 和 ${E_{out}}$ 都越来越大，这种情况称之为欠拟合（underfitting），即模型对训练样本的拟合度太差，VC Dimension太小了。
+hypothesis的阶数越高，表示VC Dimension越大。随着VC Dimension增大，${E_{in}}$ 是一直减小的，而 ${E_{out}}$ 先减小后增大。在d∗位置，${E_{out}}$ 取得最小值。在d∗VC右侧，随着VC Dimension越来越大，${E_{in}}$ 越来越小，接近于0，${E_{out}}$ 越来越大。即当VC Dimension很大的时候，这种对训练样本拟合过分好的情况称之为过拟合（overfitting）。另一方面，在d∗VC左侧，随着VC Dimension越来越小，${E_{in}}$ 和 ${E_{out}}$ 都越来越大，这种情况称之为欠拟合（underfitting），即模型对训练样本的拟合度太差，VC Dimension太小了。
 
 这里写图片描述
 
@@ -20,7 +20,7 @@ bad generation和overfitting的关系可以理解为：overfitting是VC Dimensio
 
 这里写图片描述
 
-一个好的fit， ${E_{in}}$ 和 ${E_{out}}$ 都比较小，尽管 ${E_{in}}$ 没有足够接近零；而对overfitting来说， ${E_{in}}$ ≈0，但是 ${E_{out}}$ 很大。那么，overfitting的原因有哪些呢？
+一个好的fit，${E_{in}}$ 和 ${E_{out}}$ 都比较小，尽管 ${E_{in}}$ 没有足够接近零；而对overfitting来说，${E_{in} \approx 0}$，但是 ${E_{out}}$ 很大。那么，overfitting的原因有哪些呢？
 
 我们举个开车的例子，把发生车祸比作成overfitting，那么造成车祸的原因包括：
 
@@ -36,7 +36,7 @@ bad generation和overfitting的关系可以理解为：overfitting是VC Dimensio
 
 ## The Role of Noise and Data Size
 
-为了尽可能详细地解释overfitting，我们进行这样一个实验，试验中的数据集不是很大。首先，在二维平面上，一个模型的分布由目标函数f(x)（x的10阶多项式）加上一些noise构成，下图中，离散的圆圈是数据集，目标函数是蓝色的曲线。数据没有完全落在曲线上，是因为加入了noise。
+为了尽可能详细地解释overfitting，我们进行这样一个实验，试验中的数据集不是很大。首先，在二维平面上，一个模型的分布由目标函数 ${f(x)}$ （x的10阶多项式）加上一些noise构成，下图中，离散的圆圈是数据集，目标函数是蓝色的曲线。数据没有完全落在曲线上，是因为加入了noise。
 
 这里写图片描述
 
@@ -48,17 +48,17 @@ bad generation和overfitting的关系可以理解为：overfitting是VC Dimensio
 
 这里写图片描述
 
-由上图可知，2阶多项式的学习模型 ${E_{in} =0.050}$， ${E_{out} =0.127}$；10阶多项式的学习模型 ${E_{in} =0.034}$， ${E_{out} =9.00}$。虽然10阶模型的 ${E_{in}}$ 比2阶的小，但是其 ${E_{out}}$ 要比2阶的大得多，而2阶的 ${E_{in}}$ 和 ${E_{out}}$ 相差不大，很明显用10阶的模型发生了过拟合。
+由上图可知，2阶多项式的学习模型 ${E_{in} =0.050}$，${E_{out} =0.127}$；10阶多项式的学习模型 ${E_{in} =0.034}$，${E_{out} =9.00}$。虽然10阶模型的 ${E_{in}}$ 比2阶的小，但是其 ${E_{out}}$ 要比2阶的大得多，而2阶的 ${E_{in}}$ 和 ${E_{out}}$ 相差不大，很明显用10阶的模型发生了过拟合。
 
 然后，对于第二个目标函数是50阶多项式没有noise的问题，这两个学习模型的效果如下图所示：
 
 这里写图片描述
 
-由上图可知，2阶多项式的学习模型 ${E_{in} =0.029}$， ${E_{out} =0.120}$；10阶多项式的学习模型 ${E_{in} =0.00001}$， ${E_{out} =7680}$。虽然10阶模型的 ${E_{in}}$ 比2阶的小，但是其 ${E_{out}}$ 要比2阶的大得多的多，而2阶的 ${E_{in}}$ 和 ${E_{out}}$ 相差不大，很明显用10阶的模型仍然发生了明显的过拟合。
+由上图可知，2阶多项式的学习模型 ${E_{in} =0.029}$，${E_{out} =0.120}$；10阶多项式的学习模型 ${E_{in} =0.00001}$，${E_{out} =7680}$。虽然10阶模型的 ${E_{in}}$ 比2阶的小，但是其 ${E_{out}}$ 要比2阶的大得多的多，而2阶的 ${E_{in}}$ 和 ${E_{out}}$ 相差不大，很明显用10阶的模型仍然发生了明显的过拟合。
 
 上面两个问题中，10阶模型都发生了过拟合，反而2阶的模型却表现得相对不错。这好像违背了我们的第一感觉，比如对于目标函数是10阶多项式，加上noise的模型，按道理来说应该是10阶的模型更能接近于目标函数，因为它们阶数相同。但是，事实却是2阶模型泛化能力更强。这种现象产生的原因，从哲学上来说，就是“以退为进”。有时候，简单的学习模型反而能表现的更好。
 
-下面从learning curve来分析一下具体的原因，learning curve描述的是 ${E_{in}}$ 和 ${E_{out}}$ 随着数据量N的变化趋势。下图中左边是2阶学习模型的learning curve，右边是10阶学习模型的learning curve。
+下面从learning curve来分析一下具体的原因，learning curve描述的是 ${E_{in}}$ 和 ${E_{out}}$ 随着数据量 ${N}$ 的变化趋势。下图中左边是2阶学习模型的learning curve，右边是10阶学习模型的learning curve。
 
 这里写图片描述
 
@@ -66,12 +66,12 @@ bad generation和overfitting的关系可以理解为：overfitting是VC Dimensio
 
  ${E_{in} =noiselevel∗(1−d+1N)}$
 
- ${E_{out} = noiselevel∗(1+d+1N)}$ 
+ ${E_{out} = noiselevel∗(1+d+1N)}$
 其中d为模型阶次，左图中d=2，右图中d=10。
 
-本节的实验问题中，数据量N不大，即对应于上图中的灰色区域。左图的灰色区域中，因为d=2， ${E_{in}}$ 和 ${E_{out}}$ 相对来说比较接近；右图中的灰色区域中，d=10，根据 ${E_{in}}$ 和 ${E_{out}}$ 的表达式， ${E_{in}}$ 很小，而 ${E_{out}}$ 很大。这就解释了之前2阶多项式模型的 ${E_{in}}$ 更接近 ${E_{out}}$ ，泛化能力更好。
+本节的实验问题中，数据量N不大，即对应于上图中的灰色区域。左图的灰色区域中，因为d=2，${E_{in}}$ 和 ${E_{out}}$ 相对来说比较接近；右图中的灰色区域中，d=10，根据 ${E_{in}}$ 和 ${E_{out}}$ 的表达式，${E_{in}}$ 很小，而 ${E_{out}}$ 很大。这就解释了之前2阶多项式模型的 ${E_{in}}$ 更接近 ${E_{out}}$，泛化能力更好。
 
-值得一提的是，如果数据量N很大的时候，上面两图中 ${E_{in}}$ 和 ${E_{out}}$ 都比较接近，但是对于高阶模型，z域中的特征很多的时候，需要的样本数量N很大，且容易发生维度灾难。关于维度灾难的详细生动解释，请参考我另一篇博文：
+值得一提的是，如果数据量N很大的时候，上面两图中 ${E_{in}}$ 和 ${E_{out}}$ 都比较接近，但是对于高阶模型，${z}$ 域中的特征很多的时候，需要的样本数量N很大，且容易发生维度灾难。关于维度灾难的详细生动解释，请参考我另一篇博文：
 
 机器学习中的维度灾难
 
@@ -81,7 +81,7 @@ bad generation和overfitting的关系可以理解为：overfitting是VC Dimensio
 
 ## Deterministic Noise
 
-下面我们介绍一个更细节的实验来说明 什么时候小心overfit会发生。假设我们产生的数据分布由两部分组成：第一部分是目标函数${f(x)}$，${Q_f}$阶多项式；第二部分是噪声 ${\epsilon}$ ，服从Gaussian分布。接下来我们分析的是noise强度不同对overfitting有什么样的影响。总共的数据量是 ${N}$。
+下面我们介绍一个更细节的实验来说明 什么时候小心overfit会发生。假设我们产生的数据分布由两部分组成：第一部分是目标函数${f(x)}$，${Q_f}$阶多项式；第二部分是噪声 ${\epsilon}$，服从Gaussian分布。接下来我们分析的是noise强度不同对overfitting有什么样的影响。总共的数据量是 ${N}$。
 
 这里写图片描述
 
@@ -89,17 +89,17 @@ bad generation和overfitting的关系可以理解为：overfitting是VC Dimensio
 
 这里写图片描述
 
-上图中，红色越深，代表overfit程度越高，蓝色越深，代表overfit程度越低。先看左边的图，左图中阶数 ${Q_f}$ 固定为20，横坐标代表样本数量N，纵坐标代表噪声水平\sigma2。红色区域集中在N很小或者\sigma2很大的时候，也就是说N越大，\sigma2越小，越不容易发生overfit。右边图中\sigma2=0.1，横坐标代表样本数量N，纵坐标代表目标函数阶数 ${Q_f}$ 。红色区域集中在N很小或者 ${Q_f}$ 很大的时候，也就是说 ${N}$ 越大， ${Q_f}$ 越小，越不容易发生overfit。上面两图基本相似。
+上图中，红色越深，代表overfit程度越高，蓝色越深，代表overfit程度越低。先看左边的图，左图中阶数 ${Q_f}$ 固定为20，横坐标代表样本数量 ${N}$，纵坐标代表噪声水平 ${\sigma^2}$。红色区域集中在 ${N}$ 很小或者 ${\sigma^2}$ 很大的时候，也就是说 ${N}$ 越大，${\sigma^2}$越小，越不容易发生overfit。右边图中 ${\sigma^2=0.1}$，横坐标代表样本数量 ${N}$，纵坐标代表目标函数阶数 ${Q_f}$ 。红色区域集中在 ${N}$ 很小或者 ${Q_f}$ 很大的时候，也就是说 ${N}$ 越大，${Q_f}$ 越小，越不容易发生overfit。上面两图基本相似。
 
-从上面的分析，我们发现\sigma2对overfit是有很大的影响的，我们把这种noise称之为stochastic noise。同样地， ${Q_f}$ 即模型复杂度也对overfit有很大影响，而且二者影响是相似的，所以我们把这种称之为deterministic noise。之所以把它称为noise，是因为模型高复杂度带来的影响。
+从上面的分析，我们发现 ${\sigma^2}$ 对overfit是有很大的影响的，我们把这种noise称之为stochastic noise。同样地，${Q_f}$ 即模型复杂度也对overfit有很大影响，而且二者影响是相似的，所以我们把这种称之为deterministic noise。之所以把它称为noise，是因为模型高复杂度带来的影响。
 
 总结一下，有四个因素会导致发生overfitting：
 
 data size N ↓
 
-stochastic noise \sigma2↑
+stochastic noise ${\sigma^2}$ ↑
 
-deterministic noise  ${Q_f}$ ↑
+deterministic noise ${Q_f}$ ↑
 
 excessive power ↑
 
@@ -127,11 +127,11 @@ regularization和validation我们之后的课程再介绍，本节课主要介�
 
 data cleaning/pruning就是对训练数据集里label明显错误的样本进行修正（data cleaning），或者对错误的样本看成是noise，进行剔除（data pruning）。data cleaning/pruning关键在于如何准确寻找label错误的点或者是noise的点，而且如果这些点相比训练样本N很小的话，这种处理效果不太明显。
 
-data hinting是针对N不够大的情况，如果没有办法获得更多的训练集，那么data hinting就可以对已知的样本进行简单的处理、变换，从而获得更多的样本。举个例子，数字分类问题，可以对已知的数字图片进行轻微的平移或者旋转，从而让N丰富起来，达到扩大训练集的目的。这种额外获得的例子称之为virtual examples。但是要注意一点的就是，新获取的virtual examples可能不再是iid某个distribution。所以新构建的virtual examples要尽量合理，且是独立同分布的。
+data hinting是针对 ${N}$ 不够大的情况，如果没有办法获得更多的训练集，那么data hinting就可以对已知的样本进行简单的处理、变换，从而获得更多的样本。举个例子，数字分类问题，可以对已知的数字图片进行轻微的平移或者旋转，从而让N丰富起来，达到扩大训练集的目的。这种额外获得的例子称之为virtual examples。但是要注意一点的就是，新获取的virtual examples可能不再是 ${iid}$ 某个distribution。所以新构建的virtual examples要尽量合理，且是独立同分布的。
 
 ## 总结
 
-本节课主要介绍了overfitting的概念，即当 ${E_{in}}$ 很小， ${E_{out}}$ 很大的时候，会出现overfitting。详细介绍了overfitting发生的四个常见原因data size ${N}$、stochastic noise、deterministic noise和excessive power。解决overfitting的方法有很多，本节课主要介绍了data cleaning/pruning和data hinting两种简单的方法，之后的课程将会详细介绍regularization和validataion两种更重要的方法。
+本节课主要介绍了overfitting的概念，即当 ${E_{in}}$ 很小，${E_{out}}$ 很大的时候，会出现overfitting。详细介绍了overfitting发生的四个常见原因data size ${N}$、stochastic noise、deterministic noise和excessive power。解决overfitting的方法有很多，本节课主要介绍了data cleaning/pruning和data hinting两种简单的方法，之后的课程将会详细介绍regularization和validataion两种更重要的方法。
 
 ## 参考
 
