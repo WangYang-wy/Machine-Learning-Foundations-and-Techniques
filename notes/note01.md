@@ -5,7 +5,7 @@
 - How Can Machine Learn ?
 - How Can Machine Learn Better ?
 
-### What is Machine Learning
+## What is Machine Learning
 
 什么是“学习”？学习就是人类通过观察、积累经验，掌握某项技能或能力。就好像我们从小学习识别字母、认识汉字，就是学习的过程。而 **机器学习（Machine Learning），顾名思义，就是让机器（计算机）也能向人类一样，通过观察大量的数据和训练，发现事物规律，获得某种分析问题、解决问题的能力。** 
 
@@ -24,17 +24,19 @@
 ## Components of Machine Learning
 
 本系列的课程对机器学习问题有一些基本的术语需要注意一下：
+
 - 输入 ${x}$。
 - 输出 ${y}$。
 - 目标函数 ${f}$ ，即最接近实际样本分布的规律。
 - 训练样本 ${data}$ 。
-- 假设 ${hypothesis}$ ，一个机器学习模型对应了很多不同的 ${hypothesis}$ ，通过演算法 ${A}$ ，选择一个最佳的 ${hypothesis}$ 对应的函数称为 ${g}$ ， ${g}$ 能最好地表示事物的内在规律，也是我们最终想要得到的模型表达式。
+- 假设 ${hypothesis}$ ，一个机器学习模型对应了很多不同的 ${hypothesis}$ ，通过演算法 ${A}$ ，选择一个最佳的 ${hypothesis}$ 对应的函数称为 ${g}$ ，${g}$ 能最好地表示事物的内在规律，也是我们最终想要得到的模型表达式。
 
 对于理想的目标函数 ${f}$ ，我们是不知道的，我们手上拿到的是一些训练样本 ${D}$ ，假设是监督式学习，其中有输入 ${x}$ ，也有输出 ${y}$ 。机器学习的过程，就是根据先验知识选择模型，该模型对应的 ${hypothesis\ set}$（用 ${H}$ 表示），${H}$ 中包含了许多不同的 ${hypothesis}$ ，通过演算法 ${A}$ ，在训练样本 ${D}$ 上进行训练，选择出一个最好的 ${hypothes}$ ，对应的函数表达式 ${g}$ 就是我们最终要求的。一般情况下， ${g}$ 能最接近目标函数 ${f}$ ，这样，机器学习的整个流程就完成了。
 
 ## Machine Learning and Other Fields
 
 与机器学习相关的领域有：
+
 - 数据挖掘（Data Mining）
 - 人工智能（Artificial Intelligence）
 - 统计（Statistics）

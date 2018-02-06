@@ -14,16 +14,16 @@
 
 这里写图片描述
 
-之前的数据集是确定的，即没有Noise的，我们称之为Deterministic。现在有Noise了，也就是说在某点处不再是确定分布，而是概率分布了，即对每个 ${(x，y)}$ 出现的概率是 ${P(y|x)}$ 。
+之前的数据集是确定的，即没有Noise的，我们称之为Deterministic。现在有Noise了，也就是说在某点处不再是确定分布，而是概率分布了，即对每个 ${(x,\ y)}$ 出现的概率是 ${P(y|x)}$ 。
 
-因为Noise的存在，比如在x点，有0.7的概率 ${y=1}$ ，有0.3的概率 ${y=0]$ ，即 ${y]$ 是按照 ${P(y|x)}$ 分布的。数学上可以证明如果数据集按照 ${P(y|x)}$ 概率分布且是 ${iid}$ 的，那么以前证明机器可以学习的方法依然奏效，VC Dimension有限即可推断Ein和Eout是近似的。
+因为Noise的存在，比如在x点，有0.7的概率 ${y=1}$ ，有0.3的概率 ${y=0}$ ，即 ${y}$ 是按照 ${P(y|x)}$ 分布的。数学上可以证明如果数据集按照 ${P(y|x)}$ 概率分布且是 ${iid}$ 的，那么以前证明机器可以学习的方法依然奏效，VC Dimension有限即可推断Ein和Eout是近似的。
 
 这里写图片描述
 
- ${P(y|x)}$ 称之为目标分布（Target Distribution）。它实际上告诉我们最好的选择是什么，同时伴随着多少noise。其实，没有noise的数据仍然可以看成“特殊”的 ${P(y|x)}$ 概率分布，即概率仅是1和0.对于以前确定的数据集： 
+ ${P(y|x)}$ 称之为目标分布（Target Distribution）。它实际上告诉我们最好的选择是什么，同时伴随着多少noise。其实，没有noise的数据仍然可以看成“特殊”的 ${P(y|x)}$ 概率分布，即概率仅是1和0.对于以前确定的数据集：
 
- - ${P(y|x) =1,\ for y=f(x)}$
- - ${P(y|x) =0,\ for y -= f(x)}$
+- ${P(y|x) =1,\ for \ y = f(x)}$
+- ${P(y|x) =0,\ for \ y \neq f(x)}$
 
 这里写图片描述
 
@@ -77,7 +77,7 @@ Error有两种：false accept和false reject。false accept意思是误把负类
 
 ## Weighted Classification
 
-实际上，机器学习的Cost Function即来自于这些error，也就是算法里面的迭代的目标函数，通过优化使得Error（Ein）不断变小。 
+实际上，机器学习的Cost Function即来自于这些error，也就是算法里面的迭代的目标函数，通过优化使得Error（Ein）不断变小。
 cost function中，false accept和false reject赋予不同的权重，在演算法中体现。对不同权重的错误惩罚，可以选用virtual copying的方法。
 
 这里写图片描述

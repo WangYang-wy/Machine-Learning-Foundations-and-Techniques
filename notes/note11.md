@@ -4,32 +4,35 @@
 
 ## Linear Models for Binary Classification
 
-之前介绍几种线性模型都有一个共同点，就是都有样本特征x的加权运算，我们引入一个线性得分函数s：
+之前介绍几种线性模型都有一个共同点，就是都有样本特征x的加权运算，我们引入一个线性得分函数 ${s}$：
 
-s=wTx
-三种线性模型，第一种是linear classification。线性分类模型的hypothesis为 ${h(x)=sign(s)}$ ,取值范围为 ${\{-1,+1\}}$ 两个值，它的err是0/1的，所以对应的 ${E_{in}(w)}$ 是离散的，并不好解，这是个NP-hard问题。第二种是linear regression。线性回归模型的hypothesis为 ${h(x) = s}$ ，取值范围为整个实数空间，它的err是squared的，所以对应的 ${E_{in}(w)}$ 是开口向上的二次曲线，其解是closed-form的，直接用线性最小二乘法求解即可。第三种是logistic regression。逻辑回归模型的hypothesis为 ${h(x)=\theta(s)}$ ，取值范围为 ${(-1,1)}$ 之间，它的err是cross-entropy的，所有对应的 ${E_{in}(w)}$ 是平滑的凸函数，可以使用梯度下降算法求最小值。
+$${s = w^T x}$$
+
+三种线性模型，第一种是linear classification。线性分类模型的hypothesis为 ${h(x)=sign(s)}$ ,取值范围为 ${\{-1,+1\}}$ 两个值，它的err是 ${0/1}$ 的，所以对应的 ${E_{in}(w)}$ 是离散的，并不好解，这是个NP-hard问题。第二种是linear regression。线性回归模型的hypothesis为 ${h(x) = s}$ ，取值范围为整个实数空间，它的err是squared的，所以对应的 ${E_{in}(w)}$ 是开口向上的二次曲线，其解是closed-form的，直接用线性最小二乘法求解即可。第三种是logistic regression。逻辑回归模型的hypothesis为 ${h(x)=\theta(s)}$ ，取值范围为 ${(-1,1)}$ 之间，它的err是cross-entropy的，所有对应的 ${E_{in}(w)}$ 是平滑的凸函数，可以使用梯度下降算法求最小值。
 
 从上图中，我们发现，linear regression和logistic regression的error function都有最小解。那么可不可以用这两种方法来求解linear classification问题呢？下面，我们来对这三种模型的error function进行分析，看看它们之间有什么联系。
 
-对于linear classification，它的error function可以写成： 
+对于linear classification，它的error function可以写成：
 
- ${err_{0/1}}$ (s,y)=|sign(s)≠y|=|sign(ys)≠1|
+ $${err_{0/1}(s,y) = |sign(s) \neq y|=|sign(ys)\neq 1|}$$
 
-对于linear regression，它的error function可以写成： 
-${err_{SQR}(s,y) = (s−y)^2 = (ys−1)^{2}}$ 
+对于linear regression，它的error function可以写成：
 
-对于logistic regression，它的error function可以写成： 
-errCE(s,y)=ln(1+exp(−ys))
+$${err_{SQR}(s,y) = (s - y)^2 = (ys - 1)^2}$$
 
-上述三种模型的error function都引入了 ${ys}$ 变量，那么ys的物理意义是什么？ ${ys}$ 就是指分类的正确率得分，其值越大越好，得分越高。
+对于logistic regression，它的error function可以写成：
+
+$${err_{CE}(s,y) = \ln(1 + \exp(-ys))}$$
+
+上述三种模型的error function都引入了 ${ys}$ 变量，那么ys的物理意义是什么？${ys}$ 就是指分类的正确率得分，其值越大越好，得分越高。
 
 下面，我们用图形化的方式来解释三种模型的error function到底有什么关系：
 
 从上图中可以看出，${ys}$ 是横坐标轴，${err_{0/1}}$ 是呈阶梯状的，在 ${ys>0}$ 时， ${err_{0/1}}$ 恒取最小值0。${err_{SQR}}$ 呈抛物线形式，在 ${ys=1}$ 时，取得最小值，且在 ${ys=1}$ 左右很小区域内，${err_{0/1}}$ 和errSQR近似。errCE是呈指数下降的单调函数，ys越大，其值越小。同样在ys=1左右很小区域内， ${err_{0/1}}$ 和errCE近似。但是我们发现errCE并不是始终在 ${err_{0/1}}$ 之上，所以为了计算讨论方便，我们把errCE做幅值上的调整，引入 ${err_{SCE} = log_{2}^{(1+exp(−ys))} = 1ln2errCE}$ ，这样能保证 ${err_{SCE}}$ 始终在 ${err_{0/1}}$ 上面，如下图所示：
 
-由上图可以看出： 
+由上图可以看出：
 
- ${err_{0/1}(s,y) <= err_{SCE}(s,y)= \frace{1}{ln_{2}^{err_{SCE(s,y)}}}}$ 
+ ${err_{0/1}(s,y) \leq err_{SCE}(s,y)= \frace{1}{ln_{2}^{err_{SCE(s,y)}}}}$
 
  ${E_{in}^{0/1}(w)}$ ≤ESC ${E_{in}(w)}$ =1ln2EC ${E_{in}(w)}$ 
 
@@ -38,14 +41,14 @@ errCE(s,y)=ln(1+exp(−ys))
 那么由VC理论可以知道： 
 
 从0/1出发： 
- ${E_{out}^{0/1}(w)}$ ≤ ${E_{in}^{0/1}(w)}$ +Ω0/1≤1ln2EC ${E_{in}(w)}$ + Ω0/1
+ ${E_{out}^{0/1}(w)} \leq E_{in}^{0/1}(w)}$ +Ω0/1≤1ln2EC ${E_{in}(w)}$ + Ω0/1
 
 从CE出发： 
- ${E_{out}^{0/1}(w)}$ ≤1ln2ECEout(w)≤1ln2EC ${E_{in}(w)}$ +1ln2ΩCE
+ ${E_{out}^{0/1}(w)}$ \leq 1ln2ECEout(w)\leq 1ln2EC ${E_{in}(w)}$ +1ln2ΩCE
 
 通过上面的分析，我们看到err 0/1是被限定在一个上界中。这个上界是由logistic regression模型的error function决定的。而linear regression其实也是linear classification的一个upper bound，只是随着sy偏离1的位置越来越远，linear regression的error function偏差越来越大。综上所述，linear regression和logistic regression都可以用来解决linear classification的问题。
 
-下图列举了PLA、linear regression、logistic regression模型用来解linear classification问题的优点和缺点。通常，我们使用linear regression来获得初始化的w0，再用logistic regression模型进行最优化解。
+下图列举了PLA、linear regression、logistic regression模型用来解linear classification问题的优点和缺点。通常，我们使用linear regression来获得初始化的 ${w_0}$，再用logistic regression模型进行最优化解。
 
 ## Stochastic Gradient Descent
 
@@ -55,7 +58,7 @@ errCE(s,y)=ln(1+exp(−ys))
 
 随机梯度下降可以看成是真实的梯度加上均值为零的随机噪声方向。单次迭代看，好像会对每一步找到正确梯度方向有影响，但是整体期望值上看，与真实梯度的方向没有差太多，同样能找到最小值位置。随机梯度下降的优点是减少计算量，提高运算速度，而且便于online学习；缺点是不够稳定，每次迭代并不能保证按照正确的方向前进，而且达到最小值需要迭代的次数比梯度下降算法一般要多。
 
-对于logistic regression的SGD，它的表达式为： 
+对于logistic regression的SGD，它的表达式为：
 
 wt+1←wt+ηθ(−ynwTtxn)(ynxn)
 我们发现，SGD与PLA的迭代公式有类似的地方，如下图所示：
@@ -63,14 +66,15 @@ wt+1←wt+ηθ(−ynwTtxn)(ynxn)
 我们把SGD logistic regression称之为'soft' PLA，因为PLA只对分类错误的点进行修正，而SGD logistic regression每次迭代都会进行或多或少的修正。另外，当 ${η=1}$ ，且 ${wTtxn}$ 足够大的时候，PLA近似等于SGD。
 
 除此之外，还有两点需要说明：
+
 1. SGD的终止迭代条件。没有统一的终止条件，一般让迭代次数足够多；
-1. 学习速率η。η的取值是根据实际情况来定的，一般取值0.1就可以了。
+1. 学习速率 ${\eta}$。${\eta}$的取值是根据实际情况来定的，一般取值0.1就可以了。
 
 ## Multiclass via Logistic Regression
 
 之前我们一直讲的都是二分类问题，本节主要介绍多分类问题，通过linear classification来解决。假设平面上有四个类，分别是正方形、菱形、三角形和星形，如何进行分类模型的训练呢？
 
-首先我们可以想到这样一个办法，就是先把正方形作为正类，其他三种形状都是负类，即把它当成一个二分类问题，通过linear classification模型进行训练，得出平面上某个图形是不是正方形，且只有{-1,+1}两种情况。然后再分别以菱形、三角形、星形为正类，进行二元分类。这样进行四次二分类之后，就完成了这个多分类问题。
+首先我们可以想到这样一个办法，就是先把正方形作为正类，其他三种形状都是负类，即把它当成一个二分类问题，通过linear classification模型进行训练，得出平面上某个图形是不是正方形，且只有 ${\{-1,+1\}}$两种情况。然后再分别以菱形、三角形、星形为正类，进行二元分类。这样进行四次二分类之后，就完成了这个多分类问题。
 
 但是，这样的二分类会带来一些问题，因为我们只用 ${\{-1, +1\}}$ 两个值来标记，那么平面上某些可能某些区域都被上述四次二分类模型判断为负类，即不属于四类中的任何一类；也可能会出现某些区域同时被两个类甚至多个类同时判断为正类，比如某个区域又判定为正方形又判定为菱形。那么对于这种情况，我们就无法进行多类别的准确判断，所以对于多类别，简单的binary classification不能解决问题。
 

@@ -32,16 +32,16 @@ $${h(x)= \frac{1}{1+e^{−w^{T}x}}}$$
 
 先介绍一下“似然性”的概念。目标函数 ${f(x) = P(+1|x)}$ ，如果我们找到了hypothesis很接近target function。也就是说，在所有的Hypothesis集合中找到一个hypothesis与target function最接近，能产生同样的数据集 ${D}$ ，包含y输出label，则称这个hypothesis是最大似然likelihood。
 
-logistic function: ${h(x) = \theta(w^{T}x)}$ 满足一个性质：${1−h(x)=h(−x)}$ 。那么，似然性h:
+logistic function: ${h(x) = \theta(w^{T}x)}$ 满足一个性质：${1 - h(x)=h(-x)}$ 。那么，似然性h:
 
-likelihood(h)=P(x1)h(+x1)×P(x2)h(−x2)×⋯P(xN)h(−xN)
-因为 ${P(xn)}$ 对所有的h来说，都是一样的，所以我们可以忽略它。那么我们可以得到logistic h正比于所有的 ${h(ynx)}$ 乘积。我们的目标就是让乘积值最大化。
+$${likelihood(h) = P(x_1)h(+x_1) \times P(x_2)h(-x_2)\times \cdots P(x_N)h(-x_N)}$$
+因为 ${P(x_n)}$ 对所有的h来说，都是一样的，所以我们可以忽略它。那么我们可以得到logistic h正比于所有的 ${h(y_nx)}$ 乘积。我们的目标就是让乘积值最大化。
 
 如果将 ${w}$ 代入的话：
 
-为了把连乘问题简化计算，我们可以引入${ln}$ 操作，让连乘转化为连加：
+为了把连乘问题简化计算，我们可以引入${\ln}$ 操作，让连乘转化为连加：
 
-接着，我们将maximize问题转化为minimize问题，添加一个负号就行，并引入平均数操作1N：
+接着，我们将maximize问题转化为minimize问题，添加一个负号就行，并引入平均数操作 ${\frac{1}{N}}$ ：
 
 将logistic function的表达式带入，那么minimize问题就会转化为如下形式：
 
@@ -57,50 +57,50 @@ Logistic Regression的 ${E_{in}}$ 是连续、可微、二次可微的凸曲线�
 
 最终得到的梯度表达式为：
 
-为了计算 ${E_{in}}$ 最小值，我们就要找到让∇ ${E_{in}}$ (w)等于0的位置。
+为了计算 ${E_{in}}$ 最小值，我们就要找到让\triangledown ${E_{in}(w)}$ 等于 ${0}$ 的位置。
 
-上式可以看成θ(−ynwTxn)是−ynxn的线性加权。要求 ${\theta(−ynwTxn)}$ 与 ${−y_n x_n}$ 的线性加权和为0，那么一种情况是线性可分，如果所有的权重θ(−ynwTxn)为0，那就能保证∇ ${E_{in}(w) = 0}$。θ(−ynwTxn)是sigmoid function，根据其特性，只要让−ynwTxn≪0，即ynwTxn≫0。ynwTxn≫0表示对于所有的点， ${y_{n}}$ 与 ${w^{T}x_{n}}$ 都是同号的，这表示数据集D必须是全部线性可分的才能成立。
+上式可以看成 ${\theta(-y_n w^T x_n)}$ 是 ${-y_n x_n}$ 的线性加权。要求 ${\theta(-y_n w^T x_n)}$ 与 ${-y_n x_n}$ 的线性加权和为 ${0}$ ，那么一种情况是线性可分，如果所有的权重 ${\theta(-y_n w^T x_n)}$ 为 ${0}$ ，那就能保证\triangledown ${E_{in}(w) = 0}$。 ${\theta(-y_n w^T x_n)}$ 是sigmoid function，根据其特性，只要让− ${y_n w^T x_n)}$ ≪0，即 ${y_n w^T x_n)}$ ≫0。 ${y_n w^T x_n)}$ ≫0表示对于所有的点， ${y_{n}}$ 与 ${w^{T}x_{n}}$ 都是同号的，这表示数据集D必须是全部线性可分的才能成立。
 
-然而，保证所有的权重θ(−ynwTxn)为 ${\theta}$ 是不太现实的，总有不等于0的时候，那么另一种常见的情况是非线性可分，只能通过使加权和为零，来求解w。这种情况没有closed-form解，与Linear Regression不同，只能用迭代方法求解。
+然而，保证所有的权重 ${\theta(-y_n w^T x_n)}$ 为 ${\theta}$ 是不太现实的，总有不等于0的时候，那么另一种常见的情况是非线性可分，只能通过使加权和为零，来求解w。这种情况没有closed-form解，与Linear Regression不同，只能用迭代方法求解。
 
 之前所说的Linear Regression有closed-form解，可以说是“一步登天”的；但是PLA算法是一步一步修正迭代进行的，每次对错误点进行修正，不断更新 ${w}$ 值。PLA的迭代优化过程表示如下：
 
-w每次更新包含两个内容：一个是每次更新的方向 ${y_{n}x_{n}}$ ，用 ${v}$ 表示，另一个是每次更新的步长 ${\ita}$。参数 ${(v,η)}$ 和终止条件决定了我们的迭代优化算法。
+w每次更新包含两个内容：一个是每次更新的方向 ${y_{n}x_{n}}$ ，用 ${v}$ 表示，另一个是每次更新的步长 ${\eta}$。参数 ${(v,\eta)}$ 和终止条件决定了我们的迭代优化算法。
 
 ## Gradient Descent
 
 根据上一小节PLA的思想，迭代优化让每次 ${w}$ 都有更新：
 
-我们把 ${E_{in}(w)}$ 曲线看做是一个山谷的话，要求 ${E_{in}(w)}$ 最小，即可比作下山的过程。整个下山过程由两个因素影响：一个是下山的单位方向 ${v}$ ；另外一个是下山的步长η。
+我们把 ${E_{in}(w)}$ 曲线看做是一个山谷的话，要求 ${E_{in}(w)}$ 最小，即可比作下山的过程。整个下山过程由两个因素影响：一个是下山的单位方向 ${v}$ ；另外一个是下山的步长 ${\eta}$ 。
 
-利用微分思想和线性近似，假设每次下山我们只前进一小步，即η很小，那么根据泰勒Taylor一阶展开，可以得到： 
+利用微分思想和线性近似，假设每次下山我们只前进一小步，即 ${\eta}$ 很小，那么根据泰勒Taylor一阶展开，可以得到：
 
- ${E_{in}}$ (wt+ηv)≈ ${E_{in}}$ (wt)+ηvT∇ ${E_{in}}$ (wt)
-关于Taylor展开的介绍，可参考我另一篇博客： 
+$${E_{in} (wt+ \eta v) \approx E_{in}(wt)+ \eta v^T\triangledown E_{in} (wt) }$$
+
+关于Taylor展开的介绍，可参考我另一篇博客：
 多元函数的泰勒(Taylor)展开式
 
-迭代的目的是让 ${E_{in}}$ 越来越小，即让 ${E_{in}(wt+ηv)<E_{in}(wt)}$ 。${η}$ 是标量，因为如果两个向量方向相反的话，那么他们的内积最小（为负），也就是说如果方向 ${v}$ 与梯度∇ ${E_{in}}$ (wt)反向的话，那么就能保证每次迭代 ${E_{in}}$ (wt+ηv)< ${E_{in}}$ (wt)都成立。则，我们令下降方向v为： 
+迭代的目的是让 ${E_{in}}$ 越来越小，即让 ${E_{in}(wt+ \eta v)<E_{in}(wt)}$ 。${\eta}$ 是标量，因为如果两个向量方向相反的话，那么他们的内积最小（为负），也就是说如果方向 ${v}$ 与梯度 ${\triangledown E_{in} (wt) }$反向的话，那么就能保证每次迭代 ${E_{in}(wt+ \eta v)< E_{in}(wt)}$ 都成立。则，我们令下降方向 ${v}$ 为：
 
-v=−∇ ${E_{in}}$ (wt)||∇ ${E_{in}}$ (wt)||
+$${ v= - \triangledown E_{in} (wt)||\triangledown E_{in} (wt)||}$$
 
- ${v}$ 是单位向量， ${v}$ 每次都是沿着梯度的反方向走，这种方法称为梯度下降（gradient descent）算法。那么每次迭代公式就可以写成： 
+ ${v}$ 是单位向量， ${v}$ 每次都是沿着梯度的反方向走，这种方法称为梯度下降（gradient descent）算法。那么每次迭代公式就可以写成：
 
-wt+1←wt−η∇ ${E_{in}}$ (wt)||∇ ${E_{in}}$ (wt)||
+$${w_{t+1} \leftarrow w_t - \eta \triangledown E_{in} (w_t)||\triangledown E_{in} (w_t)||}$$
 
-下面讨论一下η的大小对迭代优化的影响：η如果太小的话，那么下降的速度就会很慢；η如果太大的话，那么之前利用Taylor展开的方法就不准了，造成下降很不稳定，甚至会上升。因此，η应该选择合适的值，一种方法是在梯度较小的时候，选择小的η，梯度较大的时候，选择大的η，即η正比于 ${||∇ ${E_{in}}$ (wt)||}$ 。这样保证了能够快速、稳定地得到最小值 ${E_{in}(w)}$ 。
+下面讨论一下 ${\eta}$ 的大小对迭代优化的影响： ${\eta}$ 如果太小的话，那么下降的速度就会很慢； ${\eta}$ 如果太大的话，那么之前利用Taylor展开的方法就不准了，造成下降很不稳定，甚至会上升。因此， ${\eta}$ 应该选择合适的值，一种方法是在梯度较小的时候，选择小的 ${\eta}$ ，梯度较大的时候，选择大的 ${\eta}$ ，即 ${\eta}$ 正比于 ${||\triangledown ${E_{in}}$ (wt)||}$ 。这样保证了能够快速、稳定地得到最小值 ${E_{in}(w)}$ 。
 
-其中： 
-η′=η||∇ ${E_{in}}$ (wt)||
+其中：
+ ${\eta}$ ′= ${\eta}$ ||\triangledown ${E_{in}}$ (wt)||
 总结一下基于梯度下降的Logistic Regression算法步骤如下：
 
-初始化w0
-计算梯度∇ ${E_{in}}$ (wt)=1N∑Nn=1θ(−ynwTtxn)(−ynxn)
-迭代跟新wt+1←wt−η∇ ${E_{in}}$ (wt)
-满足∇ ${E_{in}}$ (wt+1)≈0或者达到迭代次数，迭代结束
+初始化 ${w_0}$ 计算梯度 ${\triangledown E_{in}}$ (wt)=1N∑Nn=1θ(−ynwTtxn)(−ynxn)
+迭代跟新wt+1←wt− ${\eta \triangledown E_{in}}$ (wt)
+满足\triangledown ${E_{in}}$ (wt+1)≈0或者达到迭代次数，迭代结束
 
 ## 总结
 
-我们今天介绍了Logistic Regression。首先，从逻辑回归的问题出发，将 ${P(+1|x)}$ 作为目标函数，将 ${θ(w^{T}x)}$ 作为hypothesis。接着，我们定义了logistic regression的err function，称之为cross-entropy error交叉熵误差。然后，我们计算logistic regression error的梯度，最后，通过梯度下降算法，计算 ${∇ ${E_{in}}$ (wt)≈0}$ 时对应的wt值。
+我们今天介绍了Logistic Regression。首先，从逻辑回归的问题出发，将 ${P(+1|x)}$ 作为目标函数，将 ${θ(w^{T}x)}$ 作为hypothesis。接着，我们定义了logistic regression的err function，称之为cross-entropy error交叉熵误差。然后，我们计算logistic regression error的梯度，最后，通过梯度下降算法，计算 ${\triangledown ${E_{in}}$ (wt)≈0}$ 时对应的 ${w_t}$ 值。
 
 ## 参考
 
