@@ -2,6 +2,8 @@
 
 Coursera 机器学习基石 林轩田 课堂PPT、作业及课堂笔记。
 
+由于笔记里存在公式编辑，请自行下载chrome的扩展程序[GitHub with MathJax](https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima)。
+
 ## Professor
 
 [Hsuan-Tien Lin](https://www.csie.ntu.edu.tw/~htlin/)
