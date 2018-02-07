@@ -1,4 +1,4 @@
-# note01
+# Lecture 01 - The Learning Problem
 
 - When Can Machine Learn ?
 - Why Can Machine Learn ?

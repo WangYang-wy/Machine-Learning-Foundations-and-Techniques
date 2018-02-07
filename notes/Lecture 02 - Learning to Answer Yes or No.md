@@ -1,4 +1,4 @@
-# Lecture 2: Learning to Answer Yes/No
+# Lecture 02 - Learning to Answer Yes or No
 
 上节课，我们主要简述了机器学习的定义及其重要性，并用流程图的形式介绍了机器学习的整个过程：根据模型 ${H}$，使用演算法 ${A}$，在训练样本 ${D}$ 上进行训练，得到最好的 ${h}$，其对应的 ${g}$ 就是我们最后需要的机器学习的模型函数，一般 ${g}$ 接近于目标函数 ${f}$ 。本节课将继续深入探讨机器学习问题，介绍感知机Perceptron模型，并推导课程的第一个机器学习算法：Perceptron Learning Algorithm（PLA）。
 
