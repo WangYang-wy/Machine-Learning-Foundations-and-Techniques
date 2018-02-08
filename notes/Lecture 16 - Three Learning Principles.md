@@ -1,16 +1,4 @@
-# note16
-
-<!-- TOC -->
-
-- [note16](#note16)
-    - [Occam’s Razor](#occam%E2%80%99s-razor)
-    - [Sampling Bias](#sampling-bias)
-    - [Data Snooping](#data-snooping)
-    - [Power of Three](#power-of-three)
-    - [总结](#%E6%80%BB%E7%BB%93)
-    - [Reference](#reference)
-
-<!-- /TOC -->
+# Lecture 16 - Three Learning Principles
 
 上节课我们讲了一个机器学习很重要的工具——Validation。我们将整个训练集分成两部分：${D_{train}}$ 和 ${D_{val}}$，一部分作为机器学习模型建立的训练数据，另一部分作为验证模型好坏的数据，从而选择到更好的模型，实现更好的泛化能力。这节课，我们主要介绍机器学习中非常实用的三个“锦囊妙计”。
 
@@ -18,9 +6,13 @@
 
 奥卡姆剃刀定律（Occam’s Razor），是由14世纪逻辑学家、圣方济各会修士奥卡姆的威廉（William of Occam，约1285年至1349年）提出。奥卡姆（Ockham）在英格兰的萨里郡，那是他出生的地方。他在《箴言书注》2卷15题说“切勿浪费较多东西去做用较少的东西同样可以做好的事情。” **这个原理称为“如无必要，勿增实体”（Entities must not be multiplied unnecessarily），就像剃刀一样，将不必要的部分去除掉。**
 
+![Occam’s Razor for Learning](http://ofqm89vhw.bkt.clouddn.com/6b0c24542143d890f072a719694a42ab.png)
+
 Occam’s Razor反映到机器学习领域中，指的是在所有可能选择的模型中，我们应该选择能够很好地解释已知数据并且**十分简单**的模型。
 
 上图就是一个模型选择的例子，左边的模型很简单，可能有分错的情况；而右边的模型非常复杂，所有的训练样本都分类正确。但是，我们会选择左边的模型，它更简单，符合人类直觉的解释方式。这样的结果带来两个问题：一个是什么模型称得上是简单的？另一个是为什么简单模型比复杂模型要好？
+
+![Simple Model](http://ofqm89vhw.bkt.clouddn.com/e08d8222bf991838e7a47e6d202d912e.png)
 
 简单的模型一方面指的是简单的 ${hypothesis h}$ ，简单的 ${hypothesis}$ 就是指模型使用的特征比较少，例如多项式阶数比较少。简单模型另一方面指的是模型 ${H}$ 包含的 ${hypothesis}$ 数目有限，不会太多，这也是简单模型包含的内容。
 
@@ -46,13 +38,19 @@ Occam’s Razor反映到机器学习领域中，指的是在所有可能选择�
 
 事实上，数据偷窥发生的情况有很多，不仅仅指我们看到了原始数据。什么意思呢？其实，当你在使用这些数据的任何过程，都是间接地偷看到了数据本身，然后你会进行一些模型的选择或者决策，这就增加了许多的model complexity，也就是引入了污染。
 
+![Data Snooping by Mere Shifting-Scaling](http://ofqm89vhw.bkt.clouddn.com/1e4315637bae99a4db76acce659799fd.png)
+
 下面举个例子来说明。假如我们有8年的货比交易数据，我们希望从这些数据中找出规律，来预测货比的走势。如果选择前6年数据作为训练数据，后2年数据作为测试数据的话，来训练模型。现在我们有前20天的数据，根据之前训练的模型，来预测第21天的货比交易走势。
 
 现在有两种训练模型的方法，如图所示，一种是使用前6年数据进行模型训练，后2年数据作为测试，图中蓝色曲线表示后2年的预测收益；另一种是直接使用8年数据进行模型训练，图中红色曲线表示后2年的预测收益情况。图中，很明显，使用8年数据进行训练的模型对后2年的预测的收益更大，似乎效果更好。但是这是一种自欺欺人的做法，因为训练的时候已经拿到了后2年的数据，用这样的模型再来预测后2年的走势是不科学的。这种做法也属于间接偷窥数据的行为。直接偷窥和间接偷窥数据的行为都是不科学的做法，并不能表示训练的模型有多好。
 
 还有一个偷窥数据的例子，比如对于某个基准数据集 ${D}$ ，某人对它建立了一个模型 ${H_1}$ ，并发表了论文。第二个人看到这篇论文后，又会对 ${D}$ ，建立一个新的好的模型 ${H_2}$。这样，不断地有人看过前人的论文后，建立新的模型。其实，后面人选择模型时，已经被前人影响了，这也是偷窥数据的一种情况。也许你能对 ${D}$ 训练很好的模型，但是可能你仅仅只根据前人的模型，成功避开了一些错误，甚至可能发生了overfitting或者bad generalization。所以，机器学习领域有这样一句有意思的话 **"If you torture the data long enough, it will confess."** 所以，我们不能太“折磨”我们的数据了，否则它只能“妥协”了~哈哈。
 
+![Data Snooping by Data Reusing](http://ofqm89vhw.bkt.clouddn.com/a9f3e4be7563d57c1df0ce9f7eaf0034.png)
+
 在机器学习过程中，避免“偷窥数据”非常重要，但实际上，完全避免也很困难。实际操作中，有一些方法可以帮助我们尽量避免偷窥数据。第一个方法是“看不见”数据。就是说当我们在选择模型的时候，尽量用我们的经验和知识来做判断选择，而不是通过数据来选择。先选模型，再看数据。第二个方法是保持怀疑。就是说时刻保持对别人的论文或者研究成果保持警惕与怀疑，要通过自己的研究与测试来进行模型选择，这样才能得到比较正确的结论。
+
+![Dealing with Data Snooping](http://ofqm89vhw.bkt.clouddn.com/0700adbb6310385d49894a6c43f85543.png)
 
 ## Power of Three
 
@@ -64,11 +62,15 @@ Occam’s Razor反映到机器学习领域中，指的是在所有可能选择�
 - Artificial Intelligence
 - Statistics
 
+![Three Related Fields](http://ofqm89vhw.bkt.clouddn.com/ad1b9e534bd0aeb9a637720b0fb92ad6.png)
+
 我们还介绍了三个理论保证：
 
 - Hoeffding
 - Multi-Bin Hoeffding
 - VC
+
+![Three Theoretical Bounds](http://ofqm89vhw.bkt.clouddn.com/7c40c5840a2fbc8520336971b1575213.png)
 
 然后，我们又介绍了三种线性模型：
 
@@ -76,11 +78,15 @@ Occam’s Razor反映到机器学习领域中，指的是在所有可能选择�
 - linear regression
 - logistic regression
 
+![Three Linear Models](http://ofqm89vhw.bkt.clouddn.com/ad5825ca7691731b17f0a52ee6942597.png)
+
 同时，我们介绍了三种重要的工具：
 
 - Feature Transform
 - Regularization
 - Validation
+
+![Three Key Tools](http://ofqm89vhw.bkt.clouddn.com/f28f3a68b2b5af39d06b2ff96711c925.png)
 
 还有我们本节课介绍的三个锦囊妙计：
 
@@ -88,11 +94,15 @@ Occam’s Razor反映到机器学习领域中，指的是在所有可能选择�
 - Sampling Bias
 - Data Snooping
 
+![Three Learning Principles](http://ofqm89vhw.bkt.clouddn.com/b368a6192427766f029d5e42271da53e.png)
+
 最后，我们未来机器学习的方向也分为三种：
 
 - More Transform
 - More Regularization
 - Less Label
+
+![Three Future Directions](http://ofqm89vhw.bkt.clouddn.com/5017ee54906f75c106e2a11a165f926b.png)
 
 ## 总结
 
