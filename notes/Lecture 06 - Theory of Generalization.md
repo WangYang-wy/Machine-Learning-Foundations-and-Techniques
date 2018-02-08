@@ -53,8 +53,6 @@ ${N > k}$ 的情况较为复杂，下面给出推导过程：
 
 对这11种dichotomy分组，目前分成两组，分别是orange和purple，orange的特点是，${x_1}$ ,${x_2}$和 ${x_3}$ 是一致的，${x_4}$不同并成对，例如1和5，2和8等，purple则是单一的，${x_1}$, ${x_2}$, ${x_3}$ 都不同，如6,7,9三组。
 
-这里写图片描述
-
 将Orange去掉 ${x_4}$ 后去重得到 ${4}$ 个不同的vector并成为 ${\alpha}$，相应的purple为 ${\beta}$。那么 ${B(4,3) = 2 \alpha + \beta}$，这个是直接转化。紧接着，由定义，${B(4,3)}$ 是不能允许任意三点shatter的，所以由\alpha和β构成的所有三点组合也不能shatter（alpha经过去重），即 ${\alpha+β \leq B(3,3)}$ 。
 
 ![Estimating Part of B(4, 3) (1/2)](http://ofqm89vhw.bkt.clouddn.com/153b4e55f9bbb2ca6b01f575f0024150.png)
