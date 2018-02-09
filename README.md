@@ -1,6 +1,6 @@
-# Machine Learning Foundations
+# Machine Learning Foundations and Techniques
 
-Coursera 机器学习基石 林轩田 课堂PPT、作业及课堂笔记。
+Coursera 机器学习基石 机器学习技法 林轩田 课堂PPT、作业及课堂笔记。
 
 ***由于笔记里存在公式编辑，请自行下载chrome的扩展程序[GitHub with MathJax](https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima)。***
 
@@ -12,6 +12,10 @@ Coursera 机器学习基石 林轩田 课堂PPT、作业及课堂笔记。
 
 - [機器學習基石上 (Machine Learning Foundations)---Mathematical Foundations](https://www.coursera.org/learn/ntumlone-mathematicalfoundations)
 - [機器學習基石下 (Machine Learning Foundations)---Algorithmic Foundations](https://www.coursera.org/learn/ntumlone-algorithmicfoundations)
+
+## bilibili
+
+- [【林轩田】机器学习技法](https://www.bilibili.com/video/av6991226/)
 
 ## 延伸阅读
 
@@ -71,3 +75,6 @@ Learning from Data: A Short Course , Abu-Mostafa, Magdon-Ismail, Lin, 2013.
 1. [台大林轩田机器学习课程笔记3----机器学习的可行性](http://blog.csdn.net/SteveYinger/article/details/51171828)
 1. [台大林轩田·机器学习基石记要](http://blog.csdn.net/qiusuoxiaozi/article/details/51558497)
 1. [林轩田--机器学习基石&机器学习技法](http://blog.csdn.net/youyuyixiu/article/details/54317895)
+1. [台大机器学习技法学习笔记](http://blog.csdn.net/frankchen0130/article/details/50801852)
+1. [机器学习技法--Blending and Bagging](https://www.jianshu.com/p/4dfd361e1db6)
+1. [台大林轩田·机器学习技法记要](http://blog.csdn.net/qiusuoxiaozi/article/details/51759571)
