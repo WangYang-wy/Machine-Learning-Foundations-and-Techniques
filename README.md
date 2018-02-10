@@ -15,7 +15,8 @@ Coursera 机器学习基石 机器学习技法 林轩田 课堂PPT、作业及�
 
 ## bilibili
 
-- [【林轩田】机器学习技法](https://www.bilibili.com/video/av6991226/)
+- [机器学习基石（林轩田）](https://www.bilibili.com/video/av12463015)
+- [机器学习技法（林轩田）](https://www.bilibili.com/video/av6991226/)
 
 ## 延伸阅读
 
@@ -78,3 +79,4 @@ Learning from Data: A Short Course , Abu-Mostafa, Magdon-Ismail, Lin, 2013.
 1. [台大机器学习技法学习笔记](http://blog.csdn.net/frankchen0130/article/details/50801852)
 1. [机器学习技法--Blending and Bagging](https://www.jianshu.com/p/4dfd361e1db6)
 1. [台大林轩田·机器学习技法记要](http://blog.csdn.net/qiusuoxiaozi/article/details/51759571)
+1. [不可错过的MOOC：台大《机器学习技法》](http://www.iliuye.com/index.php/Wap/Index/article/id/102124)
