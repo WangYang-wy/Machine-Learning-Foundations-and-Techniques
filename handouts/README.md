@@ -1,2 +1,4 @@
 # handouts
 
+- foundations
+- techniques
