@@ -13,7 +13,7 @@ Random Forest的算法流程我们上节课也详细介绍过，就是先通过b
 在Adaptive Boosting中，我们使用了weighted algorithm，形如：
 
 
-Euin(h)=1N∑n=1Nun⋅err(yn,h(xn))
+Euin(h)=1N\sum_{n=1}{N}un⋅err(y_n,h(xn))
 每个犯错误的样本点乘以相应的权重，求和再平均，最终得到了Euin(h)。如果在决策树中使用这种方法，将当前分支下犯错误的点赋予权重，每层分支都这样做，会比较复杂，不易求解。为了简化运算，保持决策树算法本身的稳定性和封闭性，我们可以把决策树算法当成一个黑盒子，即不改变其结构，不对算法本身进行修改，而从数据来源D’上做一些处理。按照这种思想，我们来看权重u实际上表示该样本在bootstrap中出现的次数，反映了它出现的概率。那么可以根据u值，对原样本集D进行一次重新的随机sampling，也就是带权重的随机抽样。sampling之后，会得到一个新的D’，D’中每个样本出现的几率与它权重u所占的比例应该是差不多接近的。因此，使用带权重的sampling操作，得到了新的样本数据集D’，可以直接代入决策树进行训练，从而无需改变决策树算法结构。sampling可看成是bootstrap的反操作，这种对数据本身进行修改而不更改算法结构的方法非常重要！
 
 这里写图片描述
@@ -52,20 +52,20 @@ Optimization View of AdaBoost
 之前对于incorrect样本和correct样本，u(t+1)n的表达式不同。现在，把两种情况结合起来，将u(t+1)n写成一种简化的形式：
 
 
-u(t+1)n=u(t)n⋅⋄−yngt(xn)t=u(t)n⋅exp(−ynαtgt(xn))
-其中，对于incorrect样本，yngt(xn)<0，对于correct样本，yngt(xn)>0。从上式可以看出，u(t+1)n由u(t)n与某个常数相乘得到。所以，最后一轮更新的u(T+1)n可以写成u(1)n的级联形式，我们之前令u(1)n=1N，则有如下推导：
+u(t+1)n=u(t)n⋅⋄−y_ngt(xn)t=u(t)n⋅exp(−y_nαtgt(xn))
+其中，对于incorrect样本，y_ngt(xn)<0，对于correct样本，y_ngt(xn)>0。从上式可以看出，u(t+1)n由u(t)n与某个常数相乘得到。所以，最后一轮更新的u(T+1)n可以写成u(1)n的级联形式，我们之前令u(1)n=1N，则有如下推导：
 
 
-u(T+1)n=u(1)n⋅∏t=1Texp(−ynαtgt(xn))=1N⋅exp(−yn∑t=1Tαtgt(xn))
-上式中∑Tt=1αtgt(xn)被称为voting score，最终的模型G=sign(∑Tt=1αtgt(xn))。可以看出，在AdaBoost中，u(T+1)n与exp(−yn(voting score on xn))成正比。
-
-这里写图片描述
-
-接下来我们继续看一下voting score中蕴含了哪些内容。如下图所示，voting score由许多gt(xn)乘以各自的系数αt线性组合而成。从另外一个角度来看，我们可以把gt(xn)看成是对xn的特征转换ϕi(xn)，αt就是线性模型中的权重wi。看到这里，我们回忆起之前SVM中，w与ϕ(xn)的乘积再除以w的长度就是margin，即点到边界的距离。另外，乘积项再与yn相乘，表示点的位置是在正确的那一侧还是错误的那一侧。所以，回过头来，这里的voting score实际上可以看成是没有正规化（没有除以w的长度）的距离，即可以看成是该点到分类边界距离的一种衡量。从效果上说，距离越大越好，也就是说voting score要尽可能大一些。
+u(T+1)n=u(1)n⋅∏t=1Texp(−y_nαtgt(xn))=1N⋅exp(−y_n\sumt=1Tαtgt(xn))
+上式中\sumTt=1αtgt(xn)被称为voting score，最终的模型G=sign(\sumTt=1αtgt(xn))。可以看出，在AdaBoost中，u(T+1)n与exp(−y_n(voting score on xn))成正比。
 
 这里写图片描述
 
-我们再来看，若voting score与yn相乘，则表示一个有对错之分的距离。也就是说，如果二者相乘是负数，则表示该点在错误的一边，分类错误；如果二者相乘是正数，则表示该点在正确的一边，分类正确。所以，我们算法的目的就是让yn与voting score的乘积是正的，而且越大越好。那么在刚刚推导的u(T+1)n中，得到exp(−yn(voting score))越小越好，从而得到u(T+1)n越小越好。也就是说，如果voting score表现不错，与yn的乘积越大的话，那么相应的u(T+1)n应该是最小的。
+接下来我们继续看一下voting score中蕴含了哪些内容。如下图所示，voting score由许多gt(xn)乘以各自的系数αt线性组合而成。从另外一个角度来看，我们可以把gt(xn)看成是对xn的特征转换ϕi(xn)，αt就是线性模型中的权重wi。看到这里，我们回忆起之前SVM中，w与ϕ(xn)的乘积再除以w的长度就是margin，即点到边界的距离。另外，乘积项再与y_n相乘，表示点的位置是在正确的那一侧还是错误的那一侧。所以，回过头来，这里的voting score实际上可以看成是没有正规化（没有除以w的长度）的距离，即可以看成是该点到分类边界距离的一种衡量。从效果上说，距离越大越好，也就是说voting score要尽可能大一些。
+
+这里写图片描述
+
+我们再来看，若voting score与y_n相乘，则表示一个有对错之分的距离。也就是说，如果二者相乘是负数，则表示该点在错误的一边，分类错误；如果二者相乘是正数，则表示该点在正确的一边，分类正确。所以，我们算法的目的就是让y_n与voting score的乘积是正的，而且越大越好。那么在刚刚推导的u(T+1)n中，得到exp(−y_n(voting score))越小越好，从而得到u(T+1)n越小越好。也就是说，如果voting score表现不错，与y_n的乘积越大的话，那么相应的u(T+1)n应该是最小的。
 
 这里写图片描述
 
@@ -73,60 +73,59 @@ u(T+1)n=u(1)n⋅∏t=1Texp(−ynαtgt(xn))=1N⋅exp(−yn∑t=1Tαtgt(xn))
 
 这里写图片描述
 
-上式中，∑Tt=1αtgt(xn)被称为linear score，用s表示。对于0/1 error：若ys<0，则err0/1=1；若ys>=0，则err0/1=0。如下图右边黑色折线所示。对于上式中提到的指数error，即err^ADA(s,y)=exp(−ys)，随着ys的增加，error单调下降，且始终落在0/1 error折线的上面。如下图右边蓝色曲线所示。很明显，err^ADA(s,y)可以看成是0/1 error的上界。所以，我们可以使用err^ADA(s,y)来替代0/1 error，能达到同样的效果。从这点来说，∑Nn=1u(T+1)n可以看成是一种error measure，而我们的目标就是让其最小化，求出最小值时对应的各个αt和gt(xn)。
+上式中，\sumTt=1αtgt(xn)被称为linear score，用s表示。对于0/1 error：若ys<0，则err0/1=1；若ys>=0，则err0/1=0。如下图右边黑色折线所示。对于上式中提到的指数error，即err^ADA(s,y)=exp(−ys)，随着ys的增加，error单调下降，且始终落在0/1 error折线的上面。如下图右边蓝色曲线所示。很明显，err^ADA(s,y)可以看成是0/1 error的上界。所以，我们可以使用err^ADA(s,y)来替代0/1 error，能达到同样的效果。从这点来说，\sumNn=1u(T+1)n可以看成是一种error measure，而我们的目标就是让其最小化，求出最小值时对应的各个αt和gt(xn)。
 
 这里写图片描述
 
-下面我们来研究如何让∑Nn=1u(T+1)n取得最小值，思考是否能用梯度下降（gradient descent）的方法来进行求解。我们之前介绍过gradient descent的核心是在某点处做一阶泰勒展开：
+下面我们来研究如何让\sumNn=1u(T+1)n取得最小值，思考是否能用梯度下降（gradient descent）的方法来进行求解。我们之前介绍过gradient descent的核心是在某点处做一阶泰勒展开：
 
 这里写图片描述
 
-其中，wt是泰勒展开的位置，v是所要求的下降的最好方向，它是梯度∇Ein(wt)的反方向，而η是每次前进的步长。则每次沿着当前梯度的反方向走一小步，就会不断逼近谷底（最小值）。这就是梯度下降算法所做的事情。
+其中，wt是泰勒展开的位置，v是所要求的下降的最好方向，它是梯度∇Ein(wt)的反方向，而\eta 是每次前进的步长。则每次沿着当前梯度的反方向走一小步，就会不断逼近谷底（最小值）。这就是梯度下降算法所做的事情。
 
 现在，我们对EˇADA做梯度下降算法处理，区别是这里的方向是一个函数gt，而不是一个向量wt。其实，函数和向量的唯一区别就是一个下标是连续的，另一个下标是离散的，二者在梯度下降算法应用上并没有大的区别。因此，按照梯度下降算法的展开式，做出如下推导：
 
 这里写图片描述
 
-上式中，h(xn)表示当前的方向，它是一个矩，η是沿着当前方向前进的步长。我们要求出这样的h(xn)和η，使得EˇADA是在不断减小的。当EˇADA取得最小值的时候，那么所有的方向即最佳的h(xn)和η就都解出来了。上述推导使用了在−ynηh(xn)=0处的一阶泰勒展开近似。这样经过推导之后，EˇADA被分解为两个部分，一个是前N个u之和∑Nn=1u(t)n，也就是当前所有的Ein之和；另外一个是包含下一步前进的方向h(xn)和步进长度η的项−η∑Nn=1u(t)nynh(xn)。EˇADA的这种形式与gradient descent的形式基本是一致的。
+上式中，h(xn)表示当前的方向，它是一个矩，\eta 是沿着当前方向前进的步长。我们要求出这样的h(xn)和\eta ，使得EˇADA是在不断减小的。当EˇADA取得最小值的时候，那么所有的方向即最佳的h(xn)和\eta 就都解出来了。上述推导使用了在−y_n\eta h(xn)=0处的一阶泰勒展开近似。这样经过推导之后，EˇADA被分解为两个部分，一个是前N个u之和\sumNn=1u(t)n，也就是当前所有的Ein之和；另外一个是包含下一步前进的方向h(xn)和步进长度\eta 的项−\eta \sumNn=1u(t)ny_nh(xn)。EˇADA的这种形式与gradient descent的形式基本是一致的。
 
-那么接下来，如果要最小化EˇADA的话，就要让第二项−η∑Nn=1u(t)nynh(xn)越小越好。则我们的目标就是找到一个好的h(xn)（即好的方向）来最小化∑Nn=1u(t)n(−ynh(xn))，此时先忽略步进长度η。
-
-这里写图片描述
-
-对于binary classification，yn和h(xn)均限定取值-1或+1两种。我们对∑Nn=1u(t)n(−ynh(xn))做一些推导和平移运算：
+那么接下来，如果要最小化EˇADA的话，就要让第二项−\eta \sumNn=1u(t)ny_nh(xn)越小越好。则我们的目标就是找到一个好的h(xn)（即好的方向）来最小化\sumNn=1u(t)n(−y_nh(xn))，此时先忽略步进长度\eta 。
 
 这里写图片描述
 
-最终∑Nn=1u(t)n(−ynh(xn))化简为两项组成，一项是−∑Nn=1u(t)n；另一项是2Eu(t)in(h)⋅N。则最小化∑Nn=1u(t)n(−ynh(xn))就转化为最小化Eu(t)in(h)。要让Eu(t)in(h)最小化，正是由AdaBoost中的base algorithm所做的事情。所以说，AdaBoost中的base algorithm正好帮我们找到了梯度下降中下一步最好的函数方向。
+对于binary classification，y_n和h(xn)均限定取值-1或+1两种。我们对\sumNn=1u(t)n(−y_nh(xn))做一些推导和平移运算：
+
+这里写图片描述
+
+最终\sumNn=1u(t)n(−y_nh(xn))化简为两项组成，一项是−\sumNn=1u(t)n；另一项是2Eu(t)in(h)⋅N。则最小化\sumNn=1u(t)n(−y_nh(xn))就转化为最小化Eu(t)in(h)。要让Eu(t)in(h)最小化，正是由AdaBoost中的base algorithm所做的事情。所以说，AdaBoost中的base algorithm正好帮我们找到了梯度下降中下一步最好的函数方向。
 
 这里写图片描述
 
 以上就是从数学上，从gradient descent角度验证了AdaBoost中使用base algorithm得到的gt就是让EˇADA减小的方向，只不过这个方向是一个函数而不是向量。
 
-在解决了方向问题后，我们需要考虑步进长度η如何选取。方法是在确定方向gt后，选取合适的η，使EˇADA取得最小值。也就是说，把EˇADA看成是步进长度η的函数，目标是找到EˇADA最小化时对应的η值。
+在解决了方向问题后，我们需要考虑步进长度\eta 如何选取。方法是在确定方向gt后，选取合适的\eta ，使EˇADA取得最小值。也就是说，把EˇADA看成是步进长度\eta 的函数，目标是找到EˇADA最小化时对应的\eta 值。
 
 这里写图片描述
 
 目的是找到在最佳方向上的最大步进长度，也就是steepest decent。我们先把EˇADA表达式写下来：
 
-
-EˇADA=∑n=1Nu(t)nexp(−ynηgt(xn))
+EˇADA=\sum_{n=1}{N}u(t)nexp(−y_n \eta gt(xn))
 上式中，有两种情况需要考虑：
 
-yn=gt(xn)：u(t)nexp(−η) correct
+y_n=gt(xn)：u(t)nexp(−\eta ) correct
 
-yn≠gt(xn)：u(t)nexp(+η) incorrect
+y_n≠gt(xn)：u(t)nexp(+\eta ) incorrect
 
 经过推导，可得：
 
+EˇADA=(\sum_{n=1}{N}u(t)n)⋅((1−ϵt)exp(−\eta )+ϵt exp(+\eta ))
 
-EˇADA=(∑n=1Nu(t)n)⋅((1−ϵt)exp(−η)+ϵt exp(+η))
 这里写图片描述
 
-然后对η求导，令∂EˇADA∂η=0，得：
+然后对\eta 求导，令\partial EˇADA\partial \eta =0，得：
 
 
-ηt=ln1−ϵtϵt−−−−−√=αt
+\eta t=ln1−ϵtϵt−−−−−√=αt
 由此看出，最大的步进长度就是αt，即AdaBoost中计算gt所占的权重。所以，AdaBoost算法所做的其实是在gradient descent上找到下降最快的方向和最大的步进长度。这里的方向就是gt，它是一个函数，而步进长度就是αt。也就是说，在AdaBoost中确定gt和αt的过程就相当于在gradient descent上寻找最快的下降方向和最大的步进长度。
 
 Gradient Boosting
@@ -138,7 +137,7 @@ Gradient Boosting
 
 这里写图片描述
 
-仍然按照gradient descent的思想，上式中，h(xn)是下一步前进的方向，η是步进长度。此时的error function不是前面所讲的exp了，而是任意的一种error function。因此，对应的hypothesis也不再是binary classification，最常用的是实数输出的hypothesis，例如regression。最终的目标也是求解最佳的前进方向h(xn)和最快的步进长度η。
+仍然按照gradient descent的思想，上式中，h(xn)是下一步前进的方向，\eta 是步进长度。此时的error function不是前面所讲的exp了，而是任意的一种error function。因此，对应的hypothesis也不再是binary classification，最常用的是实数输出的hypothesis，例如regression。最终的目标也是求解最佳的前进方向h(xn)和最快的步进长度\eta 。
 
 这里写图片描述
 
@@ -150,23 +149,23 @@ Gradient Boosting
 
 这里写图片描述
 
-上式中，由于regression的error function是squared的，所以，对s的导数就是2(sn−yn)。其中标注灰色的部分表示常数，对最小化求解并没有影响，所以可以忽略。很明显，要使上式最小化，只要令h(xn)是梯度2(sn−yn)的反方向就行了，即h(xn)=−2(sn−yn)。但是直接这样赋值，并没有对h(xn)的大小进行限制，一般不直接利用这个关系求出h(xn)。
+上式中，由于regression的error function是squared的，所以，对s的导数就是2(sn−y_n)。其中标注灰色的部分表示常数，对最小化求解并没有影响，所以可以忽略。很明显，要使上式最小化，只要令h(xn)是梯度2(sn−y_n)的反方向就行了，即h(xn)=−2(sn−y_n)。但是直接这样赋值，并没有对h(xn)的大小进行限制，一般不直接利用这个关系求出h(xn)。
 
 这里写图片描述
 
-实际上h(xn)的大小并不重要，因为有步进长度η。那么，我们上面的最小化问题中需要对h(xn)的大小做些限制。限制h(xn)的一种简单做法是把h(xn)的大小当成一个惩罚项（h2(xn)）添加到上面的最小化问题中，这种做法与regularization类似。如下图所示，经过推导和整理，忽略常数项，我们得到最关心的式子是：
+实际上h(xn)的大小并不重要，因为有步进长度\eta 。那么，我们上面的最小化问题中需要对h(xn)的大小做些限制。限制h(xn)的一种简单做法是把h(xn)的大小当成一个惩罚项（h2(xn)）添加到上面的最小化问题中，这种做法与regularization类似。如下图所示，经过推导和整理，忽略常数项，我们得到最关心的式子是：
 
 
-min ∑n=1N((h(xn)−(yn−sn))2)
-上式是一个完全平方项之和，yn−sn表示当前第n个样本真实值和预测值的差，称之为余数。余数表示当前预测能够做到的效果与真实值的差值是多少。那么，如果我们想要让上式最小化，求出对应的h(xn)的话，只要让h(xn)尽可能地接近余数yn−sn即可。在平方误差上尽可能接近其实很简单，就是使用regression的方法，对所有N个点(xn,yn−sn)做squared-error的regression，得到的回归方程就是我们要求的gt(xn)。
-
-这里写图片描述
-
-以上就是使用GradientBoost的思想来解决regression问题的方法，其中应用了一个非常重要的概念，就是余数yn−sn。根据这些余数做regression，得到好的矩gt(xn)，方向函数gt(xn)也就是由余数决定的。
+min \sum_{n=1}{N}((h(xn)−(y_n−sn))2)
+上式是一个完全平方项之和，y_n−sn表示当前第n个样本真实值和预测值的差，称之为余数。余数表示当前预测能够做到的效果与真实值的差值是多少。那么，如果我们想要让上式最小化，求出对应的h(xn)的话，只要让h(xn)尽可能地接近余数y_n−sn即可。在平方误差上尽可能接近其实很简单，就是使用regression的方法，对所有N个点(xn,y_n−sn)做squared-error的regression，得到的回归方程就是我们要求的gt(xn)。
 
 这里写图片描述
 
-在求出最好的方向函数gt(xn)之后，就要来求相应的步进长度η。表达式如下：
+以上就是使用GradientBoost的思想来解决regression问题的方法，其中应用了一个非常重要的概念，就是余数y_n−sn。根据这些余数做regression，得到好的矩gt(xn)，方向函数gt(xn)也就是由余数决定的。
+
+这里写图片描述
+
+在求出最好的方向函数gt(xn)之后，就要来求相应的步进长度\eta 。表达式如下：
 
 这里写图片描述
 
@@ -174,13 +173,13 @@ min ∑n=1N((h(xn)−(yn−sn))2)
 
 这里写图片描述
 
-上式中也包含了余数yn−sn，其中gt(xn)可以看成是xn的特征转换，是已知量。那么，如果我们想要让上式最小化，求出对应的η的话，只要让ηgt(xn)尽可能地接近余数yn−sn即可。显然，这也是一个regression问题，而且是一个很简单的形如y=ax的线性回归，只有一个未知数η。只要对所有N个点(ηgt(xn),yn−sn)做squared-error的linear regression，利用梯度下降算法就能得到最佳的η。
+上式中也包含了余数y_n−sn，其中gt(xn)可以看成是xn的特征转换，是已知量。那么，如果我们想要让上式最小化，求出对应的\eta 的话，只要让\eta gt(xn)尽可能地接近余数y_n−sn即可。显然，这也是一个regression问题，而且是一个很简单的形如y=ax的线性回归，只有一个未知数\eta 。只要对所有N个点(\eta gt(xn),y_n−sn)做squared-error的linear regression，利用梯度下降算法就能得到最佳的\eta 。
 
-将上述这些概念合并到一起，我们就得到了一个最终的演算法Gradient Boosted Decision Tree(GBDT)。可能有人会问，我们刚才一直没有说到Decison Tree，只是讲到了GradientBoost啊？下面我们来看看Decison Tree究竟是在哪出现并使用的。其实刚刚我们在计算方向函数gt的时候，是对所有N个点(xn,yn−sn)做squared-error的regression。那么这个回归算法就可以是决策树C&RT模型（决策树也可以用来做regression）。这样，就引入了Decision Tree，并将GradientBoost和Decision Tree结合起来，构成了真正的GBDT算法。GBDT算法的基本流程图如下所示：
+将上述这些概念合并到一起，我们就得到了一个最终的演算法Gradient Boosted Decision Tree(GBDT)。可能有人会问，我们刚才一直没有说到Decison Tree，只是讲到了GradientBoost啊？下面我们来看看Decison Tree究竟是在哪出现并使用的。其实刚刚我们在计算方向函数gt的时候，是对所有N个点(xn,y_n−sn)做squared-error的regression。那么这个回归算法就可以是决策树C&RT模型（决策树也可以用来做regression）。这样，就引入了Decision Tree，并将GradientBoost和Decision Tree结合起来，构成了真正的GBDT算法。GBDT算法的基本流程图如下所示：
 
 这里写图片描述
 
-值得注意的是，sn的初始值一般均设为0，即s1=s2=⋯=sN=0。每轮迭代中，方向函数gt通过C&RT算法做regression，进行求解；步进长度η通过简单的单参数线性回归进行求解；然后每轮更新sn的值，即sn←sn+αtgt(xn)。T轮迭代结束后，最终得到G(x)=∑Tt=1αtgt(x)。
+值得注意的是，sn的初始值一般均设为0，即s1=s2=⋯=sN=0。每轮迭代中，方向函数gt通过C&RT算法做regression，进行求解；步进长度\eta 通过简单的单参数线性回归进行求解；然后每轮更新sn的值，即sn←sn+αtgt(xn)。T轮迭代结束后，最终得到G(x)=\sumTt=1αtgt(x)。
 
 值得一提的是，本节课第一部分介绍的AdaBoost-DTree是解决binary classification问题，而此处介绍的GBDT是解决regression问题。二者具有一定的相似性，可以说GBDT就是AdaBoost-DTree的regression版本。
 
@@ -209,7 +208,7 @@ AdaBoost：通过bootstrap方法，得到不同gt，所有gt的线性组合
 
 Decision Tree：通过数据分割的形式得到不同的gt，所有gt的非线性组合
 
-然后，本节课我们将AdaBoost延伸到另一个模型GradientBoost。对于regression问题，GradientBoost通过residual fitting的方式得到最佳的方向函数gt和步进长度η。
+然后，本节课我们将AdaBoost延伸到另一个模型GradientBoost。对于regression问题，GradientBoost通过residual fitting的方式得到最佳的方向函数gt和步进长度\eta 。
 
 这里写图片描述
 

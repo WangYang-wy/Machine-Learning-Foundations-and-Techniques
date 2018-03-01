@@ -2,7 +2,8 @@
 
 上节课我们主要介绍了Adaptive Boosting。AdaBoost演算法通过调整每笔资料的权重，得到不同的hypotheses，然后将不同的hypothesis乘以不同的系数α进行线性组合。这种演算法的优点是，即使底层的演算法g不是特别好（只要比乱选好点），经过多次迭代后算法模型会越来越好，起到了boost提升的效果。本节课将在此基础上介绍一种新的aggregation算法：决策树（Decision Tree）。
 
-Decision Tree Hypothesis
+## Decision Tree Hypothesis
+
 从第7节课开始，我们就一直在介绍aggregation model。aggregation的核心就是将许多可供选择使用的比较好的hypothesis融合起来，利用集体的智慧组合成G，使其得到更好的机器学习预测模型。下面，我们先来看看已经介绍过的aggregation type有哪些。
 
 这里写图片描述
@@ -17,8 +18,7 @@ aggregation type有三种：uniform，non-uniform，conditional。它有两种�
 
 把这种树状结构对应到一个hypothesis G(x)中，G(x)的表达式为：
 
-
-G(x)=∑t=1Tqt(x)⋅gt(x)
+G(x)=\sum t=1Tqt(x)⋅gt(x)
 G(x)由许多gt(x)组成，即aggregation的做法。每个gt(x)就代表上图中的蓝色圆圈（树的叶子）。这里的gt(x)是常数，因为是处理简单的classification问题。我们把这些gt(x)称为base hypothesis。qt(x)表示每个gt(x)成立的条件，代表上图中橘色箭头的部分。不同的gt(x)对应于不同的qt(x)，即从树的根部到顶端叶子的路径不同。图中中的菱形代表每个简单的节点。所以，这些base hypothesis和conditions就构成了整个G(x)的形式，就像一棵树一样，从根部到顶端所有的叶子都安全映射到上述公式上去了。
 
 这里写图片描述
@@ -28,7 +28,7 @@ G(x)由许多gt(x)组成，即aggregation的做法。每个gt(x)就代表上图�
 如果从另外一个方面来看决策树的形式，不同于上述G(x)的公式，我们可以利用条件分支的思想，将整体G(x)分成若干个Gc(x)，也就是把整个大树分成若干个小树，如下所示：
 
 
-G(x)=∑c=1C[b(x)=c]⋅Gc(x)
+G(x)=\sum c=1C[b(x)=c]⋅Gc(x)
 上式中，G(x)表示完整的大树，即full-tree hypothesis，b(x)表示每个分支条件，即branching criteria，Gc(x)表示第c个分支下的子树，即sub-tree。这种结构被称为递归型的数据结构，即将大树分割成不同的小树，再将小树继续分割成更小的子树。所以，决策树可以分为两部分：root和sub-trees。
 
 这里写图片描述
@@ -62,19 +62,16 @@ Decision Tree Algorithm
 
 所以，决策树的基本演算法包含了四个选择：
 
-分支个数（number of branches）
+- 分支个数（number of branches）。
+- 分支条件（branching criteria）。
+- 终止条件（termination criteria）。
+- 基本算法（base hypothesis）。
 
-分支条件（branching criteria）
-
-终止条件（termination criteria）
-
-基本算法（base hypothesis）
-
-下面我们来介绍一种常用的决策树模型算法，叫做Classification and Regression Tree(C&RT)。C&RT算法有两个简单的设定，首先，分支的个数C=2，即二叉树（binary tree）的数据结构；然后，每个分支最后的gt(x)（数的叶子）是一个常数。按照最小化Ein的目标，对于binary/multiclass classification(0/1 error)问题，看正类和负类哪个更多，gt(x)取所占比例最多的那一类yn；对于regression(squared error)问题，gt(x)则取所有yn的平均值。
+下面我们来介绍一种常用的决策树模型算法，叫做Classification and Regression Tree(C&RT)。C&RT算法有两个简单的设定，首先，分支的个数C=2，即二叉树（binary tree）的数据结构；然后，每个分支最后的gt(x)（数的叶子）是一个常数。按照最小化Ein的目标，对于binary/multiclass classification(0/1 error)问题，看正类和负类哪个更多，gt(x)取所占比例最多的那一类y_n；对于regression(squared error)问题，gt(x)则取所有y_n的平均值。
 
 这里写图片描述
 
-对于决策树的基本演算法流程，C&RT还有一些简单的设定。首先，C&RT分支个数C=2，一般采用上节课介绍过的decision stump的方法进行数据切割。也就是每次在一个维度上，只对一个特征feature将数据一分为二，左子树和右子树，分别代表不同的类别。然而，怎么切割才能让数据划分得最好呢（error最小）？C&RT中使用纯净度purifying这个概念来选择最好的decision stump。purifying的核心思想就是每次切割都尽可能让左子树和右子树中同类样本占得比例最大或者yn都很接近（regression），即错误率最小。比如说classifiacation问题中，如果左子树全是正样本，右子树全是负样本，那么它的纯净度就很大，说明该分支效果很好。
+对于决策树的基本演算法流程，C&RT还有一些简单的设定。首先，C&RT分支个数C=2，一般采用上节课介绍过的decision stump的方法进行数据切割。也就是每次在一个维度上，只对一个特征feature将数据一分为二，左子树和右子树，分别代表不同的类别。然而，怎么切割才能让数据划分得最好呢（error最小）？C&RT中使用纯净度purifying这个概念来选择最好的decision stump。purifying的核心思想就是每次切割都尽可能让左子树和右子树中同类样本占得比例最大或者y_n都很接近（regression），即错误率最小。比如说classifiacation问题中，如果左子树全是正样本，右子树全是负样本，那么它的纯净度就很大，说明该分支效果很好。
 
 这里写图片描述
 
@@ -83,40 +80,40 @@ Decision Tree Algorithm
 不纯度Impurity如何用函数的形式量化？一种简单的方法就是类比于Ein，看预测值与真实值的误差是多少。对于regression问题，它的impurity可表示为：
 
 
-impurity(D)=1N∑n=1N(yn−y¯)2
-其中，y¯表示对应分支下所有yn的均值。
+impurity(D)=\frac{1}{N} \sum_{n=1}^{N}(y_n−y¯)2
+其中，y¯表示对应分支下所有y_n的均值。
 
 对应classification问题，它的impurity可表示为：
 
 
-impurity(D)=1N∑n=1N[yn≠y∗]
+impurity(D)=\frac{1}{N} \sum_{n=1}^{N}[y_n≠y∗]
 其中，y∗表示对应分支下所占比例最大的那一类。
 
 这里写图片描述
 
 以上这些impurity是基于原来的regression error和classification error直接推导的。进一步来看classification的impurity functions，如果某分支条件下，让其中一个分支纯度最大，那么就选择对应的decision stump，即得到的classification error为：
 
-
-1−max1≤k≤K∑Nn=1[yn=k]N
+1−max1 \leq k \leq K\sum_{n=1}{N}[y_n=k]N
 其中，K为分支个数。
 
 上面这个式子只考虑纯度最大的那个分支，更好的做法是将所有分支的纯度都考虑并计算在内，用基尼指数（Gini index）表示：
 
+$${1−\sum k=\frac{1}{K} (\sum_{n=1}{N}[y_n=k]N)2}$$
 
-1−∑k=1K(∑Nn=1[yn=k]N)2
 Gini index的优点是将所有的class在数据集中的分布状况和所占比例全都考虑了，这样让decision stump的选择更加准确。
 
 这里写图片描述
 
 对于决策树C&RT算法，通常来说，上面介绍的各种impurity functions中，Gini index更适合求解classification问题，而regression error更适合求解regression问题。
 
-C&RT算法迭代终止条件有两种情况，第一种情况是当前各个分支下包含的所有样本yn都是同类的，即不纯度impurity为0，表示该分支已经达到了最佳分类程度。第二种情况是该特征下所有的xn相同，无法对其进行区分，表示没有decision stumps。遇到这两种情况，C&RT算法就会停止迭代。
+C&RT算法迭代终止条件有两种情况，第一种情况是当前各个分支下包含的所有样本y_n都是同类的，即不纯度impurity为0，表示该分支已经达到了最佳分类程度。第二种情况是该特征下所有的xn相同，无法对其进行区分，表示没有decision stumps。遇到这两种情况，C&RT算法就会停止迭代。
 
 这里写图片描述
 
 所以，C&RT算法遇到迭代终止条件后就成为完全长成树（fully-grown tree）。它每次分支为二，是二叉树结构，采用purify来选择最佳的decision stump来划分，最终得到的叶子（gt(x)）是常数。
 
-Decision Tree Heuristics in C&RT
+## Decision Tree Heuristics in C&RT
+
 现在我们已经知道了C&RT算法的基本流程：
 
 这里写图片描述
@@ -128,10 +125,10 @@ Decision Tree Heuristics in C&RT
 考虑到避免模型过于复杂的方法是减少叶子（gt(x)）的数量，那么可以令regularizer就为决策树中叶子的总数，记为Ω(G)。正则化的目的是尽可能减少Ω(G)的值。这样，regularized decision tree的形式就可以表示成：
 
 
-argmin(all possible G) Ein(G)+λΩ(G)
+argmin(all possible G) Ein(G)+ \lambda Ω(G)
 我们把这种regularized decision tree称为pruned decision tree。pruned是修剪的意思，通过regularization来修剪决策树，去掉多余的叶子，更简洁化，从而达到避免过拟合的效果。
 
-那么如何确定修剪多少叶子，修剪哪些叶子呢？假设由C&RT算法得到一棵完全长成树（fully-grown tree），总共10片叶子。首先分别减去其中一片叶子，剩下9片，将这10种情况比较，取Ein最小的那个模型；然后再从9片叶子的模型中分别减去一片，剩下8片，将这9种情况比较，取Ein最小的那个模型。以此类推，继续修建叶子。这样，最终得到包含不同叶子的几种模型，将这几个使用regularized decision tree的error function来进行选择，确定包含几片叶子的模型误差最小，就选择该模型。另外，参数λ可以通过validation来确定最佳值。
+那么如何确定修剪多少叶子，修剪哪些叶子呢？假设由C&RT算法得到一棵完全长成树（fully-grown tree），总共10片叶子。首先分别减去其中一片叶子，剩下9片，将这10种情况比较，取Ein最小的那个模型；然后再从9片叶子的模型中分别减去一片，剩下8片，将这9种情况比较，取Ein最小的那个模型。以此类推，继续修建叶子。这样，最终得到包含不同叶子的几种模型，将这几个使用regularized decision tree的error function来进行选择，确定包含几片叶子的模型误差最小，就选择该模型。另外，参数 \lambda 可以通过validation来确定最佳值。
 
 这里写图片描述
 
@@ -143,7 +140,8 @@ argmin(all possible G) Ein(G)+λΩ(G)
 
 这里写图片描述
 
-Decision Tree in Action
+## Decision Tree in Action
+
 最后我们来举个例子看看C&RT算法究竟是如何进行计算的。例如下图二维平面上分布着许多正负样本，我们使用C&RT算法来对其进行决策树的分类。
 
 这里写图片描述

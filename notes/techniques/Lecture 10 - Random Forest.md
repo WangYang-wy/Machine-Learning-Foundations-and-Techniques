@@ -33,7 +33,7 @@ Random Forest算法的优点主要有三个。第一，不同决策树可以由�
 上面我们讲的是随机抽取特征，除此之外，还可以将现有的特征x，通过数组p进行线性组合，来保持多样性：
 
 
-ϕi(x)=pTix
+ \Phi i(x)=pTix
 这种方法使每次分支得到的不再是单一的子特征集合，而是子特征的线性组合（权重不为1）。好比在二维平面上不止得到水平线和垂直线，也能得到各种斜线。这种做法使子特征选择更加多样性。值得注意的是，不同分支i下的pi是不同的，而且向量pi中大部分元素为零，因为我们选择的只是一部分特征，这是一种低维映射。
 
 这里写图片描述
@@ -52,7 +52,7 @@ Out-Of-Bag Estimate
 首先，我们来计算OOB样本到底有多少。假设bootstrap的数量N’=N，那么某个样本(xn,yn)是OOB的概率是：
 
 
-(1−1N)N=1(NN−1)N=1(1+1N−1)N≈1e
+(1−\frac{1}{N} )N=1(NN−1)N=1(1+\frac{1}{N} −1)N≈1e
 其中，e是自然对数，N是原样本集的数量。由上述推导可得，每个gt中，OOB数目大约是1eN，即大约有三分之一的样本没有在bootstrap中被抽到。
 
 然后，我们将OOB与之前介绍的Validation进行对比：
@@ -65,16 +65,17 @@ Out-Of-Bag Estimate
 G−N(x)=average(g2,g3,gT)
 这种做法我们并不陌生，就像是我们之前介绍过的Leave-One-Out Cross Validation，每次只对一个样本进行g−的验证一样，只不过这里选择的是每个样本是哪些gt的OOB，然后再分别进行G−n(x)的验证。每个样本都当成验证资料一次（与留一法相同），最后计算所有样本的平均表现：
 
+E_{oob}(G)=\frac{1}{N} \sum_{n=1}{N}err(yn,G−n(xn))
 
-Eoob(G)=1N∑n=1Nerr(yn,G−n(xn))
-Eoob(G)估算的就是G的表现好坏。我们把Eoob称为bagging或者Random Forest的self-validation。
+E_{oob}(G)估算的就是G的表现好坏。我们把E_{oob}称为bagging或者Random Forest的self-validation。
 
-这种self-validation相比于validation来说还有一个优点就是它不需要重复训练。如下图左边所示，在通过Dval选择到表现最好的g−m∗之后，还需要在Dtrain和Dval组成的所有样本集D上重新对该模型g−m∗训练一次，以得到最终的模型系数。但是self-validation在调整随机森林算法相关系数并得到最小的Eoob之后，就完成了整个模型的建立，无需重新训练模型。随机森林算法中，self-validation在衡量G的表现上通常相当准确。
+这种self-validation相比于validation来说还有一个优点就是它不需要重复训练。如下图左边所示，在通过Dval选择到表现最好的g−m∗之后，还需要在Dtrain和Dval组成的所有样本集D上重新对该模型g−m∗训练一次，以得到最终的模型系数。但是self-validation在调整随机森林算法相关系数并得到最小的E_{oob}之后，就完成了整个模型的建立，无需重新训练模型。随机森林算法中，self-validation在衡量G的表现上通常相当准确。
 
 这里写图片描述
 
-Feature Selection
-如果样本资料特征过多，假如有10000个特征，而我们只想从中选取300个特征，这时候就需要舍弃部分特征。通常来说，需要移除的特征分为两类：一类是冗余特征，即特征出现重复，例如“年龄”和“生日”；另一类是不相关特征，例如疾病预测的时候引入的“保险状况”。这种从d维特征到d’维特征的subset-transform Φ(x)称为Feature Selection，最终使用这些d’维的特征进行模型训练。
+## Feature Selection
+
+如果样本资料特征过多，假如有10000个特征，而我们只想从中选取300个特征，这时候就需要舍弃部分特征。通常来说，需要移除的特征分为两类：一类是冗余特征，即特征出现重复，例如“年龄”和“生日”；另一类是不相关特征，例如疾病预测的时候引入的“保险状况”。这种从d维特征到d’维特征的subset-transform \Phi(x)称为Feature Selection，最终使用这些d’维的特征进行模型训练。
 
 这里写图片描述
 
@@ -114,7 +115,7 @@ RF中，特征选择的核心思想是random test。random test的做法是对�
 
 这里写图片描述
 
-知道了permutation test的原理后，接下来要考虑的问题是如何衡量上图中的performance，即替换前后的表现。显然，我们前面介绍过performance可以用Eoob(G)来衡量。但是，对于N个样本的第i个特征值重新洗牌重置的D(p)，要对它进行重新训练，而且每个特征都要重复训练，然后再与原D的表现进行比较，过程非常繁琐。为了简化运算，RF的作者提出了一种方法，就是把permutation的操作从原来的training上移到了OOB validation上去，记为Eoob(G(p))→E(p)oob(G)。也就是说，在训练的时候仍然使用D，但是在OOB验证的时候，将所有的OOB样本的第i个特征重新洗牌，验证G的表现。这种做法大大简化了计算复杂度，在RF的feature selection中应用广泛。
+知道了permutation test的原理后，接下来要考虑的问题是如何衡量上图中的performance，即替换前后的表现。显然，我们前面介绍过performance可以用E_{oob}(G)来衡量。但是，对于N个样本的第i个特征值重新洗牌重置的D(p)，要对它进行重新训练，而且每个特征都要重复训练，然后再与原D的表现进行比较，过程非常繁琐。为了简化运算，RF的作者提出了一种方法，就是把permutation的操作从原来的training上移到了OOB validation上去，记为E_{oob}(G(p))→E(p)oob(G)。也就是说，在训练的时候仍然使用D，但是在OOB验证的时候，将所有的OOB样本的第i个特征重新洗牌，验证G的表现。这种做法大大简化了计算复杂度，在RF的feature selection中应用广泛。
 
 这里写图片描述
 
