@@ -36,7 +36,8 @@
 
 这里写图片描述
 
-Diversity by Re-weighting
+## Diversity by Re-weighting
+
 在介绍这个演算法之前，我们先来讲一下上节课就介绍过的bagging。Bagging的核心是bootstrapping，通过对原始数据集D不断进行bootstrap的抽样动作，得到与D类似的数据集D^t，每组D^t都能得到相应的g_t，从而进行aggregation的操作。现在，假如包含四个样本的D经过bootstrap，得到新的D^t如下：
 
 这里写图片描述
@@ -55,9 +56,9 @@ Eu_in(h)= \frac{1}{4} \sum_{n=1}{4}u(t)n⋅[y_n \neq h(x)]
 
 这里写图片描述
 
-其实，这种weightd base algorithm我们之前就介绍过类似的算法形式。例如在soft-margin SVM中，我们引入允许犯错的项，同样可以将每个点的error乘以权重因子u_n。加上该项前的参数C，经过QP，最终得到0 \leq  \alpha n \leq Cu_n，有别于之前介绍的0 \leq  \alpha n \leq C。这里的u_n相当于每个犯错的样本的惩罚因子，并会反映到 \alpha n的范围限定上。
+其实，这种weightd base algorithm我们之前就介绍过类似的算法形式。例如在soft-margin SVM中，我们引入允许犯错的项，同样可以将每个点的error乘以权重因子u_n。加上该项前的参数C，经过QP，最终得到 ${0 \leq  \alpha n \leq Cu_n}$ ，有别于之前介绍的 ${0 \leq  \alpha n \leq C}$。这里的 ${u_n}$ 相当于每个犯错的样本的惩罚因子，并会反映到 ${\alpha n}$ 的范围限定上。
 
-同样在logistic regression中，同样可以对每个犯错误的样本乘以相应的u_n，作为惩罚因子。u_n表示该错误点出现的次数，u_n越大，则对应的惩罚因子越大，则在最小化error时就应该更加重视这些点。
+同样在logistic regression中，同样可以对每个犯错误的样本乘以相应的u_n，作为惩罚因子。u_n表示该错误点出现的次数，${u_n}$ 越大，则对应的惩罚因子越大，则在最小化error时就应该更加重视这些点。
 
 这里写图片描述
 
@@ -139,8 +140,9 @@ Adaptive Boosting Algorithm
 
 这里写图片描述
 
-Adaptive Boosting in Action
-上一小节我们已经介绍了选择一个“弱弱”的算法A（ \epsilon t \leq  \epsilon <12，比乱猜好就行），就能经过多次迭代得到E_{in}=0。我们称这种形式为decision stump模型。下面介绍一个例子，来看看AdaBoost是如何使用decision stump解决实际问题的。
+## Adaptive Boosting in Action
+
+上一小节我们已经介绍了选择一个“弱弱”的算法A（${\epsilon t \leq  \epsilon < \frac{1}{2}}$，比乱猜好就行），就能经过多次迭代得到E_{in}=0。我们称这种形式为decision stump模型。下面介绍一个例子，来看看AdaBoost是如何使用decision stump解决实际问题的。
 
 如下图所示，二维平面上分布一些正负样本点，利用decision stump来做切割。
 
@@ -182,6 +184,6 @@ Adaptive Boosting in Action
 
 ## 总结
 
-本节课主要介绍了Adaptive Boosting。首先通过讲一个老师教小学生识别苹果的例子，来引入Boosting的思想，即把许多“弱弱”的hypotheses合并起来，变成很强的预测模型。然后重点介绍这种算法如何实现，关键在于每次迭代时，给予样本不同的系数u，宗旨是放大错误样本，缩小正确样本，得到不同的小矩g。并且在每次迭代时根据错误 \epsilon 值的大小，给予不同g_t不同的权重。最终由不同的g_t进行组合得到整体的预测模型G。实际证明，Adaptive Boosting能够得到有效的预测模型。
+本节课主要介绍了Adaptive Boosting。首先通过讲一个老师教小学生识别苹果的例子，来引入Boosting的思想，即把许多“弱弱”的hypotheses合并起来，变成很强的预测模型。然后重点介绍这种算法如何实现，关键在于每次迭代时，给予样本不同的系数 ${u}$，宗旨是放大错误样本，缩小正确样本，得到不同的小矩 ${g}$ 。并且在每次迭代时根据错误 ${\epsilon}$ 值的大小，给予不同 ${g_t}$ 不同的权重。最终由不同的 ${g_t}$ 进行组合得到整体的预测模型 ${G}$。实际证明，Adaptive Boosting能够得到有效的预测模型。
 
 ## 参考

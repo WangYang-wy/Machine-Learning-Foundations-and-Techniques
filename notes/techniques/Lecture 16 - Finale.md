@@ -20,7 +20,8 @@ Kernel是我们利用特征转换的第一种方法，那利用特征转换的�
 
 这里写图片描述
 
-Error Optimization Techniques
+## Error Optimization Techniques
+
 接下来我们将总结一下本系列课程中介绍过哪些优化技巧。首先，第一个数值优化技巧就是梯度下降（Gradient Descent），即让变量沿着其梯度反方向变化，不断接近最优解。例如我们介绍过的SGD、Steepest Descent和Functional GD都是利用了梯度下降的技巧。
 
 这里写图片描述

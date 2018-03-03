@@ -1,10 +1,10 @@
 # Lecture 06 - Support Vector Regression
 
-上节课我们主要介绍了Kernel Logistic Regression，讨论如何把SVM的技巧应用在soft-binary classification上。方法是使用2-level learning，先利用SVM得到参数b和w，然后再用通用的logistic regression优化算法，通过迭代优化，对参数b和w进行微调，得到最佳解。然后，也介绍了可以通过Representer ^T heorem，在z空间中，引入SVM的kernel技巧，直接对logistic regression进行求解。本节课将延伸上节课的内容，讨论如何将SVM的kernel技巧应用到regression问题上。
+上节课我们主要介绍了Kernel Logistic Regression，讨论如何把SVM的技巧应用在soft-binary classification上。方法是使用2-level learning，先利用SVM得到参数b和w，然后再用通用的logistic regression优化算法，通过迭代优化，对参数b和w进行微调，得到最佳解。然后，也介绍了可以通过Representer Theorem，在z空间中，引入SVM的kernel技巧，直接对logistic regression进行求解。本节课将延伸上节课的内容，讨论如何将SVM的kernel技巧应用到regression问题上。
 
 ## Kernel Ridge Regression
 
-首先回顾一下上节课介绍的Representer ^T heorem，对于任何包含正则项的L2-regularized linear model，它的最佳化解w都可以写成是z的线性组合形式，因此，也就能引入kernel技巧，将模型kernelized化。
+首先回顾一下上节课介绍的Representer Theorem，对于任何包含正则项的L2-regularized linear model，它的最佳化解w都可以写成是z的线性组合形式，因此，也就能引入kernel技巧，将模型kernelized化。
 
 这里写图片描述
 
@@ -14,7 +14,7 @@
 
 这里写图片描述
 
-其中，最佳解w∗必然是z的线性组合。那么我们就把w∗= \sum_{n=1}^{N} \beta nzn代入到ridge regression中，将z的内积用kernel替换，把求w∗的问题转化成求 \beta n的问题，得到：
+其中，最佳解w_{\star} 必然是z的线性组合。那么我们就把w_{\star} = \sum_{n=1}^{N} \beta nzn代入到ridge regression中，将z的内积用kernel替换，把求w_{\star} 的问题转化成求 \beta n的问题，得到：
 
 这里写图片描述
 

@@ -8,7 +8,7 @@
 
 这里写图片描述
 
-一个典型的电影推荐系统的例子是2006年Netflix举办的一次比赛。数据包含了480189个用户和17770部电影，总共1亿多个排名信息。该推荐系统模型中，我们用x˘n=(n)表示第n个用户，这是一个抽象的特征，常常使用数字编号来代替具体哪个用户。输出方面，我们使用ym=rnm表示第n个用户对第m部电影的排名数值。
+一个典型的电影推荐系统的例子是2006年Netflix举办的一次比赛。数据包含了480189个用户和17770部电影，总共1亿多个排名信息。该推荐系统模型中，我们用x˘n=(n)表示第n个用户，这是一个抽象的特征，常常使用数字编号来代替具体哪个用户。输出方面，我们使用ym=r_{nm}表示第n个用户对第m部电影的排名数值。
 
 这里写图片描述
 
@@ -20,66 +20,67 @@
 
 这里写图片描述
 
-经过encoding之后，输入xn是N维的binary vector，表示第n个用户。输出yn是M维的向量，表示该用户对M部电影的排名数值大小。注意，用户不一定对所有M部电影都作过评价，未评价的恰恰是我们要预测的（下图中问号？表示未评价的电影）。
+经过encoding之后，输入x_n是N维的binary vector，表示第n个用户。输出y_n是M维的向量，表示该用户对M部电影的排名数值大小。注意，用户不一定对所有M部电影都作过评价，未评价的恰恰是我们要预测的（下图中问号？表示未评价的电影）。
 
 这里写图片描述
 
-总共有N个用户，M部电影。对于这样的数据，我们需要掌握每个用户对不同电影的喜爱程度及排名。这其实就是一个特征提取（feature extraction）的过程，提取出每个用户喜爱的电影风格及每部电影属于哪种风格，从而建立这样的推荐系统模型。可供选择使用的方法和模型很多，这里，我们使用的是NNet模型。NNet模型中的网络结构是N−d˘−M型，其中N是输入层样本个数，d˘是隐藏层神经元个数，M是输出层电影个数。该NNet为了简化计算，忽略了常数项。当然可以选择加上常数项，得到较复杂一些的模型。顺便提一下，这个结构跟我们之前介绍的autoencoder非常类似，都是只有一个隐藏层。
+总共有N个用户，M部电影。对于这样的数据，我们需要掌握每个用户对不同电影的喜爱程度及排名。这其实就是一个特征提取（feature extraction）的过程，提取出每个用户喜爱的电影风格及每部电影属于哪种风格，从而建立这样的推荐系统模型。可供选择使用的方法和模型很多，这里，我们使用的是NNet模型。NNet模型中的网络结构是N−\hat{d}−M型，其中N是输入层样本个数，\hat{d}是隐藏层神经元个数，M是输出层电影个数。该NNet为了简化计算，忽略了常数项。当然可以选择加上常数项，得到较复杂一些的模型。顺便提一下，这个结构跟我们之前介绍的autoencoder非常类似，都是只有一个隐藏层。
 
 这里写图片描述
 
-说到这里，有一个问题，就是上图NNet中隐藏层的tanh函数是否一定需要呢？答案是不需要。因为输入向量x是经过encoding得到的，其中大部分元素为0，只有一个元素为1。那么，只有一个元素xn与相应权重的乘积进入到隐藏层。由于xn=1，则相当于只有一个权重值进入到tanh函数进行运算。从效果上来说，tanh(x)与x是无差别的，只是单纯经过一个函数的计算，并不影响最终的结果，修改权重值即可得到同样的效果。因此，我们把隐藏层的tanh函数替换成一个线性函数y=x，得到下图所示的结构。
+说到这里，有一个问题，就是上图NNet中隐藏层的tanh函数是否一定需要呢？答案是不需要。因为输入向量x是经过encoding得到的，其中大部分元素为0，只有一个元素为1。那么，只有一个元素x_n与相应权重的乘积进入到隐藏层。由于x_n=1，则相当于只有一个权重值进入到tanh函数进行运算。从效果上来说，tanh(x)与x是无差别的，只是单纯经过一个函数的计算，并不影响最终的结果，修改权重值即可得到同样的效果。因此，我们把隐藏层的tanh函数替换成一个线性函数y=x，得到下图所示的结构。
 
 这里写图片描述
 
-由于中间隐藏层的转换函数是线性的，我们把这种结构称为Linear Network（与linear autoencoder比较相似）。看一下上图这个网络结构，输入层到隐藏层的权重W(1)ni维度是Nxd˘，用向量VT表示。隐藏层到输出层的权重W(2)im维度是d˘xM，用矩阵W表示。把权重由矩阵表示之后，Linear Network的hypothesis 可表示为：
+由于中间隐藏层的转换函数是线性的，我们把这种结构称为Linear Network（与linear autoencoder比较相似）。看一下上图这个网络结构，输入层到隐藏层的权重W(1)ni维度是Nx\hat{d}，用向量VT表示。隐藏层到输出层的权重W(2)im维度是\hat{d}xM，用矩阵W表示。把权重由矩阵表示之后，Linear Network的hypothesis 可表示为：
 
 
-h(x)=WTVx
-如果是单个用户xn，由于X向量中只有元素xn为1，其它均为0，则对应矩阵V只有第n列向量是有效的，其输出hypothesis为：
+h(x)=w^TVx
+如果是单个用户x_n，由于X向量中只有元素x_n为1，其它均为0，则对应矩阵V只有第n列向量是有效的，其输出hypothesis为：
 
 
-h(xn)=WTvn
+h(x_n)=w^Tv_n
 这里写图片描述
 
-Basic Matrix Factorization
-刚刚我们已经介绍了linear network的模型和hypothesis。其中Vx可以看作是对用户x的一种特征转换Φ(x)。对于单部电影，其预测的排名可表示为：
+## Basic Matrix Factorization
 
+刚刚我们已经介绍了linear network的模型和hypothesis。其中Vx可以看作是对用户x的一种特征转换\Phi(x)。对于单部电影，其预测的排名可表示为：
 
-hm(x)=wTmΦ(x)
-这里写图片描述
-
-推导完linear network模型之后，对于每组样本数据（即第n个用户第m部电影），我们希望预测的排名wTmvn与实际样本排名yn尽可能接近。所有样本综合起来，我们使用squared error measure的方式来定义Ein，Ein的表达式如下所示：
+$${h_m(x)=w_m^T\Phi(x)}$$
 
 这里写图片描述
 
-上式中，灰色的部分是常数，并不影响最小化求解，所以可以忽略。接下来，我们就要求出Ein最小化时对应的V和W解。
-
-我们的目标是让真实排名与预测排名尽可能一致，即rnm≈wTmvn=vTnwm。把这种近似关系写成矩阵的形式：R≈VTW。矩阵R表示所有不同用户不同电影的排名情况，维度是NxM。这种用矩阵的方式进行处理的方法叫做Matrix Factorization。
+推导完linear network模型之后，对于每组样本数据（即第n个用户第m部电影），我们希望预测的排名w_m^Tv_n与实际样本排名y_n尽可能接近。所有样本综合起来，我们使用squared error measure的方式来定义E_{in}，E_{in}的表达式如下所示：
 
 这里写图片描述
 
-上面的表格说明了我们希望将实际排名情况R分解成两个矩阵（V和W）的乘积形式。V的维度是d˘xN的，N是用户个数，d˘可以是影片类型，例如（喜剧片，爱情片，悬疑片，动作片，…）。根据用户喜欢的类型不同，赋予不同的权重。W的维度是d˘xM，M是电影数目，d˘同样是影片类型，该部电影属于哪一类型就在那个类型上占比较大的权重。当然，d˘维特征不一定就是影片类型，还可以是其它特征，例如明显阵容、年代等等。
+上式中，灰色的部分是常数，并不影响最小化求解，所以可以忽略。接下来，我们就要求出E_{in}最小化时对应的V和W解。
+
+我们的目标是让真实排名与预测排名尽可能一致，即r_{nm}≈w_m^Tv_n=vTnw_m。把这种近似关系写成矩阵的形式：R≈VTW。矩阵R表示所有不同用户不同电影的排名情况，维度是NxM。这种用矩阵的方式进行处理的方法叫做Matrix Factorization。
 
 这里写图片描述
 
-那么，Matrix Factorization的目标就是最小化Ein函数。Ein表达式如下所示：
+上面的表格说明了我们希望将实际排名情况R分解成两个矩阵（V和W）的乘积形式。V的维度是\hat{d}x_n的，N是用户个数，\hat{d}可以是影片类型，例如（喜剧片，爱情片，悬疑片，动作片，…）。根据用户喜欢的类型不同，赋予不同的权重。W的维度是\hat{d}xM，M是电影数目，\hat{d}同样是影片类型，该部电影属于哪一类型就在那个类型上占比较大的权重。当然，\hat{d}维特征不一定就是影片类型，还可以是其它特征，例如明显阵容、年代等等。
 
 这里写图片描述
 
-Ein中包含了两组待优化的参数，分别是vn和wm。我们可以借鉴上节课中k-Means的做法，将其中第一个参数固定，优化第二个参数，然后再固定第二个参数，优化第一个参数，一步一步进行优化。
-
-当vn固定的时候，只需要对每部电影做linear regression即可，优化得到每部电影的d˘维特征值wm。
-
-当wm固定的时候，因为V和W结构上是对称的，同样只需要对每个用户做linear regression即可，优化得到每个用户对d˘维电影特征的喜爱程度vn。
+那么，Matrix Factorization的目标就是最小化E_{in}函数。E_{in}表达式如下所示：
 
 这里写图片描述
 
-这种算法叫做alternating least squares algorithm。它的处理思想与k-Means算法相同，其算法流程图如下所示：
+E_{in}中包含了两组待优化的参数，分别是v_n和w_m。我们可以借鉴上节课中k-Means的做法，将其中第一个参数固定，优化第二个参数，然后再固定第二个参数，优化第一个参数，一步一步进行优化。
+
+当v_n固定的时候，只需要对每部电影做linear regression即可，优化得到每部电影的\hat{d}维特征值w_m。
+
+当w_m固定的时候，因为V和W结构上是对称的，同样只需要对每个用户做linear regression即可，优化得到每个用户对\hat{d}维电影特征的喜爱程度v_n。
 
 这里写图片描述
 
-alternating least squares algorithm有两点需要注意。第一是initialize问题，通常会随机选取vn和wm。第二是converge问题，由于每次迭代更新都能减小Ein，Ein会趋向于0，则保证了算法的收敛性。
+这种算法叫做alternating least squares algorith_m。它的处理思想与k-Means算法相同，其算法流程图如下所示：
+
+这里写图片描述
+
+alternating least squares algorith_m有两点需要注意。第一是initialize问题，通常会随机选取v_n和w_m。第二是converge问题，由于每次迭代更新都能减小E_{in}，E_{in}会趋向于0，则保证了算法的收敛性。
 
 这里写图片描述
 
@@ -90,7 +91,7 @@ alternating least squares algorithm有两点需要注意。第一是initialize�
 Matrix Factorization与Linear Autoencoder有很强的相似性，都可以从原始资料汇总提取有用的特征。其实，linear autoencoder可以看成是matrix factorization的一种特殊形式。
 
 Stochastic Gradient Descent
-我们刚刚介绍了alternating least squares algorithm来解决Matrix Factorization的问题。这部分我们将讨论使用Stochastic Gradient Descent方法来进行求解。之前的alternating least squares algorithm中，我们考虑了所有用户、所有电影。现在使用SGD，随机选取一笔资料，然后只在与这笔资料有关的error function上使用梯度下降算法。使用SGD的好处是每次迭代只要处理一笔资料，效率很高；而且程序简单，容易实现；最后，很容易扩展到其它的error function来实现。
+我们刚刚介绍了alternating least squares algorith_m来解决Matrix Factorization的问题。这部分我们将讨论使用Stochastic Gradient Descent方法来进行求解。之前的alternating least squares algorith_m中，我们考虑了所有用户、所有电影。现在使用SGD，随机选取一笔资料，然后只在与这笔资料有关的error function上使用梯度下降算法。使用SGD的好处是每次迭代只要处理一笔资料，效率很高；而且程序简单，容易实现；最后，很容易扩展到其它的error function来实现。
 
 这里写图片描述
 
@@ -98,15 +99,14 @@ Stochastic Gradient Descent
 
 这里写图片描述
 
-上式中的err是squared error function，仅与第n个用户vn，第m部电影wm有关。其对vn和wm的偏微分结果为：
+上式中的err是squared error function，仅与第n个用户v_n，第m部电影w_m有关。其对v_n和w_m的偏微分结果为：
 
+\nabla v_n=−2(r_{nm}−w_m^Tv_n)w_m
 
-∇vn=−2(rnm−wTmvn)wm
-
-∇wm=−2(rnm−wTmvn)vn
+\nabla w_m=−2(r_{nm}−w_m^Tv_n)v_n
 这里写图片描述
 
-很明显，∇vn和∇wm都由两项乘积构成。（忽略常数因子2）。第一项都是rnm−wTmvn，即余数residual。我们在之前介绍的GBDT算法中也介绍过余数这个概念。∇vn的第二项是wm，而∇wm的第二项是vn。二者在结构上是对称的。
+很明显，\nabla v_n和\nabla w_m都由两项乘积构成。（忽略常数因子2）。第一项都是r_{nm}−w_m^Tv_n，即余数residual。我们在之前介绍的GBDT算法中也介绍过余数这个概念。\nabla v_n的第二项是w_m，而 ${\nabla w_m}$ 的第二项是v_n。二者在结构上是对称的。
 
 计算完任意一个样本点的SGD后，就可以构建Matrix Factorization的算法流程。SGD for Matrix Factorization的算法流程如下所示：
 
