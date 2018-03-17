@@ -1,4 +1,4 @@
-# Lecture 15 - Matrix Factorization.md
+# Lecture 15 - Matrix Factorization
 
 上节课我们主要介绍了Radial Basis Function Network。它的原理就是基于距离相似性（distance-based similarities）的线性组合（linear aggregation）。我们使用k-Means clustering算法找出具有代表性的k个中心点，然后再计算与这些中心点的distance similarity，最后应用到RBF Network中去。
 
