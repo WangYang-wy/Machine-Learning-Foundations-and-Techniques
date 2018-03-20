@@ -1,4 +1,4 @@
-# Kernel Support Vector Machine
+# Lecture 03 - Kernel Support Vector Machine
 
 上节课我们主要介绍了SVM的对偶形式，即dual SVM。Dual SVM也是一个二次规划问题，可以用QP来进行求解。之所以要推导SVM的对偶形式是因为：首先，它展示了SVM的几何意义；然后，从计算上，求解过程“好像”与所在维度 ${\hat{d}}$ 无关，规避了 ${\hat{d}}$ 很大时难以求解的情况。但是，上节课的最后，我们也提到dual SVM的计算过程其实跟 ${\hat{d}}$ 还是有关系的。那么，能不能完全摆脱对 ${\hat{d}}$ 的依赖，从而减少SVM计算量呢？这就是我们本节课所要讲的主要内容。
 
