@@ -10,7 +10,7 @@
 
 ![More Binary Classification Problems](http://ofqm89vhw.bkt.clouddn.com/a65b873a440aa09235e3bd3d293070d1.png)
 
-除了二元分类，也有多元分类（Multiclass Classification）问题。顾名思义，多元分类的输出多于两个，${y=\{1,\ 2,\ \ldots ,\ K\}, K > 2}$ 一般多元分类的应用有数字识别、图片内容识别等等。
+除了二元分类，也有多元分类（Multiclass Classification）问题。顾名思义，多元分类的输出多于两个，${y=\{1,\ 2,\ \ldots ,\ K\},\ K > 2}$ 一般多元分类的应用有数字识别、图片内容识别等等。
 
 ![Multiclass Classification: Coin Recognition Problem](http://ofqm89vhw.bkt.clouddn.com/1c07a674bb47a8740af0e42ff043d0f3.png)
 
@@ -45,11 +45,11 @@
 - Online
 - Active Learning
 
-batch learning是一种常见的类型。batch learning获得的训练数据 ${D}$ 是一批的，即一次性拿到整个 ${D}$，对其进行学习建模，得到我们最终的机器学习模型。batch learning在实际应用中最为广泛。
+`Batch Learning` 是一种常见的类型。batch learning获得的训练数据 ${D}$ 是一批的，即一次性拿到整个 ${D}$，对其进行学习建模，得到我们最终的机器学习模型。batch learning在实际应用中最为广泛。
 
-online是一种在线学习模型，数据是实时更新的，根据数据一个个进来，同步更新我们的算法。比如在线邮件过滤系统，根据一封一封邮件的内容，根据当前算法判断是否为垃圾邮件，再根据用户反馈，及时更新当前算法。这是一个动态的过程。之前我们介绍的PLA和增强学习都可以使用online模型。
+`Online` 是一种在线学习模型，数据是实时更新的，根据数据一个个进来，同步更新我们的算法。比如在线邮件过滤系统，根据一封一封邮件的内容，根据当前算法判断是否为垃圾邮件，再根据用户反馈，及时更新当前算法。这是一个动态的过程。之前我们介绍的PLA和增强学习都可以使用online模型。
 
-active learning是近些年来新出现的一种机器学习类型，即让机器具备主动问问题的能力，例如手写数字识别，机器自己生成一个数字或者对它不确定的手写字主动提问。active learning优势之一是在获取样本label比较困难的时候，可以节约时间和成本，只对一些重要的label提出需求。
+`Active Learning` 是近些年来新出现的一种机器学习类型，即让机器具备主动问问题的能力，例如手写数字识别，机器自己生成一个数字或者对它不确定的手写字主动提问。Active Learning 优势之一是在获取样本label比较困难的时候，可以节约时间和成本，只对一些重要的label提出需求。
 
 简单总结一下，按照不同的协议，机器学习可以分为batch, online, active。这三种学习类型分别可以类比为：填鸭式，老师教学以及主动问问题。
 
@@ -59,11 +59,11 @@ active learning是近些年来新出现的一种机器学习类型，即让机�
 
 上面几部分介绍的机器学习分类都是根据输出来分类的，比如根据输出空间进行分类，根据输出 ${y}$ 的标记进行分类，根据取得数据和标记的方法进行分类。这部分，我们将谈谈输入 ${X}$ 有哪些类型。
 
-输入X的第一种类型就是concrete features。比如说硬币分类问题中硬币的尺寸、重量等；比如疾病诊断中的病人信息等具体特征。concrete features对机器学习来说最容易理解和使用。
+输入 ${X}$ 的第一种类型就是 `concrete features`。比如说硬币分类问题中硬币的尺寸、重量等；比如疾病诊断中的病人信息等具体特征。concrete features对机器学习来说最容易理解和使用。
 
-第二种类型是raw features。比如说手写数字识别中每个数字所在图片的 ${m \times n}$ 维像素值；比如语音信号的频谱等。raw features一般比较抽象，经常需要人或者机器来转换为其对应的concrete features，这个转换的过程就是Feature Transform。
+第二种类型是 `raw features`。比如说手写数字识别中每个数字所在图片的 ${m \times n}$ 维像素值；比如语音信号的频谱等。raw features一般比较抽象，经常需要人或者机器来转换为其对应的concrete features，这个转换的过程就是Feature Transform。
 
-第三种类型是abstract features。比如某购物网站做购买预测时，提供给参赛者的是抽象加密过的资料编号或者 ${ID}$ ，这些特征 ${X}$ 完全是抽象的，没有实际的物理含义。所以对于机器学习来说是比较困难的，需要对特征进行更多的转换和提取。
+第三种类型是 `abstract features`。比如某购物网站做购买预测时，提供给参赛者的是抽象加密过的资料编号或者 ${ID}$ ，这些特征 ${X}$ 完全是抽象的，没有实际的物理含义。所以对于机器学习来说是比较困难的，需要对特征进行更多的转换和提取。
 
 简单总结一下，根据输入 ${X}$ 类型不同，可以分为concetet, raw, abstract。将一些抽象的特征转换为具体的特征，是机器学习过程中非常重要的一个环节。在《机器学习技法》课程中，我们再详细介绍。
 
@@ -71,7 +71,7 @@ active learning是近些年来新出现的一种机器学习类型，即让机�
 
 ## 总结
 
-本节课主要介绍了机器学习的类型，包括Out Space、Data Label、Protocol、Input Space四种类型。
+本节课主要介绍了机器学习的类型，包括Output Space、Data Label、Protocol、Input Space四种类型。
 
 ![Summary](http://ofqm89vhw.bkt.clouddn.com/b489e67888866ba0b14ec91c0785d169.png)
 

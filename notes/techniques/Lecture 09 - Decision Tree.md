@@ -4,22 +4,23 @@
 
 ## Decision Tree Hypothesis
 
-从第7节课开始，我们就一直在介绍aggregation model。aggregation的核心就是将许多可供选择使用的比较好的hypothesis融合起来，利用集体的智慧组合成G，使其得到更好的机器学习预测模型。下面，我们先来看看已经介绍过的aggregation type有哪些。
+从第7节课开始，我们就一直在介绍aggregation model。aggregation的核心就是将许多可供选择使用的比较好的hypothesis融合起来，利用集体的智慧组合成 ${G}$，使其得到更好的机器学习预测模型。下面，我们先来看看已经介绍过的 aggregation type 有哪些。
 
 这里写图片描述
 
-aggregation type有三种：uniform，non-uniform，conditional。它有两种情况，一种是所有的g是已知的，即blending。对应的三种类型分别是voting/averaging，linear和stacking。另外一种情况是所有g未知，只能通过手上的资料重构g，即learning。其中uniform和non-uniform分别对应的是Bagging和AdaBoost算法，而conditional对应的就是我们本节课将要介绍的Decision Tree算法。
+aggregation type有三种：`uniform`，`non-uniform`，`conditional`。它有两种情况，一种是所有的g是已知的，即 blending。对应的三种类型分别是 voting/averaging，linear 和 stacking。另外一种情况是所有g未知，只能通过手上的资料重构 ${g}$ ，即 learning。其中 uniform 和 non-uniform 分别对应的是 Bagging 和 AdaBoost 算法，而 conditional 对应的就是我们本节课将要介绍的 Decision Tree 算法。
 
-决策树（Decision Tree）模型是一种传统的算法，它的处理方式与人类思维十分相似。例如下面这个例子，对下班时间、约会情况、提交截止时间这些条件进行判断，从而决定是否要进行在线课程测试。如下图所示，整个流程类似一个树状结构。
+`决策树（Decision Tree）`模型是一种传统的算法，它的处理方式与人类思维十分相似。例如下面这个例子，对下班时间、约会情况、提交截止时间这些条件进行判断，从而决定是否要进行在线课程测试。如下图所示，整个流程类似一个树状结构。
 
 这里写图片描述
 
-图中每个条件和选择都决定了最终的结果，Y or N。蓝色的圆圈表示树的叶子，即最终的决定。
+图中每个条件和选择都决定了最终的结果，${Y\ or\ N}$。蓝色的圆圈表示树的叶子，即最终的决定。
 
-把这种树状结构对应到一个hypothesis G(x)中，G(x)的表达式为：
+把这种树状结构对应到一个hypothesis ${G(x)}$ 中，${G(x)}$ 的表达式为：
 
-G(x)=\sum t=1Tqt(x)⋅gt(x)
-G(x)由许多gt(x)组成，即aggregation的做法。每个gt(x)就代表上图中的蓝色圆圈（树的叶子）。这里的gt(x)是常数，因为是处理简单的classification问题。我们把这些gt(x)称为base hypothesis。qt(x)表示每个gt(x)成立的条件，代表上图中橘色箭头的部分。不同的gt(x)对应于不同的qt(x)，即从树的根部到顶端叶子的路径不同。图中中的菱形代表每个简单的节点。所以，这些base hypothesis和conditions就构成了整个G(x)的形式，就像一棵树一样，从根部到顶端所有的叶子都安全映射到上述公式上去了。
+$${G(x)=\sum_{t=1}^{T}q_t(x) \cdot g_t(x)}$$
+
+G(x)由许多g_t(x)组成，即aggregation的做法。每个g_t(x)就代表上图中的蓝色圆圈（树的叶子）。这里的g_t(x)是常数，因为是处理简单的classification问题。我们把这些g_t(x)称为base hypothesis。q_t(x)表示每个g_t(x)成立的条件，代表上图中橘色箭头的部分。不同的g_t(x)对应于不同的q_t(x)，即从树的根部到顶端叶子的路径不同。图中中的菱形代表每个简单的节点。所以，这些base hypothesis和conditions就构成了整个G(x)的形式，就像一棵树一样，从根部到顶端所有的叶子都安全映射到上述公式上去了。
 
 这里写图片描述
 
@@ -56,7 +57,7 @@ Decision Tree Algorithm
 
 这里写图片描述
 
-这个Basic Decision Tree Algorithm的流程可以分成四个部分，首先学习设定划分不同分支的标准和条件是什么；接着将整体数据集D根据分支个数C和条件，划为不同分支下的子集Dc；然后对每个分支下的Dc进行训练，得到相应的机器学习模型Gc；最后将所有分支下的Gc合并到一起，组成大矩G(x)。但值得注意的是，这种递归的形式需要终止条件，否则程序将一直进行下去。当满足递归的终止条件之后，将会返回基本的hypothesis gt(x)。
+这个Basic Decision Tree Algorithm的流程可以分成四个部分，首先学习设定划分不同分支的标准和条件是什么；接着将整体数据集D根据分支个数C和条件，划为不同分支下的子集Dc；然后对每个分支下的Dc进行训练，得到相应的机器学习模型Gc；最后将所有分支下的Gc合并到一起，组成大矩G(x)。但值得注意的是，这种递归的形式需要终止条件，否则程序将一直进行下去。当满足递归的终止条件之后，将会返回基本的hypothesis g_t(x)。
 
 这里写图片描述
 
@@ -67,7 +68,7 @@ Decision Tree Algorithm
 - 终止条件（termination criteria）。
 - 基本算法（base hypothesis）。
 
-下面我们来介绍一种常用的决策树模型算法，叫做Classification and Regression Tree(C&RT)。C&RT算法有两个简单的设定，首先，分支的个数C=2，即二叉树（binary tree）的数据结构；然后，每个分支最后的gt(x)（数的叶子）是一个常数。按照最小化Ein的目标，对于binary/multiclass classification(0/1 error)问题，看正类和负类哪个更多，gt(x)取所占比例最多的那一类y_n；对于regression(squared error)问题，gt(x)则取所有y_n的平均值。
+下面我们来介绍一种常用的决策树模型算法，叫做Classification and Regression Tree(C&RT)。C&RT算法有两个简单的设定，首先，分支的个数C=2，即二叉树（binary tree）的数据结构；然后，每个分支最后的g_t(x)（数的叶子）是一个常数。按照最小化Ein的目标，对于binary/multiclass classification(0/1 error)问题，看正类和负类哪个更多，g_t(x)取所占比例最多的那一类y_n；对于regression(squared error)问题，g_t(x)则取所有y_n的平均值。
 
 这里写图片描述
 
@@ -110,7 +111,7 @@ C&RT算法迭代终止条件有两种情况，第一种情况是当前各个分�
 
 这里写图片描述
 
-所以，C&RT算法遇到迭代终止条件后就成为完全长成树（fully-grown tree）。它每次分支为二，是二叉树结构，采用purify来选择最佳的decision stump来划分，最终得到的叶子（gt(x)）是常数。
+所以，C&RT算法遇到迭代终止条件后就成为完全长成树（fully-grown tree）。它每次分支为二，是二叉树结构，采用purify来选择最佳的decision stump来划分，最终得到的叶子（g_t(x)）是常数。
 
 ## Decision Tree Heuristics in C&RT
 
@@ -122,7 +123,7 @@ C&RT算法迭代终止条件有两种情况，第一种情况是当前各个分�
 
 考虑这样一个问题，有N个样本，如果我们每次只取一个样本点作为分支，那么在经过N-1次分支之后，所有的样本点都能完全分类正确。最终每片叶子上只有一个样本，有N片叶子，即必然能保证Ein=0。这样看似是完美的分割，但是不可避免地造成VC Dimension无限大，造成模型复杂度增加，从而出现过拟合现象。为了避免overfit，我们需要在C&RT算法中引入正则化，来控制整个模型的复杂度。
 
-考虑到避免模型过于复杂的方法是减少叶子（gt(x)）的数量，那么可以令regularizer就为决策树中叶子的总数，记为Ω(G)。正则化的目的是尽可能减少Ω(G)的值。这样，regularized decision tree的形式就可以表示成：
+考虑到避免模型过于复杂的方法是减少叶子（g_t(x)）的数量，那么可以令regularizer就为决策树中叶子的总数，记为Ω(G)。正则化的目的是尽可能减少Ω(G)的值。这样，regularized decision tree的形式就可以表示成：
 
 
 argmin(all possible G) Ein(G)+ \lambda Ω(G)
@@ -182,7 +183,7 @@ argmin(all possible G) Ein(G)+ \lambda Ω(G)
 
 ## 总结
 
-本节课主要介绍了Decision Tree。首先将decision tree hypothesis对应到不同分支下的矩gt(x)。然后再介绍决策树算法是如何通过递归的形式建立起来。接着详细研究了决策树C&RT算法对应的数学模型和算法架构流程。最后通过一个实际的例子来演示决策树C&RT算法是如何一步一步进行分类的。
+本节课主要介绍了Decision Tree。首先将decision tree hypothesis对应到不同分支下的矩 ${g_t(x)}$。然后再介绍决策树算法是如何通过递归的形式建立起来。接着详细研究了决策树C&RT算法对应的数学模型和算法架构流程。最后通过一个实际的例子来演示决策树C&RT算法是如何一步一步进行分类的。
 
 ## 参考
 
