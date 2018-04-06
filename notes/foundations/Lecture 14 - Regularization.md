@@ -44,9 +44,7 @@ Looser Constraint 对应的 hypothesis 应该更好解一些，但事实是 spar
 
 $${\sum_{q=0}^{10}w^2_q = ||w||^2 \leq C}$$
 
-其中，${C}$ 是常数，也就是说，所有的权重 ${w}$ 的平方和的大小不超过 ${C}$ ，我们把这种 hypothesis sets 记为 ${H(C)}$。
-
-${H_2'}$ 与 ${H(C)}$ 的关系是，它们之间有重叠，有交集的部分，但是没有完全包含的关系，也不一定相等。对应 ${H(C)}$ ，${C}$ 值越大，限定的范围越大，即越宽松：
+其中，${C}$ 是常数，也就是说，所有的权重 ${w}$ 的平方和的大小不超过 ${C}$ ，我们把这种 hypothesis sets 记为 ${H(C)}$。${H_2'}$ 与 ${H(C)}$ 的关系是，它们之间有重叠，有交集的部分，但是没有完全包含的关系，也不一定相等。对应 ${H(C)}$ ，${C}$ 值越大，限定的范围越大，即越宽松：
 
 $${H(0) \subset H(1.126)\subset \cdots \subset H(1126)\subset \cdots \subset H(\infty)= H_{10}}$$
 
@@ -104,7 +102,7 @@ $${E_{aug}(w)= E_{in}(w) + \frac{\lambda}{N} w^T w}$$
 
 事实上，这种 regularization 不仅可以用在多项式的 hypothesis 中，还可以应用在 logistic regression 等其他 hypothesis 中，都可以达到防止过拟合的效果。
 
-我们目前讨论的多项式是形如 ${x,x^2,x^3,\cdots,x^n}$ 的形式，若 ${x}$ 的范围限定在 ${[-1,1]}$ 之间，那么可能导致 ${x^n}$ 相对于低阶的值要小得多，则其对于的 ${w}$ 非常大，相当于要给高阶项设置很大的惩罚。为了避免出现这种数据大小差别很大的情况，可以使用Legendre Polynomials代替 ${x,x^2,x^3,\cdots,x^n}$ 这种形式，Legendre Polynomials 各项之间是正交的，用它进行多项式拟合的效果更好。
+我们目前讨论的多项式是形如 ${x,x^2,x^3,\cdots,x^n}$ 的形式，若 ${x}$ 的范围限定在 ${[-1,1]}$ 之间，那么可能导致 ${x^n}$ 相对于低阶的值要小得多，则其对于的 ${w}$ 非常大，相当于要给高阶项设置很大的惩罚。为了避免出现这种数据大小差别很大的情况，可以使用 Legendre Polynomials 代替 ${x,x^2,x^3,\cdots,x^n}$ 这种形式，Legendre Polynomials 各项之间是正交的，用它进行多项式拟合的效果更好。
 
 ## Regularization and VC Theory
 
@@ -118,7 +116,7 @@ $${E_{out}(w) \leq E_{in}(w) +\Omega(H)}$$
 
 ![Regularization and VC Theory](http://ofqm89vhw.bkt.clouddn.com/588c7e02010cafc674f841537f6736b5.png)
 
-其中 ${w^T w}$ 表示的是单个hypothesis的复杂度，记为 ${\Omega}$；而 ${\Omega(H)}$ 表示整个hypothesis set的复杂度。根据Augmented Error和VC Bound的表达式，${\Omega}$ 包含于 ${\Omega(H)}$ 之内，所以，${E_{aug}(w)}$ 比 ${E_{in}}$ 更接近于 ${E_{out}}$，即更好地代表 ${E_{out}}$，${E_{aug}(w)}$ 与 ${E_{out}}$ 之间的误差更小。
+其中 ${w^T w}$ 表示的是单个 hypothesis 的复杂度，记为 ${\Omega}$；而 ${\Omega(H)}$ 表示整个 hypothesis set 的复杂度。根据 Augmented Error 和 VC Bound 的表达式，${\Omega}$ 包含于 ${\Omega(H)}$ 之内，所以，${E_{aug}(w)}$ 比 ${E_{in}}$ 更接近于 ${E_{out}}$，即更好地代表 ${E_{out}}$，${E_{aug}(w)}$ 与 ${E_{out}}$ 之间的误差更小。
 
 ![Another View of Augmented Error](http://ofqm89vhw.bkt.clouddn.com/698e0a76bba17e0160a0e56fdeea9b42.png)
 
@@ -144,13 +142,13 @@ $${d_{EFF}(H,A) \leq d_{VC}}$$
 - plausible
 - friendly
 
-regularizer与error measure是机器学习模型设计中的重要步骤。
+regularizer 与 error measure 是机器学习模型设计中的重要步骤。
 
-接下来，介绍两种Regularizer：${L2}$ 和 ${L1}$。L2 Regularizer一般比较通用，其形式如下：
+接下来，介绍两种 Regularizer：${L2}$ 和 ${L1}$。L2 Regularizer 一般比较通用，其形式如下：
 
 $${\Omega =\sum_{q=0}^{Q}w_2^q=||w||_2^2}$$
 
-这种形式的regularizer计算的是 ${w}$ 的平方和，是凸函数，比较平滑，易于微分，容易进行最优化计算。
+这种形式的 regularizer 计算的是 ${w}$ 的平方和，是凸函数，比较平滑，易于微分，容易进行最优化计算。
 
 L1 Regularizer 的表达式如下：
 
@@ -160,9 +158,9 @@ ${L1}$ 计算的不是 ${w}$ 的平方和，而是绝对值和，即长度和，
 
 ![L2 and L1 Regularizer](http://ofqm89vhw.bkt.clouddn.com/de06708744248be9c056ed509029f18b.png)
 
-下面来看一下 ${\lambda}$ 如何取值，首先，若stochastic noise不同，那么一般情况下，${\lambda}$ 取值有如下特点：
+下面来看一下 ${\lambda}$ 如何取值，首先，若 stochastic noise 不同，那么一般情况下，${\lambda}$ 取值有如下特点：
 
-从图中可以看出，stochastic noise越大，${\lambda}$ 越大。
+从图中可以看出，stochastic noise 越大，${\lambda}$ 越大。
 
 ![The Optimal ${\lambda}$](http://ofqm89vhw.bkt.clouddn.com/374fee1e94e11a0f75c40451431ab574.png)
 

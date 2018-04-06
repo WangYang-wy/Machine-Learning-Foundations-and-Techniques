@@ -25,7 +25,7 @@
 
 ![Trade-off on M](http://ofqm89vhw.bkt.clouddn.com/a782ae19da6e38f9ada73c62c7b4a8cd.png)
 
-从上面的分析来看， ${M}$ 的选择直接影响机器学习两个核心问题是否满足， ${M}$ 不能太大也不能太小。那么如果M无限大的时候，是否机器就不可以学习了呢？例如PLA算法中直线是无数条的，但是PLA能够很好地进行机器学习，这又是为什么呢？如果我们能将无限大的M限定在一个有限的 ${m_H}$内，问题似乎就解决了。
+从上面的分析来看， ${M}$ 的选择直接影响机器学习两个核心问题是否满足， ${M}$ 不能太大也不能太小。那么如果M无限大的时候，是否机器就不可以学习了呢？例如PLA算法中直线是无数条的，但是PLA能够很好地进行机器学习，这又是为什么呢？如果我们能将无限大的 ${M}$ 限定在一个有限的 ${m_H}$内，问题似乎就解决了。
 
 ## Effective Number of Line
 
@@ -33,17 +33,17 @@
 
 $${P[| E_{in}(g) - E_{out}(g) | > \epsilon]\leq 2 \cdot M \cdot exp(- 2 \epsilon^2 N)}$$
 
-其中， ${M}$ 表示 ${hypothesis}$ 的个数。每个 ${hypothesis}$ 下的BAD events Bm级联的形式满足下列不等式：
+其中， ${M}$ 表示 ${hypothesis}$ 的个数。每个 ${hypothesis}$ 下的 BAD events ${B_m}$ 级联的形式满足下列不等式：
 
 $${P[B_1 or B_2 or \cdots B_M] \leq P[B_1]+P[B_2]+\cdots +P[B_M]}$$
 
-当 ${M = \infty}$时，上面不等式右边值将会很大，似乎说明BAD events很大，${E_{in}(g)}$ 与 ${E_{out}(g)}$ 也并不接近。但是 BAD events ${B_m}$级联的形式实际上是扩大了上界，union bound 过大。这种做法假设各个 ${hypothesis}$ 之间没有交集，这是最坏的情况，可是实际上往往不是如此，很多情况下，都是有交集的，也就是说 ${M}$ 实际上没那么大，如下图所示：
+当 ${M = \infty}$时，上面不等式右边值将会很大，似乎说明BAD events很大，${E_{in}(g)}$ 与 ${E_{out}(g)}$ 也并不接近。但是 BAD events ${B_m}$ 级联的形式实际上是扩大了上界，union bound 过大。这种做法假设各个 ${hypothesis}$ 之间没有交集，这是最坏的情况，可是实际上往往不是如此，很多情况下，都是有交集的，也就是说 ${M}$ 实际上没那么大，如下图所示：
 
 ![Where Did Uniform Bound Fail?](http://ofqm89vhw.bkt.clouddn.com/8f2e2b7a6979e15fb59f96593c427e19.png)
 
-也就是说union bound被估计过高了（over-estimating）。所以，我们的目的是找出不同BAD events之间的重叠部分，也就是将无数个 ${hypothesis}$ 分成有限个类别。
+也就是说 union bound 被估计过高了（over-estimating）。所以，我们的目的是找出不同 BAD events 之间的重叠部分，也就是将无数个 ${hypothesis}$ 分成有限个类别。
 
-如何将无数个 ${hypothesis}$ 分成有限类呢？我们先来看这样一个例子，假如平面上用直线将点分开，也就跟PLA一样。如果平面上只有一个点 ${x_1}$，那么直线的种类有两种：一种将 ${x_1}$ 划为 ${+1}$，一种将 ${x_1}$ 划为 ${-1}$ ：
+如何将无数个 ${hypothesis}$ 分成有限类呢？我们先来看这样一个例子，假如平面上用直线将点分开，也就跟 PLA 一样。如果平面上只有一个点 ${x_1}$，那么直线的种类有两种：一种将 ${x_1}$ 划为 ${+1}$，一种将 ${x_1}$ 划为 ${-1}$ ：
 
 ![How Many Lines Are There?(1/2)](http://ofqm89vhw.bkt.clouddn.com/9e850c2b8c58fd593acd4e38fe3ddc60.png)
 
@@ -67,15 +67,15 @@ $${P[B_1 or B_2 or \cdots B_M] \leq P[B_1]+P[B_2]+\cdots +P[B_M]}$$
 
 $${P[|E_{in}(g) - E_{out}(g)|>\epsilon] \leq 2 \cdot effective(N) \cdot exp(- 2\epsilon^2 N)}$$
 
-已知 ${effective(N)<2^N}$，如果能够保证 ${effective(N) \ll 2N}$，即不等式右边接近于零，那么即使 ${M}$ 无限大，直线的种类也很有限，机器学习也是可能的。
+已知 ${effective(N)< 2^N}$，如果能够保证 ${effective(N) \ll 2^N}$，即不等式右边接近于零，那么即使 ${M}$ 无限大，直线的种类也很有限，机器学习也是可能的。
 
 ## Effective Number of Hypotheses
 
-接下来先介绍一个新名词：二分类（dichotomy）。dichotomy就是将空间中的点（例如二维平面）用一条直线分成正类（蓝色 ${O}$ ）和负类（红色 ${X}$ ）。令H是将平面上的点用直线分开的所有 ${hypothesis}$ h的集合，dichotomy H与hypotheses ${H}$ 的关系是：hypotheses ${H}$ 是平面上所有直线的集合，个数可能是无限个，而dichotomy ${H}$ 是平面上能将点完全用直线分开的直线种类，它的上界是 ${2^N}$ 。接下来，我们要做的就是尝试用dichotomy代替 ${M}$。
+接下来先介绍一个新名词：二分类（dichotomy）。dichotomy 就是将空间中的点（例如二维平面）用一条直线分成正类（蓝色 ${O}$）和负类（红色 ${X}$）。令 ${H}$是将平面上的点用直线分开的所有 ${hypothesis}$ h的集合，dichotomy H与hypotheses ${H}$ 的关系是：hypotheses ${H}$ 是平面上所有直线的集合，个数可能是无限个，而dichotomy ${H}$ 是平面上能将点完全用直线分开的直线种类，它的上界是 ${2^N}$ 。接下来，我们要做的就是尝试用 dichotomy 代替 ${M}$。
 
 ![Dichotomies: Mini-hypotheses](http://ofqm89vhw.bkt.clouddn.com/6ed45dfed835a97902f229d90c2170bc.png)
 
-再介绍一个新的名词：成长函数（growth function），记为 ${m_{H}(H)}$ 。成长函数的定义是：对于由 ${N}$ 个点组成的不同集合中，某集合对应的dichotomy最大，那么这个dichotomy值就是 ${m_{H}(H)}$，它的上界是 ${2^N}$，成长函数其实就是我们之前讲的effective lines的数量最大值。根据成长函数的定义，二维平面上，${m_{H}(H)}$ 随 ${N}$ 的变化关系是：
+再介绍一个新的名词：成长函数（growth function），记为 ${m_{H}(H)}$ 。成长函数的定义是：对于由 ${N}$ 个点组成的不同集合中，某集合对应的 dichotomy 最大，那么这个 dichotomy 值就是 ${m_{H}(H)}$，它的上界是 ${2^N}$，成长函数其实就是我们之前讲的 effective lines 的数量最大值。根据成长函数的定义，二维平面上，${m_{H}(H)}$ 随 ${N}$ 的变化关系是：
 
 ![Growth Function](http://ofqm89vhw.bkt.clouddn.com/fcc0c188a62e6eacf455c9109c242a64.png)
 
@@ -83,7 +83,7 @@ $${P[|E_{in}(g) - E_{out}(g)|>\epsilon] \leq 2 \cdot effective(N) \cdot exp(- 2\
 
 ![Growth Function for Positive Rays](http://ofqm89vhw.bkt.clouddn.com/a09e25428c69d9bea3ace2a9cbe0dad2.png)
 
-若有 ${N}$ 个点，则整个区域可分为 ${N+1}$ 段，很容易得到其成长函数 ${m_{H}(N) = N + 1}$ 。注意当N很大时，${(N+1) \ll 2N}$，这是我们希望看到的。
+若有 ${N}$ 个点，则整个区域可分为 ${N+1}$ 段，很容易得到其成长函数 ${m_{H}(N) = N + 1}$ 。注意当N很大时，${(N+1) \ll 2^N}$，这是我们希望看到的。
 
 另一种情况是一维的 Positive Intervals：
 
@@ -107,15 +107,15 @@ $${P[|E_{in}(g) - E_{out}(g)|>\epsilon] \leq 2 \cdot effective(N) \cdot exp(- 2\
 
 其中，positive rays 和 positive intervals 的成长函数都是 polynomial 的，如果用 ${m_H}$ 代替 ${M}$ 的话，这两种情况是比较好的。而 convex sets 的成长函数是 exponential 的，即等于 ${M}$，并不能保证机器学习的可行性。那么，对于 2D perceptrons，它的成长函数究竟是 polynomial 的还是 exponential 的呢？
 
-对于2D perceptrons，我们之前分析了 ${3}$ 个点，可以做出 ${8}$ 种所有的dichotomy，而 ${4}$ 个点，就无法做出所有 ${16}$ 个点的dichotomy了。所以，我们就把 ${4}$ 称为 2D perceptrons 的 break point（5、6、7等都是break point）。**令有 ${k}$ 个点，如果 ${k}$ 大于等于break point时，它的成长函数一定小于 ${2^k}$。**
+对于 2D perceptrons，我们之前分析了 ${3}$ 个点，可以做出 ${8}$ 种所有的dichotomy，而 ${4}$ 个点，就无法做出所有 ${16}$ 个点的dichotomy了。所以，我们就把 ${4}$ 称为 2D perceptrons 的 break point（5、6、7等都是break point）。**令有 ${k}$ 个点，如果 ${k}$ 大于等于break point时，它的成长函数一定小于 ${2^k}$。**
 
-根据break point的定义，我们知道满足 ${m_{H}(k) \neq 2^k}$ 的 ${k}$ 的最小值就是break point。
+根据 break point 的定义，我们知道满足 ${m_{H}(k) \neq 2^k}$ 的 ${k}$ 的最小值就是 break point。
 
 通过观察，我们猜测成长函数可能与 break point 存在某种关系：对于 convex sets，没有 break point，它的成长函数是 ${2^N}$；对于 positive rays，break point ${k=2}$，它的成长函数是 ${O(N)}$ ；对于positive intervals，break point ${k=3}$，它的成长函数是 ${O(N^2)}$。则根据这种推论，我们猜测 2D perceptrons，它的成长函数 ${m_{H}(N) =O(N^{k-1})}$。如果成立，那么就可以用 ${m_H}$ 代替${M}$，就满足了机器能够学习的条件。关于上述猜测的证明，我们下节课再详细介绍。
 
 ## 总结
 
-本节课，我们更深入地探讨了机器学习的可行性。我们把机器学习拆分为两个核心问题： ${E_{in}(g) \approx E_{out}(g)}$ 和 ${E_{in}(g) \approx 0}$。对于第一个问题，我们探讨了 ${M}$ 个 ${hypothesis}$ 到底可以划分为多少种，也就是成长函数 ${m_H}$。并引入了break point的概念，给出了break point的计算方法。下节课，我们将详细论证对于2D perceptrons，它的成长函数与break point是否存在多项式的关系，如果是这样，那么机器学习就是可行的。
+本节课，我们更深入地探讨了机器学习的可行性。我们把机器学习拆分为两个核心问题： ${E_{in}(g) \approx E_{out}(g)}$ 和 ${E_{in}(g) \approx 0}$。对于第一个问题，我们探讨了 ${M}$ 个 ${hypothesis}$ 到底可以划分为多少种，也就是成长函数 ${m_H}$。并引入了break point的概念，给出了 break point 的计算方法。下节课，我们将详细论证对于 2D perceptrons，它的成长函数与 break point 是否存在多项式的关系，如果是这样，那么机器学习就是可行的。
 
 ## 参考
 

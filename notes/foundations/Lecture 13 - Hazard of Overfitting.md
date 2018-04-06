@@ -30,7 +30,7 @@ Bad generation 和 overfitting 的关系可以理解为：overfitting 是 VC Dim
 
 ## The Role of Noise and Data Size
 
-为了尽可能详细地解释 overfitting，我们进行这样一个实验，试验中的数据集不是很大。首先，在二维平面上，一个模型的分布由目标函数 ${f(x)}$ （ ${x}$ 的 ${10}$ 阶多项式）加上一些 noise 构成，下图中，离散的圆圈是数据集，目标函数是蓝色的曲线。数据没有完全落在曲线上，是因为加入了 noise。
+为了尽可能详细地解释 overfitting，我们进行这样一个实验，试验中的数据集不是很大。首先，在二维平面上，一个模型的分布由目标函数 ${f(x)}$ （${x}$ 的 ${10}$ 阶多项式）加上一些 noise 构成，下图中，离散的圆圈是数据集，目标函数是蓝色的曲线。数据没有完全落在曲线上，是因为加入了 noise。
 
 ![Case Study (1/2)](http://ofqm89vhw.bkt.clouddn.com/6814d140f6a2d2c93380fa6964136681.png)
 
@@ -50,11 +50,11 @@ ${2}$ 阶多项式的学习模型 ${E_{in} =0.029}$，${E_{out} =0.120}$；${10}
 
 上面两个问题中，${10}$ 阶模型都发生了过拟合，反而 ${2}$ 阶的模型却表现得相对不错。这好像违背了我们的第一感觉，比如对于目标函数是 ${10}$ 阶多项式，加上noise的模型，按道理来说应该是 ${10}$ 阶的模型更能接近于目标函数，因为它们阶数相同。但是，事实却是 ${2}$ 阶模型泛化能力更强。这种现象产生的原因，从哲学上来说，就是“以退为进”。有时候，简单的学习模型反而能表现的更好。
 
-下面从 learning curve 来分析一下具体的原因， learning curve 描述的是 ${E_{in}}$ 和 ${E_{out}}$ 随着数据量 ${N}$ 的变化趋势。下图中左边是2阶学习模型的 learning curve，右边是 ${10}$ 阶学习模型的 learning curve。
+下面从 learning curve 来分析一下具体的原因， learning curve 描述的是 ${E_{in}}$ 和 ${E_{out}}$ 随着数据量 ${N}$ 的变化趋势。下图中左边是 ${2}$ 阶学习模型的 learning curve，右边是 ${10}$ 阶学习模型的 learning curve。
 
 ![Learning Curves Revisited](http://ofqm89vhw.bkt.clouddn.com/c2ba28b4cc70052a479def15fc31e839.png)
 
-在learning curve中，横轴是样本数量 ${N}$，纵轴是 Error。 ${E_{in}}$ 和 ${E_{out}}$ 可表示为：
+在 learning curve中，横轴是样本数量 ${N}$，纵轴是 Error。 ${E_{in}}$ 和 ${E_{out}}$ 可表示为：
 
 $${E_{in} =noiselevel \ast (1 - \frac{d+1}{N})}$$
 
@@ -82,9 +82,9 @@ $${E_{out} = noiselevel \ast (1 + \frac{d+1}{N})}$$
 
 上图中，红色越深，代表 overfit 程度越高，蓝色越深，代表 overfit 程度越低。先看左边的图，左图中阶数 ${Q_f}$ 固定为 ${20}$，横坐标代表样本数量 ${N}$，纵坐标代表噪声水平 ${\sigma^2}$。红色区域集中在 ${N}$ 很小或者 ${\sigma^2}$ 很大的时候，也就是说 ${N}$ 越大，${\sigma^2}$越小，越不容易发生 overfit。右边图中 ${\sigma^2=0.1}$，横坐标代表样本数量 ${N}$，纵坐标代表目标函数阶数 ${Q_f}$ 。红色区域集中在 ${N}$ 很小或者 ${Q_f}$ 很大的时候，也就是说 ${N}$ 越大，${Q_f}$ 越小，越不容易发生 overfit。上面两图基本相似。
 
-从上面的分析，我们发现 ${\sigma^2}$ 对 overfit是有很大的影响的，我们把这种 noise 称之为 stochastic noise。同样地，${Q_f}$ 即模型复杂度也对 overfit 有很大影响，而且二者影响是相似的，所以我们把这种称之为 deterministic noise。之所以把它称为 noise，是因为模型高复杂度带来的影响。
+从上面的分析，我们发现 ${\sigma^2}$ 对 overfit 是有很大的影响的，我们把这种 noise 称之为 stochastic noise。同样地，${Q_f}$ 即模型复杂度也对 overfit 有很大影响，而且二者影响是相似的，所以我们把这种称之为 deterministic noise。之所以把它称为 noise，是因为模型高复杂度带来的影响。
 
-总结一下，有四个因素会导致发生 overfitting：
+总结一下，有四个因素会导致发生 overfitting ：
 
 - data size N ${\downarrow}$
 - stochastic noise ${\sigma^2}$ ${\uparrow}$
