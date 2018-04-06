@@ -1,22 +1,18 @@
 # Kernel Logistic Regression
 
-上节课我们主要介绍了Soft-Margin SVM，即如果允许有分类错误的点存在，那么在原来的Hard-Margin SVM中添加新的惩罚因子 ${C}$，修正原来的公式，得到新的 \alpha_n值。最终的到的 \alpha_n有个上界，上界就是 ${C}$。Soft-Margin SVM权衡了large-margin和error point之前的关系，目的是在尽可能犯更少错误的前提下，得到最大分类边界。本节课将把Soft-Margin SVM和我们之前介绍的Logistic Regression联系起来，研究如何使用kernel技巧来解决更多的问题。
+上节课我们主要介绍了 Soft-Margin SVM，即如果允许有分类错误的点存在，那么在原来的 Hard-Margin SVM 中添加新的惩罚因子 ${C}$，修正原来的公式，得到新的 ${\alpha_n}$ 值。最终的到的 ${\alpha_n}$ 有个上界，上界就是 ${C}$。Soft-Margin SVM 权衡了 large-margin 和 error point 之前的关系，目的是在尽可能犯更少错误的前提下，得到最大分类边界。本节课将把 Soft-Margin SVM 和我们之前介绍的 Logistic Regression 联系起来，研究如何使用 kernel 技巧来解决更多的问题。
 
 ## Soft-Margin SVM as Regularized Model
 
-先复习一下我们已经介绍过的内容，我们最早开始讲了Hard-Margin Primal的数学表达式，然后推导了Hard-Margin Dual形式。后来，为了允许有错误点的存在（或者noise），也为了避免模型过于复杂化，造成过拟合，我们建立了Soft-Margin Primal的数学表达式，并引入了新的参数C作为权衡因子，然后也推导了其Soft-Margin Dual形式。因为Soft-Margin Dual SVM更加灵活、便于调整参数，所以在实际应用中，使用Soft-Margin Dual SVM来解决分类问题的情况更多一些。
+先复习一下我们已经介绍过的内容，我们最早开始讲了 Hard-Margin Primal 的数学表达式，然后推导了 Hard-Margin Dual 形式。后来，为了允许有错误点的存在（或者 noise），也为了避免模型过于复杂化，造成过拟合，我们建立了Soft-Margin Primal的数学表达式，并引入了新的参数C作为权衡因子，然后也推导了其Soft-Margin Dual形式。因为 Soft-Margin Dual SVM 更加灵活、便于调整参数，所以在实际应用中，使用 Soft-Margin Dual SVM 来解决分类问题的情况更多一些。
 
-这里写图片描述
+下面我们再来回顾一下 Soft-Margin SVM 的主要内容。我们的出发点是用 ${\xi_n}$ 来表示 margin violation，即犯错值的大小，没有犯错对应的 ${\xi_n=0}$。然后将有条件问题转化为对偶 dual 形式，使用 ${QP}$ 来得到最佳化的解。
 
-Soft-Margin Dual SVM有两个应用非常广泛的工具包，分别是Libsvm和Liblinear。 Libsvm和Liblinear都是国立台湾大学的Chih-Jen Lin博士开发的，Chih-Jen Lin的个人网站为：Welcome to Chih-Jen Lin’s Home Page
-
-下面我们再来回顾一下Soft-Margin SVM的主要内容。我们的出发点是用 ${\xi_n}$ 来表示margin violation，即犯错值的大小，没有犯错对应的 ${\xi_n=0}$。然后将有条件问题转化为对偶dual形式，使用QP来得到最佳化的解。
-
-从另外一个角度来看，${\xi_n}$ 描述的是点 ${(x_n,y_n)}$ 距离 ${y_n(w^Tz_n+b)=1}$ 的边界有多远。第一种情况是violating margin，即不满足 ${y_n(w^T z_n + b) \geq 1}$ 。那么 ${\xi_n}$ 可表示为： ${\xi_n=1 - y_n(w^Tz_n+b)>0}$ 。第二种情况是not violating margin，即点 ${(x_n,y_n)}$ 在边界之外，满足 ${y_n(w^Tz_n+b) \geq 1}$ 的条件，此时 ${\xi_n=0}$。我们可以将两种情况整合到一个表达式中，对任意点：
+从另外一个角度来看，${\xi_n}$ 描述的是点 ${(x_n,y_n)}$ 距离 ${y_n(w^Tz_n+b)=1}$ 的边界有多远。第一种情况是 violating margin，即不满足 ${y_n(w^T z_n + b) \geq 1}$ 。那么 ${\xi_n}$ 可表示为： ${\xi_n=1 - y_n(w^Tz_n+b)>0}$ 。第二种情况是 not violating margin，即点 ${(x_n,y_n)}$ 在边界之外，满足 ${y_n(w^Tz_n+b) \geq 1}$ 的条件，此时 ${\xi_n=0}$。我们可以将两种情况整合到一个表达式中，对任意点：
 
 $${\xi_n= \max(1-y_n(w^T z_n+b),0)}$$
 
-上式表明，如果有voilating margin，则 ${1 - y_n(w^Tz_n+b)>0}$，${\xi_n = 1 - y_n(w^T z_n+b)}$ ；如果not violating margin，则 ${1 - y_n(w^T z_n + b)<0}$，${\xi_n = 0}$。整合之后，我们可以把Soft-Margin SVM的最小化问题写成如下形式：
+上式表明，如果有 voilating margin，则 ${1 - y_n(w^Tz_n+b)>0}$，${\xi_n = 1 - y_n(w^T z_n+b)}$ ；如果 not violating margin，则 ${1 - y_n(w^T z_n + b)<0}$，${\xi_n = 0}$。整合之后，我们可以把 Soft-Margin SVM 的最小化问题写成如下形式：
 
 $${\frac{1}{2}w^Tw+C \sum_{n=1}^{N} \max(1 - y_n(w^T z_n+b),0)}$$
 
@@ -24,7 +20,7 @@ $${\frac{1}{2}w^Tw+C \sum_{n=1}^{N} \max(1 - y_n(w^T z_n+b),0)}$$
 
 这里写图片描述
 
-为什么要将把Soft-Margin SVM转换为这种unconstrained form呢？我们再来看一下转换后的形式，其中包含两项，第一项是 ${w}$ 的内积，第二项关于 ${y}$ 和 ${w}$，${b}$，${z}$ 的表达式，似乎有点像一种错误估计err^，则类似这样的形式：
+为什么要将把 Soft-Margin SVM 转换为这种 unconstrained form 呢？我们再来看一下转换后的形式，其中包含两项，第一项是 ${w}$ 的内积，第二项关于 ${y}$ 和 ${w}$，${b}$，${z}$ 的表达式，似乎有点像一种错误估计 err^，则类似这样的形式：
 
 $${\min \frac{1}{2}w^Tw+C \sum err}$$
 
