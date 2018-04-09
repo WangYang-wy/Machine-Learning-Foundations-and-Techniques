@@ -4,23 +4,23 @@
 
 ## Kernel Ridge Regression
 
-首先回顾一下上节课介绍的Representer Theorem，对于任何包含正则项的L2-regularized linear model，它的最佳化解w都可以写成是z的线性组合形式，因此，也就能引入kernel技巧，将模型kernelized化。
+首先回顾一下上节课介绍的Representer Theorem，对于任何包含正则项的 ${L2}$-regularized linear model，它的最佳化解 ${w}$ 都可以写成是 ${z}$ 的线性组合形式，因此，也就能引入 kernel 技巧，将模型 kernelized 化。
 
 这里写图片描述
 
-那么如何将regression模型变成kernel的形式呢？我们之前介绍的linear/ridge regression最常用的错误估计是squared error，即err(y,w^T z)=(y−w^T z)2。这种形式对应的解是analytic solution，即可以使用线性最小二乘法，通过向量运算，直接得到最优化解。那么接下来我们就要研究如何将kernel引入到ridge regression中去，得到与之对应的analytic solution。
+那么如何将regression模型变成kernel的形式呢？我们之前介绍的 linear/ridge regression 最常用的错误估计是squared error，即 ${err(y,w^T z)=(y−w^T z)^2}$。这种形式对应的解是 analytic solution，即可以使用线性最小二乘法，通过向量运算，直接得到最优化解。那么接下来我们就要研究如何将 kernel 引入到 ridge regression 中去，得到与之对应的 analytic solution。
 
 我们先把Kernel Ridge Regression问题写下来：
 
 这里写图片描述
 
-其中，最佳解w_{\star} 必然是z的线性组合。那么我们就把w_{\star} = \sum_{n=1}^{N} \beta nzn代入到ridge regression中，将z的内积用kernel替换，把求w_{\star} 的问题转化成求 \beta n的问题，得到：
+其中，最佳解w_{\star} 必然是z的线性组合。那么我们就把w_{\star} = \sum_{n=1}^{N} \beta_nzn代入到ridge regression中，将z的内积用kernel替换，把求w_{\star} 的问题转化成求 \beta_n的问题，得到：
 
 这里写图片描述
 
-ridge regression可以写成矩阵的形式，其中第一项可以看成是 \beta n的正则项，而第二项可以看成是 \beta n的error function。这样，我们的目的就是求解该式最小化对应的 \beta n值，这样就解决了kernel ridge regression问题。
+ridge regression可以写成矩阵的形式，其中第一项可以看成是 \beta_n的正则项，而第二项可以看成是 \beta_n的error function。这样，我们的目的就是求解该式最小化对应的 \beta_n值，这样就解决了kernel ridge regression问题。
 
-求解 \beta n的问题可以写成如下形式：
+求解 \beta_n的问题可以写成如下形式：
 
 这里写图片描述
 
@@ -46,7 +46,7 @@ $${\beta =(\lambda I+K)^{-1} y}$$
 
 这里写图片描述
 
-如上图所示，如果只看分类边界的话，soft-margin Gaussian SVM 和 Gaussian LSSVM 差别不是很大，即的到的分类线是几乎相同的。但是如果看 Support Vector 的话（图中方框标注的点），左边soft-margin Gaussian SVM的 ${SV}$ 不多，而右边 Gaussian LSSVM 中基本上每个点都是 ${SV}$。这是因为soft-margin Gaussian SVM中的 ${\alpha n}$ 大部分是等于零，${\alpha n>0}$ 的点只占少数，所以 ${SV}$ 少。而对于 LSSVM，我们上一部分介绍了 \beta 的解大部分都是非零值，所以对应的每个点基本上都是SV。SV太多会带来一个问题，就是做预测的矩 ${g(x)= \sum_{n=1}^{N} \beta nK(x_n,x)}$ ，如果 ${\beta_n}$非零值较多，那么g的计算量也比较大，降低计算速度。基于这个原因，soft-margin Gaussian SVM更有优势。
+如上图所示，如果只看分类边界的话，soft-margin Gaussian SVM 和 Gaussian LSSVM 差别不是很大，即的到的分类线是几乎相同的。但是如果看 Support Vector 的话（图中方框标注的点），左边soft-margin Gaussian SVM的 ${SV}$ 不多，而右边 Gaussian LSSVM 中基本上每个点都是 ${SV}$。这是因为soft-margin Gaussian SVM中的 ${\alpha n}$ 大部分是等于零，${\alpha n>0}$ 的点只占少数，所以 ${SV}$ 少。而对于 LSSVM，我们上一部分介绍了 \beta 的解大部分都是非零值，所以对应的每个点基本上都是SV。SV太多会带来一个问题，就是做预测的矩 ${g(x)= \sum_{n=1}^{N} \beta_nK(x_n,x)}$ ，如果 ${\beta_n}$非零值较多，那么g的计算量也比较大，降低计算速度。基于这个原因，soft-margin Gaussian SVM更有优势。
 
 这里写图片描述
 
@@ -60,7 +60,7 @@ $${\beta =(\lambda I+K)^{-1} y}$$
 
 这里写图片描述
 
-通常把这个error叫做 \epsilon -insensitive error，这种max的形式跟我们上节课中介绍的hinge error measure形式其实是类似的。所以，我们接下来要做的事情就是将L2-regularized tube regression做类似于soft-margin SVM的推导，从而得到sparse  \beta 。
+通常把这个error叫做 \epsilon -insensitive error，这种max的形式跟我们上节课中介绍的hinge error measure形式其实是类似的。所以，我们接下来要做的事情就是将${L2}$-regularized tube regression做类似于soft-margin SVM的推导，从而得到sparse  \beta 。
 
 首先，我们把tube regression中的error与squared error做个比较：
 
@@ -118,9 +118,9 @@ w= \sumn=1N( \alpha ⋀n− \alpha ⋁n)zn
 
 这里写图片描述
 
-对于分布在tube中心区域内的点，满足|w^T zn+b−yn|< \epsilon ，此时忽略错误， \xi ⋁n和 \xi ⋀n都等于零。则complementary slackness两个等式的第二项均不为零，必然得到 \alpha ⋀n=0和 \alpha ⋁n=0，即 \beta n= \alpha ⋀n− \alpha ⋁n=0。
+对于分布在tube中心区域内的点，满足|w^T zn+b−yn|< \epsilon ，此时忽略错误， \xi ⋁n和 \xi ⋀n都等于零。则complementary slackness两个等式的第二项均不为零，必然得到 \alpha ⋀n=0和 \alpha ⋁n=0，即 \beta_n= \alpha ⋀n− \alpha ⋁n=0。
 
-所以，对于分布在 tube 内的点，得到的解 \beta n=0，是sparse的。而分布在tube之外的点， \beta n \neq 0。至此，我们就得到了SVR的sparse解。
+所以，对于分布在 tube 内的点，得到的解 \beta_n=0，是sparse的。而分布在tube之外的点， \beta_n \neq 0。至此，我们就得到了SVR的sparse解。
 
 ## Summary of Kernel Models
 
