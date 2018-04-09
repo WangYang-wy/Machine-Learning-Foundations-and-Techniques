@@ -122,7 +122,7 @@ $${\beta=(K+\lambda I)^{-1} y}$$
 
 ## k-Means Algorithm
 
-之所以要选择代表，是因为如果某些样本点很接近，那么就可以用一个中心点来代表它们。这就是聚类（cluster）的思想，从所有N个样本点中选择少数几个代表作为中心点。
+之所以要选择代表，是因为如果某些样本点很接近，那么就可以用一个中心点来代表它们。这就是聚类（cluster）的思想，从所有 ${N}$ 个样本点中选择少数几个代表作为中心点。
 
 这里写图片描述
 
@@ -140,31 +140,32 @@ $${\beta=(K+\lambda I)^{-1} y}$$
 
 这里写图片描述
 
-然后，如果 ${S_1,S_2,\cdots ,S_M}$ 是固定的，目标就是只要找出每个类的中心点 ${\mu}$ 。显然，根据上式中的error function，所有的 ${x_n}$ 分群是已知的，那么该最小化问题就是一个典型的数值最优化问题。对于每个类群 ${S_m}$ ，利用梯度下降算法，即可得到 ${\mu_m}$ 的解。
+然后，如果 ${S_1,S_2,\cdots ,S_M}$ 是固定的，目标就是只要找出每个类的中心点 ${\mu}$ 。显然，根据上式中的 error function，所有的 ${x_n}$ 分群是已知的，那么该最小化问题就是一个典型的数值最优化问题。对于每个类群 ${S_m}$ ，利用梯度下降算法，即可得到 ${\mu_m}$ 的解。
 
 这里写图片描述
 
 如上图所示，中心点 ${\mu_m}$ 就等于所有属于类群 ${S_m}$ 的平均位置处。
 
-经过以上的推导，我们得到了一个非常有名的一种unsupervised learning算法，叫做k-Means Algorithm。这里的k就是代表上面的M，表示类群的个数。
+经过以上的推导，我们得到了一个非常有名的一种 unsupervised learning 算法，叫做 k-Means Algorithm。这里的 ${k}$ 就是代表上面的 ${M}$，表示类群的个数。
 
-k-Means Algorithm的流程是这样的：首先，随机选择 ${k}$ 个中心点 ${\mu_1,\mu_2,\cdots ,\mu_k}$ ；然后，再由确定的中心点得到不同的类群 ${S_1,S_2,\cdots ,S_k}$ ；接着，再由确定的类群计算出新的不同的 ${k}$ 个中心点；继续循环迭代计算，交互地对 ${\mu}$ 和 ${S}$ 值进行最优化计算，不断更新 ${\mu}$ 和 ${S}$ 值，直到程序收敛，实现 ${E_{in}}$ 最小化。具体算法流程图如下所示：
-
-这里写图片描述
-
-有一个问题是，k-Means Algorithm的循环迭代一定会停止吗？或者说一定能得到最优解吗？答案是肯定的。因为每次迭代更新，${\mu}$ 和 ${S}$ 值都会比上一次的值更接近最优解，也就是说 ${E_{in}}$ 是不断减小的。而 ${E_{in}}$ 的下界是 ${0}$，所以，${E_{in}}$ 最终会等于 ${0}$，${\mu}$ 和 ${S}$ 最终能得到最优解。
-
-k-Means Algorithm已经介绍完毕。接下来，我们把k-Means Algorithm应用到RBF Network中去。首先，使用k-Means，得到原始样本的 ${k}$ 个中心点。原始样本到k个中心点组成了RBF特征转换 ${\Phi(x)}$ 。然后，根据上面介绍过的线性模型，由最优化公式解计算得到权重\beta值。最后，将所有的 ${\Phi(x)}$ 用 ${\beta}$ 线性组合，即得到矩 ${g_{RBF}NET(x)}$ 的表达式。具体的算法流程如下所示：
+k-Means Algorithm 的流程是这样的：首先，随机选择 ${k}$ 个中心点 ${\mu_1,\mu_2,\cdots ,\mu_k}$ ；然后，再由确定的中心点得到不同的类群 ${S_1,S_2,\cdots ,S_k}$ ；接着，再由确定的类群计算出新的不同的 ${k}$ 个中心点；继续循环迭代计算，交互地对 ${\mu}$ 和 ${S}$ 值进行最优化计算，不断更新 ${\mu}$ 和 ${S}$ 值，直到程序收敛，实现 ${E_{in}}$ 最小化。具体算法流程图如下所示：
 
 这里写图片描述
 
-值得一提的是，这里我们使用了unsupervised learning（k-Means）与我们上节课介绍的autoencoder类似，同样都是特征转换（feature transform）的方法。
+有一个问题是，k-Means Algorithm 的循环迭代一定会停止吗？或者说一定能得到最优解吗？答案是肯定的。因为每次迭代更新，${\mu}$ 和 ${S}$ 值都会比上一次的值更接近最优解，也就是说 ${E_{in}}$ 是不断减小的。而 ${E_{in}}$ 的下界是 ${0}$，所以，${E_{in}}$ 最终会等于 ${0}$，${\mu}$ 和 ${S}$ 最终能得到最优解。
 
-在最优化求解过程中，参数有k-Means类群个数 ${M}$、Gaussian函数参数 ${\lambda}$ 等。我们可以采用validation的方法来选取最佳的参数值。
+k-Means Algorithm 已经介绍完毕。接下来，我们把 k-Means Algorithm 应用到 RBF Network 中去。首先，使用k-Means，得到原始样本的 ${k}$ 个中心点。原始样本到k个中心点组成了 RBF 特征转换 ${\Phi(x)}$ 。然后，根据上面介绍过的线性模型，由最优化公式解计算得到权重 ${\beta}$ 值。最后，将所有的 ${\Phi(x)}$ 用 ${\beta}$ 线性组合，即得到矩 ${g_{RBF}NET(x)}$ 的表达式。具体的算法流程如下所示：
 
 这里写图片描述
 
-k-means and RBF Network in Action
+值得一提的是，这里我们使用了 unsupervised learning（k-Means）与我们上节课介绍的 autoencoder 类似，同样都是特征转换（feature transform）的方法。
+
+在最优化求解过程中，参数有 k-Means 类群个数 ${M}$、Gaussian函数参数 ${\lambda}$ 等。我们可以采用 validation 的方法来选取最佳的参数值。
+
+这里写图片描述
+
+## k-means and RBF Network in Action
+
 下面这部分，我们将举几个例子，看一下k-Means Algorithm是如何处理分类问题的。
 
 第一个例子，平面上有 ${4}$ 个类群，${k=4}$。首先，我们随机选择 ${4}$ 个中心点，如下图中四种颜色的方块所示：
@@ -243,7 +244,7 @@ ${4}$ 个类群点确定后，再更新 ${4}$ 个中心点的位置：
 
 ## 总结
 
-本节课主要介绍了Radial Basis Function Network。RBF Network Hypothesis就是计算样本之间distance similarity的Gaussian函数，这类原型替代了神经网络中的神经元。RBF Network的训练学习过程，其实就是对所有的原型Hypotheses进行linear aggregation。然后，我们介绍了一个确定 ${k}$ 个中心点的unsupervised learning算法，叫做k-Means Algorithm。这是一种典型的聚类算法，实现对原始样本数据的聚类分群。接着，将k-Means Algorithm应用到RBF Network中，选择合适数量的中心点，得到更好的分类模型。最后，我们列举了几个在实际中使用k-Means和RBF Network的例子，结果显示不同的类群k值对分类的效果影响很大。
+本节课主要介绍了 Radial Basis Function Network。RBF Network Hypothesis 就是计算样本之间 distance similarity 的 Gaussian 函数，这类原型替代了神经网络中的神经元。RBF Network 的训练学习过程，其实就是对所有的原型 Hypotheses 进行 linear aggregation。然后，我们介绍了一个确定 ${k}$ 个中心点的 unsupervised learning 算法，叫做 k-Means Algorithm。这是一种典型的聚类算法，实现对原始样本数据的聚类分群。接着，将 k-Means Algorithm 应用到 RBF Network 中，选择合适数量的中心点，得到更好的分类模型。最后，我们列举了几个在实际中使用 k-Means 和 RBF Network 的例子，结果显示不同的类群 ${k}$ 值对分类的效果影响很大。
 
 ## 参考
 
