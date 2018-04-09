@@ -1,6 +1,6 @@
 # Lecture 06 - Support Vector Regression
 
-上节课我们主要介绍了Kernel Logistic Regression，讨论如何把SVM的技巧应用在soft-binary classification上。方法是使用2-level learning，先利用SVM得到参数b和w，然后再用通用的logistic regression优化算法，通过迭代优化，对参数b和w进行微调，得到最佳解。然后，也介绍了可以通过Representer Theorem，在z空间中，引入SVM的kernel技巧，直接对logistic regression进行求解。本节课将延伸上节课的内容，讨论如何将SVM的kernel技巧应用到regression问题上。
+上节课我们主要介绍了 Kernel Logistic Regression，讨论如何把 SVM 的技巧应用在 soft-binary classification 上。方法是使用2-level learning，先利用 SVM 得到参数 ${b}$ 和 ${w}$，然后再用通用的logistic regression优化算法，通过迭代优化，对参数 ${b}$ 和 ${w}$ 进行微调，得到最佳解。然后，也介绍了可以通过Representer Theorem，在 ${z}$ 空间中，引入 SVM 的 kernel 技巧，直接对 logistic regression 进行求解。本节课将延伸上节课的内容，讨论如何将 SVM 的 kernel 技巧应用到 regression 问题上。
 
 ## Kernel Ridge Regression
 
@@ -24,17 +24,17 @@ ridge regression可以写成矩阵的形式，其中第一项可以看成是 \be
 
 这里写图片描述
 
-Eaug( \beta )是关于 \beta 的二次多项式，要对Eaug( \beta )求最小化解，这种凸二次最优化问题，只需要先计算其梯度，再令梯度为零即可。∇Eaug( \beta )已经在上式中写出来了，令其等于零，即可得到一种可能的 \beta 的解析解为：
+${E_{aug}(\beta)}$ 是关于 ${\beta}$ 的二次多项式，要对 ${E_{aug}(\beta)}$ 求最小化解，这种凸二次最优化问题，只需要先计算其梯度，再令梯度为零即可。${\nabla E_{aug}(\beta)}$ 已经在上式中写出来了，令其等于零，即可得到一种可能的 ${\beta}$ 的解析解为：
 
- \beta =( \lambda I+K)−1y
+$${\beta =(\lambda I+K)^{-1} y}$$
 
-这里需要关心的问题是( \lambda I+K)的逆矩阵是否存在？答案是肯定的。因为我们之前介绍过，核函数K满足Mercer’s condition，它是半正定的，而且 \lambda >0，所以( \lambda I+K)一定是可逆的。从计算的时间复杂上来说，由于( \lambda I+K)是NxN大小的，所以时间复杂度是O(N3)。还有一点，∇Eaug( \beta )是由两项乘积构成的，另一项是K，会不会出现K=0的情况呢？其实，由于核函数K表征的是z空间的内积，一般而言，除非两个向量互相垂直，内积才为零，否则，一般情况下K不等于零。这个原因也决定了( \lambda I+K)是dense matrix，即 \beta 的解大部分都是非零值。这个性质，我们之后还会说明。
+这里需要关心的问题是 ${(\lambda I+K)}$ 的逆矩阵是否存在？答案是肯定的。因为我们之前介绍过，核函数 ${K}$ 满足 Mercer’s condition，它是半正定的，而且 ${\lambda >0}$ ，所以 ${(\lambda I+K)}$ 一定是可逆的。从计算的时间复杂上来说，由于 ${(\lambda I+K)}$ 是 ${N \times N}$ 大小的，所以时间复杂度是 ${O(N^3)}$ 。还有一点，${\nabla E_{aug}(\beta)}$ 是由两项乘积构成的，另一项是 ${K}$ ，会不会出现 ${K=0}$ 的情况呢？其实，由于核函数 ${K}$ 表征的是 ${z}$ 空间的内积，一般而言，除非两个向量互相垂直，内积才为零，否则，一般情况下 ${K}$ 不等于零。这个原因也决定了 ${(\lambda I+K)}$ 是 dense matrix，即 ${\beta}$ 的解大部分都是非零值。这个性质，我们之后还会说明。
 
-所以说，我们可以通过kernel来解决non-linear regression的问题。下面比较一下linear ridge regression和kernel ridge regression的关系。
+所以说，我们可以通过 kernel 来解决 non-linear regression 的问题。下面比较一下 linear ridge regression 和 kernel ridge regression 的关系。
 
 这里写图片描述
 
-如上图所示，左边是linear ridge regression，是一条直线；右边是kernel ridge regression，是一条曲线。大致比较一下，右边的曲线拟合的效果更好一些。这两种regression有什么样的优点和缺点呢？对于linear ridge regression来说，它是线性模型，只能拟合直线；其次，它的训练复杂度是O(d3+d2N)，预测的复杂度是O(d)，如果N比d大很多时，这种模型就更有效率。而对于kernel ridge regression来说，它转换到z空间，使用kernel技巧，得到的是非线性模型，所以更加灵活；其次，它的训练复杂度是O(N3)，预测的复杂度是O(N)，均只与N有关。当N很大的时候，计算量就很大，所以，kernel ridge regression适合N不是很大的场合。比较下来，可以说linear和kernel实际上是效率（efficiency）和灵活（flexibility）之间的权衡。
+如上图所示，左边是linear ridge regression，是一条直线；右边是kernel ridge regression，是一条曲线。大致比较一下，右边的曲线拟合的效果更好一些。这两种regression有什么样的优点和缺点呢？对于linear ridge regression来说，它是线性模型，只能拟合直线；其次，它的训练复杂度是 ${O(d^3+d^2 N)}$，预测的复杂度是O(d)，如果N比d大很多时，这种模型就更有效率。而对于kernel ridge regression来说，它转换到z空间，使用kernel技巧，得到的是非线性模型，所以更加灵活；其次，它的训练复杂度是 ${O(N^3)}$，预测的复杂度是 ${O(N)}$，均只与 ${N}$ 有关。当N很大的时候，计算量就很大，所以，kernel ridge regression适合 ${N}$ 不是很大的场合。比较下来，可以说 linear 和 kernel实际上是效率（efficiency）和灵活（flexibility）之间的权衡。
 
 这里写图片描述
 
@@ -46,11 +46,11 @@ Eaug( \beta )是关于 \beta 的二次多项式，要对Eaug( \beta )求最小�
 
 这里写图片描述
 
-如上图所示，如果只看分类边界的话，soft-margin Gaussian SVM和Gaussian LSSVM差别不是很大，即的到的分类线是几乎相同的。但是如果看Support Vector的话（图中方框标注的点），左边soft-margin Gaussian SVM的SV不多，而右边Gaussian LSSVM中基本上每个点都是SV。这是因为soft-margin Gaussian SVM中的 \alpha n大部分是等于零， \alpha n>0的点只占少数，所以SV少。而对于LSSVM，我们上一部分介绍了 \beta 的解大部分都是非零值，所以对应的每个点基本上都是SV。SV太多会带来一个问题，就是做预测的矩g(x)= \sum_{n=1}^{N} \beta nK(xn,x)，如果 \beta n非零值较多，那么g的计算量也比较大，降低计算速度。基于这个原因，soft-margin Gaussian SVM更有优势。
+如上图所示，如果只看分类边界的话，soft-margin Gaussian SVM 和 Gaussian LSSVM 差别不是很大，即的到的分类线是几乎相同的。但是如果看 Support Vector 的话（图中方框标注的点），左边soft-margin Gaussian SVM的 ${SV}$ 不多，而右边 Gaussian LSSVM 中基本上每个点都是 ${SV}$。这是因为soft-margin Gaussian SVM中的 ${\alpha n}$ 大部分是等于零，${\alpha n>0}$ 的点只占少数，所以 ${SV}$ 少。而对于 LSSVM，我们上一部分介绍了 \beta 的解大部分都是非零值，所以对应的每个点基本上都是SV。SV太多会带来一个问题，就是做预测的矩 ${g(x)= \sum_{n=1}^{N} \beta nK(x_n,x)}$ ，如果 ${\beta_n}$非零值较多，那么g的计算量也比较大，降低计算速度。基于这个原因，soft-margin Gaussian SVM更有优势。
 
 这里写图片描述
 
-那么，针对LSSVM中dense  \beta 的缺点，我们能不能使用一些方法来的得到sparse  \beta ，使得SV不会太多，从而得到和soft-margin SVM同样的分类效果呢？下面我们将尝试解决这个问题。
+那么，针对 LSSVM 中 dense ${\beta}$ 的缺点，我们能不能使用一些方法来的得到 sparse ${\beta}$，使得 ${SV}$ 不会太多，从而得到和 soft-margin SVM 同样的分类效果呢？下面我们将尝试解决这个问题。
 
 方法是引入一个叫做^T ube Regression的做法，即在分类线上下分别划定一个区域（中立区），如果数据点分布在这个区域内，则不算分类错误，只有误分在中立区域之外的地方才算error。
 
@@ -120,7 +120,7 @@ w= \sumn=1N( \alpha ⋀n− \alpha ⋁n)zn
 
 对于分布在tube中心区域内的点，满足|w^T zn+b−yn|< \epsilon ，此时忽略错误， \xi ⋁n和 \xi ⋀n都等于零。则complementary slackness两个等式的第二项均不为零，必然得到 \alpha ⋀n=0和 \alpha ⋁n=0，即 \beta n= \alpha ⋀n− \alpha ⋁n=0。
 
-所以，对于分布在tube内的点，得到的解 \beta n=0，是sparse的。而分布在tube之外的点， \beta n \neq 0。至此，我们就得到了SVR的sparse解。
+所以，对于分布在 tube 内的点，得到的解 \beta n=0，是sparse的。而分布在tube之外的点， \beta n \neq 0。至此，我们就得到了SVR的sparse解。
 
 ## Summary of Kernel Models
 

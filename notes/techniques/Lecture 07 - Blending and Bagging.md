@@ -131,7 +131,7 @@ Bagging(Bootstrap Aggregation)
 
 这里写图片描述
 
-现在考虑一个问题：如何得到不同的 ${g_t}$ 呢？可以选取不同模型H；可以设置不同的参数，例如 ${\eta}$、迭代次数 ${n}$ 等；可以由算法的随机性得到，例如PLA、随机种子等；可以选择不同的数据样本等。这些方法都可能得到不同的 ${g_t}$。
+现在考虑一个问题：如何得到不同的 ${g_t}$ 呢？可以选取不同模型 ${H}$；可以设置不同的参数，例如 ${\eta}$、迭代次数 ${n}$ 等；可以由算法的随机性得到，例如 PLA、随机种子等；可以选择不同的数据样本等。这些方法都可能得到不同的 ${g_t}$。
 
 这里写图片描述
 
@@ -141,11 +141,11 @@ Bagging(Bootstrap Aggregation)
 
 其中，${g^{-}}$ 是在矩个数 ${T}$ 趋向于无穷大的时候，不同的 ${g_t}$ 计算平均得到的值。这里我们为了得到 ${g^{-}}$ ，做两个近似条件：
 
-有限的T；
+有限的 ${T}$；
 
 由已有数据集 ${D}$ 构造出 ${D_t}$  PN，独立同分布
 
-第一个条件没有问题，第二个近似条件的做法就是 bootstrapping。bootstrapping 是统计学的一个工具，思想就是从已有数据集 ${D}$ 中模拟出其他类似的样本 ${D_t}$。
+第一个条件没有问题，第二个近似条件的做法就是  bootstrapping。bootstrapping 是统计学的一个工具，思想就是从已有数据集 ${D}$ 中模拟出其他类似的样本 ${D_t}$。
 
 这里写图片描述
 
@@ -153,7 +153,7 @@ bootstrapping 的做法是，假设有 ${N}$ 笔资料，先从中选出一个�
 
 这里写图片描述
 
-下面举个实际中 Bagging Pocket 算法的例子。如下图所示，先通过 bootstrapping 得到 25 个不同样本集，再使用pocket算法得到25个不同的 ${g_t}$，每个pocket算法迭代1000次。最后，再利用blending，将所有的 ${g_t}$ 融合起来，得到最终的分类线，如图中黑线所示。可以看出，虽然bootstrapping会得到差别很大的分类线（灰线），但是经过blending后，得到的分类线效果是不错的，则bagging通常能得到最佳的分类模型。
+下面举个实际中 Bagging Pocket 算法的例子。如下图所示，先通过 bootstrapping 得到 ${25}$ 个不同样本集，再使用 pocket 算法得到 ${25}$ 个不同的 ${g_t}$，每个 pocket 算法迭代 ${1000}$ 次。最后，再利用 blending，将所有的 ${g_t}$ 融合起来，得到最终的分类线，如图中黑线所示。可以看出，虽然 bootstrapping 会得到差别很大的分类线（灰线），但是经过 blending 后，得到的分类线效果是不错的，则bagging 通常能得到最佳的分类模型。
 
 这里写图片描述
 
@@ -161,7 +161,7 @@ bootstrapping 的做法是，假设有 ${N}$ 笔资料，先从中选出一个�
 
 ## 总结
 
-本节课主要介绍了blending和bagging的方法，它们都属于aggregation，即将不同的g_t合并起来，利用集体的智慧得到更加优化的 ${G(t)}$。Blending通常分为三种情况：Uniform Blending，Linear Blending和Any Blending。其中，uniform blending采样最简单的“一人一票”的方法，linear blending和any blending都采用标准的two-level learning方法，类似于特征转换的操作，来得到不同 ${g_t}$ 的线性组合或非线性组合。最后，我们介绍了如何利用bagging（bootstrap aggregation），从已有数据集 ${D}$ 中模拟出其他类似的样本 ${D_t}$，而得到不同的 ${g_t}$，再合并起来，优化预测模型。
+本节课主要介绍了 blending 和 bagging 的方法，它们都属于 aggregation，即将不同的 ${g_t}$ 合并起来，利用集体的智慧得到更加优化的 ${G(t)}$。Blending通常分为三种情况：Uniform Blending，Linear Blending 和 Any Blending。其中，uniform blending 采样最简单的“一人一票”的方法，linear blending 和 any blending 都采用标准的 two-level learning 方法，类似于特征转换的操作，来得到不同 ${g_t}$ 的线性组合或非线性组合。最后，我们介绍了如何利用 bagging（bootstrap aggregation），从已有数据集 ${D}$ 中模拟出其他类似的样本 ${D_t}$，而得到不同的 ${g_t}$，再合并起来，优化预测模型。
 
 ## 参考
 
