@@ -38,8 +38,8 @@ ${P(y|x)}$ 称之为目标分布（Target Distribution）。它实际上告诉�
 我们介绍的矩g对错误的衡量有三个特性：
 
 - out-of-sample：样本外的未知数据。
-- pointwise：对每个数据点x进行测试。
-- classification：看prediction与target是否一致，classification error通常称为0/1 error。
+- pointwise：对每个数据点 ${x}$ 进行测试。
+- classification：看 prediction 与 target 是否一致，classification error 通常称为 0/1 error。
 
 ![Error Measure](http://ofqm89vhw.bkt.clouddn.com/bacaf80c234cd7efef9767de8fc34208.png)
 
@@ -76,7 +76,7 @@ Error 有两种：false accept 和 false reject。false accept 意思是误把�
 ## Weighted Classification
 
 实际上，机器学习的 Cost Function 即来自于这些 error，也就是算法里面的迭代的目标函数，通过优化使得 ${Error(E_{in})}$ 不断变小。
-cost function 中，false accept 和 false reject 赋予不同的权重，在演算法中体现。对不同权重的错误惩罚，可以选用 virtual copying 的方法。
+cost function 中，false accept 和 false reject 赋予不同的权重，在演算法中体现。对不同权重的错误惩罚，可以选用 `virtual copying` 的方法。
 
 ![copying examples](http://ofqm89vhw.bkt.clouddn.com/93f35e2ad6996213740484cac4a7e6e0.png)
 

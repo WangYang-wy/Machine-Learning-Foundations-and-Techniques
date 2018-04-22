@@ -25,7 +25,7 @@
 
 ![Trade-off on M](http://ofqm89vhw.bkt.clouddn.com/a782ae19da6e38f9ada73c62c7b4a8cd.png)
 
-从上面的分析来看， ${M}$ 的选择直接影响机器学习两个核心问题是否满足， ${M}$ 不能太大也不能太小。那么如果M无限大的时候，是否机器就不可以学习了呢？例如PLA算法中直线是无数条的，但是PLA能够很好地进行机器学习，这又是为什么呢？如果我们能将无限大的 ${M}$ 限定在一个有限的 ${m_H}$内，问题似乎就解决了。
+从上面的分析来看， ${M}$ 的选择直接影响机器学习两个核心问题是否满足， ${M}$ 不能太大也不能太小。那么如果 ${M}$ 无限大的时候，是否机器就不可以学习了呢？例如 ${PLA}$ 算法中直线是无数条的，但是 ${PLA}$ 能够很好地进行机器学习，这又是为什么呢？如果我们能将无限大的 ${M}$ 限定在一个有限的 ${m_H}$内，问题似乎就解决了。
 
 ## Effective Number of Line
 
@@ -37,7 +37,7 @@ $${P[| E_{in}(g) - E_{out}(g) | > \epsilon]\leq 2 \cdot M \cdot exp(- 2 \epsilon
 
 $${P[B_1 or B_2 or \cdots B_M] \leq P[B_1]+P[B_2]+\cdots +P[B_M]}$$
 
-当 ${M = \infty}$时，上面不等式右边值将会很大，似乎说明BAD events很大，${E_{in}(g)}$ 与 ${E_{out}(g)}$ 也并不接近。但是 BAD events ${B_m}$ 级联的形式实际上是扩大了上界，union bound 过大。这种做法假设各个 ${hypothesis}$ 之间没有交集，这是最坏的情况，可是实际上往往不是如此，很多情况下，都是有交集的，也就是说 ${M}$ 实际上没那么大，如下图所示：
+当 ${M = \infty}$时，上面不等式右边值将会很大，似乎说明 BAD events 很大，${E_{in}(g)}$ 与 ${E_{out}(g)}$ 也并不接近。但是 BAD events ${B_m}$ 级联的形式实际上是扩大了上界，union bound 过大。这种做法假设各个 ${hypothesis}$ 之间没有交集，这是最坏的情况，可是实际上往往不是如此，很多情况下，都是有交集的，也就是说 ${M}$ 实际上没那么大，如下图所示：
 
 ![Where Did Uniform Bound Fail?](http://ofqm89vhw.bkt.clouddn.com/8f2e2b7a6979e15fb59f96593c427e19.png)
 
@@ -71,7 +71,7 @@ $${P[|E_{in}(g) - E_{out}(g)|>\epsilon] \leq 2 \cdot effective(N) \cdot exp(- 2\
 
 ## Effective Number of Hypotheses
 
-接下来先介绍一个新名词：二分类（dichotomy）。dichotomy 就是将空间中的点（例如二维平面）用一条直线分成正类（蓝色 ${O}$）和负类（红色 ${X}$）。令 ${H}$是将平面上的点用直线分开的所有 ${hypothesis}$ h的集合，dichotomy H与hypotheses ${H}$ 的关系是：hypotheses ${H}$ 是平面上所有直线的集合，个数可能是无限个，而dichotomy ${H}$ 是平面上能将点完全用直线分开的直线种类，它的上界是 ${2^N}$ 。接下来，我们要做的就是尝试用 dichotomy 代替 ${M}$。
+接下来先介绍一个新名词：二分类（dichotomy）。dichotomy 就是将空间中的点（例如二维平面）用一条直线分成正类（蓝色 ${O}$）和负类（红色 ${X}$）。令 ${H}$是将平面上的点用直线分开的所有 ${hypothesis}$ h的集合，dichotomy ${H}$ 与hypotheses ${H}$ 的关系是：hypotheses ${H}$ 是平面上所有直线的集合，个数可能是无限个，而dichotomy ${H}$ 是平面上能将点完全用直线分开的直线种类，它的上界是 ${2^N}$ 。接下来，我们要做的就是尝试用 dichotomy 代替 ${M}$。
 
 ![Dichotomies: Mini-hypotheses](http://ofqm89vhw.bkt.clouddn.com/6ed45dfed835a97902f229d90c2170bc.png)
 

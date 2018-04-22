@@ -2,18 +2,18 @@
 
 前几节课着重介绍了机器能够学习的条件并做了详细的推导和解释。机器能够学习必须满足两个条件：
 
-- 假设空间 ${H}$ 的Size ${M}$ 是有限的，即当 ${N}$ 足够大的时候，那么对于假设空间中任意一个假设 ${g}$，${E_{out} \approx  E_{in}}$。
+- 假设空间 ${H}$ 的 Size ${M}$ 是有限的，即当 ${N}$ 足够大的时候，那么对于假设空间中任意一个假设 ${g}$，${E_{out} \approx  E_{in}}$。
 - 利用算法 ${A}$ 从假设空间 ${H}$ 中，挑选一个 ${g}$ ，使 ${E_{in} (g) \approx 0}$，则 ${E_{out} \approx 0}$。
 
 这两个条件，正好对应着 test 和 trian 两个过程。train 的目的是使损失期望 ${E_{in} (g) \approx 0}$；test 的目的是使将算法用到新的样本时的损失期望也尽可能小，即 ${E_{out} \approx 0}$。
 
-正因为如此，上次课引入了break point，并推导出只要 break point 存在，则 ${M}$ 有上界，一定存在 ${E_{out} \approx E_{in}}$ 。
+正因为如此，上次课引入了 break point，并推导出只要 break point 存在，则 ${M}$ 有上界，一定存在 ${E_{out} \approx E_{in}}$ 。
 
 本次课程主要介绍 VC Dimension 的概念。同时也是总结 VC Dimension与 ${E_{in} (g) \approx 0}$，${E_{out}  \approx 0}$，Model Complexity Penalty（下面会讲到）的关系。
 
 ## Definition of VC Dimension
 
-首先，我们知道如果一个假设空间 ${H}$ 有break point ${k}$，那么它的成长函数是有界的，它的上界称为 Bound function。根据数学归纳法，Bound function 也是有界的，且上界为 ${N^{k-1}}$。从下面的表格可以看出，${N^{k-1}}$比 ${B(N,k)}$ 松弛很多。
+首先，我们知道如果一个假设空间 ${H}$ 有 break point ${k}$，那么它的成长函数是有界的，它的上界称为 Bound function。根据数学归纳法，Bound function 也是有界的，且上界为 ${N^{k-1}}$。从下面的表格可以看出，${N^{k-1}}$比 ${B(N,k)}$ 松弛很多。
 
 ![Recap: More on Growth Function](http://ofqm89vhw.bkt.clouddn.com/adb7b648b2603ecdacb7b072e994d021.png)
 
@@ -23,16 +23,16 @@
 
 这样，不等式只与 ${k}$ 和 ${N}$ 相关了，一般情况下样本 ${N}$ 足够大，所以我们只考虑 ${k}$ 值。有如下结论：
 
-- 若假设空间 ${H}$ 有break point ${k}$，且${N}$ 足够大，则根据VC bound 理论，算法有良好的泛化能力。
+- 若假设空间 ${H}$ 有 break point ${k}$，且${N}$ 足够大，则根据 VC bound 理论，算法有良好的泛化能力。
 - 在假设空间中选择一个 ${g}$，使 ${E_{in} \approx 0}$，则其在全集数据中的错误率会较低。
 
 ![Conclusions](http://ofqm89vhw.bkt.clouddn.com/c0ee48b44ced41f5b5a2d44a5e39a575.png)
 
 下面介绍一个新的名词：`VC Dimension`。VC Dimension 就是某假设集 ${H}$ 能够 shatter 的最多 inputs 的个数，即最大完全正确的分类能力。（注意，只要存在一种分布的 inputs 能够正确分类也满足）。
 
-shatter 的英文意思是“粉碎”，也就是说：对于inputs的所有情况都能列举出来。例如对 ${N}$ 个输入，如果能够将 ${2^N}$ 种情况都列出来，则称该 ${N}$ 个输入能够被假设集 ${H}$ shatter。
+> shatter 的英文意思是“粉碎”，也就是说：对于inputs的所有情况都能列举出来。例如对 ${N}$ 个输入，如果能够将 ${2^N}$ 种情况都列出来，则称该 ${N}$ 个输入能够被假设集 ${H}$ shatter。
 
-根据之前 break point 的定义：假设集不能被 shatter 任何分布类型的inputs 的最少个数。则 VC Dimension 等于 break point 的个数减一。
+根据之前 break point 的定义：假设集不能被 shatter 任何分布类型的 inputs 的最少个数。则 VC Dimension 等于 break point 的个数减一。
 
 ![VC Dimension](http://ofqm89vhw.bkt.clouddn.com/e08529dc629989a6df769eb9e81a582e.png)
 
@@ -40,19 +40,19 @@ shatter 的英文意思是“粉碎”，也就是说：对于inputs的所有情
 
 ![The Four VC Dimensions](http://ofqm89vhw.bkt.clouddn.com/87978a480a703080c6cbcaa697cdd646.png)
 
-用  ${d_{vc}}$ 代替 ${k}$ ，那么 VC bound 的问题也就转换为与 ${d_{vc}}$ 和 ${N}$ 相关了。同时，如果一个假设集 ${H}$ 的 ${d_{vc}}$ 确定了，则就能满足机器能够学习的第一个条件 ${E_{out}  \approx  E_{in}}$，与算法、样本数据分布和目标函数都没有关系。
+用 ${d_{vc}}$ 代替 ${k}$ ，那么 VC bound 的问题也就转换为与 ${d_{vc}}$ 和 ${N}$ 相关了。同时，如果一个假设集 ${H}$ 的 ${d_{vc}}$ 确定了，则就能满足机器能够学习的第一个条件 ${E_{out}  \approx  E_{in}}$，与算法、样本数据分布和目标函数都没有关系。
 
 ![VC Dimension and Learning](http://ofqm89vhw.bkt.clouddn.com/58154e105e9f0a8874c12589d8008343.png)
 
 ## VC Dimension of Perceptrons
 
-回顾一下我们之前介绍的 2D 下的 PLA 算法，已知 Perceptrons 的 ${k=4}$，即 ${d_{vc} = 3}$。根据 VC Bound 理论，当 ${N}$ 足够大的时候， ${E_{out}(g) \approx  E_{in}(g)}$ 。如果找到一个${g}$，使 ${E_{in}(g) \approx 0}$，那么就能证明 PLA 是可以学习的。
+回顾一下我们之前介绍的 ${2D}$ 下的 ${PLA}$ 算法，已知 Perceptrons 的 ${k=4}$，即 ${d_{vc} = 3}$。根据 VC Bound 理论，当 ${N}$ 足够大的时候， ${E_{out}(g) \approx  E_{in}(g)}$ 。如果找到一个${g}$，使 ${E_{in}(g) \approx 0}$，那么就能证明 ${PLA}$ 是可以学习的。
 
 ![2D PLA Revisited](http://ofqm89vhw.bkt.clouddn.com/0b872acafa482d72c862913a988b276e.png)
 
-这是在 2D 情况下，那如果是多维的 Perceptron，它对应的 ${d_{vc}}$ 又等于多少呢？
+这是在 ${2D}$ 情况下，那如果是多维的 Perceptron，它对应的 ${d_{vc}}$ 又等于多少呢？
 
-已知在 1D Perceptron， ${d_{vc} =2}$，在2D Perceptrons， ${d_{vc} =3}$，那么我们有如下假设：${d_{vc} = d+1}$，其中d为维数。
+已知在 ${1D}$ Perceptron， ${d_{vc} =2}$，在${2D}$ Perceptrons，${d_{vc} =3}$，那么我们有如下假设：${d_{vc} = d+1}$，其中 ${d}$ 为维数。
 
 要证明的话，只需分两步证明：
 
@@ -63,7 +63,7 @@ shatter 的英文意思是“粉碎”，也就是说：对于inputs的所有情
 
 首先证明第一个不等式：${d_{vc} \geq d+1}$。
 
-在 ${d}$ 维里，我们只要找到某一类的 ${d+1}$ 个 inputs 可以被shatter 的话，那么必然得到 ${d_{vc}  \geq d+1}$。所以，我们有意构造一个 ${d}$ 维的矩阵 ${X}$ 能够被 shatter 就行。${X}$ 是 ${d}$ 维的，有 ${d+1}$ 个inputs，每个 inputs 加上第零个维度的常数项 ${1}$ ，得到 ${X}$ 的矩阵：
+在 ${d}$ 维里，我们只要找到某一类的 ${d+1}$ 个 inputs 可以被 shatter 的话，那么必然得到 ${d_{vc}  \geq d+1}$。所以，我们有意构造一个 ${d}$ 维的矩阵 ${X}$ 能够被 shatter 就行。${X}$ 是 ${d}$ 维的，有 ${d+1}$ 个inputs，每个 inputs 加上第零个维度的常数项 ${1}$ ，得到 ${X}$ 的矩阵：
 
 ![${d_{vc} \geq d+1}$](http://ofqm89vhw.bkt.clouddn.com/728f528fffd081ad66d653f2ea3f916f.png)
 
@@ -95,9 +95,9 @@ $${X_{d+2} = a_1 \cdot X_1 + a_2 \cdot X_2+ \cdots +a_{d+1} \cdot X_{d+1}}$$
 
 ![practical rule of thumb](http://ofqm89vhw.bkt.clouddn.com/1e7609aa4cbff27f1547222c7ea65156.png)
 
-例如，对 2D Perceptrons，线性分类，${d_{vc} =3}$，则${W={w_0,w_1,w_2}}$，也就是说只要 ${3}$ 个 features 就可以进行学习，自由度为 ${3}$。
+例如，对 ${2D}$ Perceptrons，线性分类，${d_{vc} =3}$，则 ${W={w_0,w_1,w_2}}$，也就是说只要 ${3}$ 个 features 就可以进行学习，自由度为 ${3}$。
 
-介绍到这，我们发现${M}$与 ${d_{vc}}$ 是成正比的，从而得到如下结论：
+介绍到这，我们发现 ${M}$ 与 ${d_{vc}}$ 是成正比的，从而得到如下结论：
 
 ![${M}$ and ${d_{VC}}$](http://ofqm89vhw.bkt.clouddn.com/976207bf25cbd9ffdefa6eb66d09b1db.png)
 
@@ -140,7 +140,7 @@ ${\epsilon}$ 表现了假设空间 ${H}$ 的泛化能力，${\epsilon}$ 越小�
 
 ## 总结
 
-本节课主要介绍了 VC Dimension 的概念就是最大的 non-break point。然后，我们得到了 Perceptrons 在 ${d}$维度下的 VC Dimension是 ${d+1}$ 。接着，我们在物理意义上，将 ${d_{vc}}$ 与自由度联系起来。最终得出结论 ${d_{vc}}$ 不能过大也不能过小。选取合适的值，才能让 ${E_{out}}$ 足够小，使假设空间 ${H}$ 具有良好的泛化能力。
+本节课主要介绍了 VC Dimension 的概念就是最大的 non-break point。然后，我们得到了 Perceptrons 在 ${d}$ 维度下的 VC Dimension是 ${d+1}$ 。接着，我们在物理意义上，将 ${d_{vc}}$ 与自由度联系起来。最终得出结论 ${d_{vc}}$ 不能过大也不能过小。选取合适的值，才能让 ${E_{out}}$ 足够小，使假设空间 ${H}$ 具有良好的泛化能力。
 
 ## 参考
 

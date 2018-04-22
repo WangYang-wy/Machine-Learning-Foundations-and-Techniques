@@ -15,15 +15,15 @@
 - 抽样数据集 ${N}$。
 - break point ${k}$（这个变量确定了假设的类型）。
 
-那么，如果给定 ${N}$ 和 ${k}$，能够证明其 ${m_{H}(N)}$ 的最大值的上界是多项式的，则根据霍夫丁不等式，就能用 ${m_{H}(N)}$ 代替 ${M}$，得到机器学习是可行的。所以，证明 ${m_{H}(N)}$ 的上界是 ${poly(N)}$，是我们的目标。å
+那么，如果给定 ${N}$ 和 ${k}$，能够证明其 ${m_{H}(N)}$ 的最大值的上界是多项式的，则根据霍夫丁不等式，就能用 ${m_{H}(N)}$ 代替 ${M}$，得到机器学习是可行的。所以，证明 ${m_{H}(N)}$ 的上界是 ${poly(N)}$，是我们的目标。
 
 ## Bounding Function: Basic Cases
 
-现在，我们引入一个新的函数：bounding function，${B(N,K)}$ 。Bound Function 指的是当 break point为 ${k}$ 的时候，成长函数 ${m_{H}(N)}$ 可能的最大值。也就是说 ${B(N,K)}$ 是 ${m_{H}(N)}$ 的上界，对应 ${m_{H}(N)}$ 最多有多少种dichotomy。那么，我们新的目标就是证明：
+现在，我们引入一个新的函数：bounding function，${B(N,K)}$ 。Bound Function 指的是当 break point为 ${k}$ 的时候，成长函数 ${m_{H}(N)}$ 可能的最大值。也就是说 ${B(N,K)}$ 是 ${m_{H}(N)}$ 的上界，对应 ${m_{H}(N)}$ 最多有多少种 dichotomy。那么，我们新的目标就是证明：
 
 $${B(N,K) \leq poly(N)}$$
 
-这里值得一提的是，${B(N,K)}$ 的引入不考虑是 1D postive intrervals 问题还是 2D perceptrons 问题，而只关心成长函数的上界是多少，从而简化了问题的复杂度。
+这里值得一提的是，${B(N,K)}$ 的引入不考虑是 ${1D}$ postive intrervals 问题还是 ${2D}$ perceptrons 问题，而只关心成长函数的上界是多少，从而简化了问题的复杂度。
 
 ![Bounding Function](http://ofqm89vhw.bkt.clouddn.com/dd5447424e25195c06f982ec95406af5.png)
 
@@ -35,7 +35,7 @@ $${B(N,K) \leq poly(N)}$$
 
 ![Table of Bounding Function](http://ofqm89vhw.bkt.clouddn.com/f7a4664377cf91fec7d0a98bc5461cfb.png)
 
-到此，bounding function的表格已经填了一半了，对于最常见的 ${N>k}$ 的情况比较复杂，推导过程下一小节再详细介绍。
+到此，bounding function 的表格已经填了一半了，对于最常见的 ${N>k}$ 的情况比较复杂，推导过程下一小节再详细介绍。
 
 ## Bounding Function: Inductive Cases
 
@@ -45,13 +45,13 @@ ${N > k}$ 的情况较为复杂，下面给出推导过程：以 ${B(4,3)}$ 为�
 
 !['Achieving' Dichotomies of B(4, 3)](http://ofqm89vhw.bkt.clouddn.com/ded60a2d565554d7ae89b07c46bcc88c.png)
 
-对这 ${11}$ 种dichotomy分组，目前分成两组，分别是 orange 和 purple，orange 的特点是，${x_1}$ ,${x_2}$和 ${x_3}$ 是一致的，${x_4}$不同并成对，例如 ${1}$ 和 ${5}$，${2}$ 和 ${8}$ 等，purple 则是单一的，${x_1}$, ${x_2}$, ${x_3}$ 都不同，如 ${6}$ , ${7}$ , ${9}$ 三组。
+对这 ${11}$ 种 dichotomy 分组，目前分成两组，分别是 orange 和 purple，orange 的特点是，${x_1}$ ,${x_2}$和 ${x_3}$ 是一致的，${x_4}$不同并成对，例如 ${1}$ 和 ${5}$，${2}$ 和 ${8}$ 等，purple 则是单一的，${x_1}$, ${x_2}$, ${x_3}$ 都不同，如 ${6}$ , ${7}$ , ${9}$ 三组。
 
-将Orange去掉 ${x_4}$ 后去重得到 ${4}$ 个不同的 vector 并成为 ${\alpha}$，相应的 purple为 ${\beta}$。那么 ${B(4,3) = 2 \alpha + \beta}$，这个是直接转化。紧接着，由定义，${B(4,3)}$ 是不能允许任意三点 shatter的，所以由 ${\alpha}$ 和 ${\beta}$ 构成的所有三点组合也不能shatter（ ${\alpha}$ 经过去重），即 ${\alpha+β \leq B(3,3)}$。
+将 Orange 去掉 ${x_4}$ 后去重得到 ${4}$ 个不同的 vector 并成为 ${\alpha}$，相应的 purple 为 ${\beta}$。那么 ${B(4,3) = 2 \alpha + \beta}$，这个是直接转化。紧接着，由定义，${B(4,3)}$ 是不能允许任意三点 shatter的，所以由 ${\alpha}$ 和 ${\beta}$ 构成的所有三点组合也不能shatter (${\alpha}$ 经过去重)，即 ${\alpha+β \leq B(3,3)}$。
 
 ![Estimating Part of B(4, 3) (1/2)](http://ofqm89vhw.bkt.clouddn.com/153b4e55f9bbb2ca6b01f575f0024150.png)
 
-另一方面，由于 ${\alpha}$ 中 ${x_4}$ 是成对存在的，且 ${\alpha}$ 是不能被任意三点 shatter 的，则能推导出 ${\alpha}$ 是不能被任意两点 shatter 的。这是因为，如果 ${\alpha}$ 是不能被任意两点 shatter，而 ${x_4}$ 又是成对存在的，那么 ${x_1, x_2, x_3, x_4}$组成的 ${\alpha}$ 必然能被三个点 shatter。这就违背了条件的设定。这个地方的推导非常巧妙，也解释了为什么会这样分组。此处得到的结论是：
+另一方面，由于 ${\alpha}$ 中 ${x_4}$ 是成对存在的，且 ${\alpha}$ 是不能被任意三点 shatter 的，则能推导出 ${\alpha}$ 是不能被任意两点 shatter 的。这是因为，如果 ${\alpha}$ 是不能被任意两点 shatter，而 ${x_4}$ 又是成对存在的，那么 ${x_1, x_2, x_3, x_4}$ 组成的 ${\alpha}$ 必然能被三个点 shatter。这就违背了条件的设定。这个地方的推导非常巧妙，也解释了为什么会这样分组。此处得到的结论是：
 
 $${\alpha \leq B(3,2)}$$
 
@@ -69,7 +69,7 @@ $${\alpha \leq B(3,2)}$$
 
 上述不等式的右边是最高阶为 ${k-1}$ 的 ${N}$ 多项式，也就是说成长函数 ${m_{H}(N)}$ 的上界 ${B(N,K)}$ 的上界满足多项式分布 ${poly(N)}$，这就是我们想要得到的结果。
 
-得到了 ${m_{H}(N)}$ 的上界 ${B(N,K)}$ 的上界满足多项式分布 ${poly(N)}$ 后，我们回过头来看看之前介绍的几种类型它们的 ${m_{H}(N)}$ 与break point的关系：
+得到了 ${m_{H}(N)}$ 的上界 ${B(N,K)}$ 的上界满足多项式分布 ${poly(N)}$ 后，我们回过头来看看之前介绍的几种类型它们的 ${m_{H}(N)}$ 与 break point 的关系：
 
 ![The Three Break Points](http://ofqm89vhw.bkt.clouddn.com/6af894d021c610aba9398458428dc2f6.png)
 
