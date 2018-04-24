@@ -48,7 +48,7 @@ $${h(x) = w^T X}$$
 
 ## 泛化问题
 
-现在，可能有这样一个疑问，就是这种求解权重向量的方法是机器学习吗？或者说这种方法满足我们之前推导VC Bound，即是否泛化能力强 ${E_{in} \approx E_{out}}$？
+现在，可能有这样一个疑问，就是这种求解权重向量的方法是机器学习吗？或者说这种方法满足我们之前推导 VC Bound，即是否泛化能力强 ${E_{in} \approx E_{out}}$？
 
 ![Is Linear Regression a 'Learning Algorithm'?](http://ofqm89vhw.bkt.clouddn.com/aeff146c0da89587e090cbd11215707a.png)
 
@@ -129,7 +129,7 @@ $${E_{out} = noiselevel \times (1+ \frac{d+1}{N})}$$
 
 ## 总结
 
-本节课，我们主要介绍了 Linear Regression。首先，我们从问题出发，想要找到一条直线拟合实际数据值；然后，我们利用最小二乘法，用解析形式推导了权重 ${w}$ 的 closed-form解；接着，用图形的形式得到 ${E_{out} - E_{in} \approx \ \frac{2(N+1)}{N}}$，证明了 linear regression 是可以进行机器学习的；最后，我们证明 linear regressin这种方法可以用在 binary classification 上，虽然上界变宽松了，但是仍然能得到不错的学习方法。
+本节课，我们主要介绍了 Linear Regression。首先，我们从问题出发，想要找到一条直线拟合实际数据值；然后，我们利用最小二乘法，用解析形式推导了权重 ${w}$ 的 closed-form 解；接着，用图形的形式得到 ${E_{out} - E_{in} \approx \ \frac{2(N+1)}{N}}$，证明了 linear regression 是可以进行机器学习的；最后，我们证明 linear regressin这种方法可以用在 binary classification 上，虽然上界变宽松了，但是仍然能得到不错的学习方法。
 
 ## 参考
 

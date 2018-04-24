@@ -42,21 +42,21 @@ $${E_{in}^{0/1}(w) \leq err_{ES} E_{in}(w) = \frac{1}{ln2} err_{EC} E_{in}(w)}$$
 
 $${E_{out}^{0/1}(w) \leq E_{out}^{SCE}(w)= \frac{1}{ln2} E_{out}^{CE}(w)}$$
 
-那么由VC理论可以知道：
+那么由 ${VC}$ 理论可以知道：
 
-从 0/1 出发：
+从 ${0/1}$ 出发：
 
 $${E_{out}^{0/1}(w) \leq E_{in}^{0/1}(w) +\Omega^{0/1} \leq \frac{1}{ln2} E_{in}^{CE}(w) + \Omega^{0/1}}$$
 
-从 CE 出发：
+从 ${CE}$ 出发：
 
 $${E_{out}^{0/1}(w) \leq \frac{1}{\ln 2}ECEout(w)\leq \frac{1}{\ln 2}EC E_{in}(w) +\frac{1}{\ln 2}\Omega^{CE}}$$
 
-通过上面的分析，我们看到err 0/1是被限定在一个上界中。这个上界是由logistic regression模型的error function决定的。而linear regression其实也是linear classification的一个upper bound，只是随着sy偏离1的位置越来越远，linear regression的error function偏差越来越大。综上所述，linear regression和logistic regression都可以用来解决linear classification的问题。
+通过上面的分析，我们看到 err 0/1 是被限定在一个上界中。这个上界是由 logistic regression 模型的 error function 决定的。而 linear regression 其实也是 linear classification 的一个 upper bound，只是随着 ${ys}$ 偏离 ${1}$ 的位置越来越远，linear regression 的 error function 偏差越来越大。综上所述，linear regression 和 logistic regression 都可以用来解决 linear classification 的问题。
 
 ![Theoretical Implication of Upper Bound](http://ofqm89vhw.bkt.clouddn.com/a956bc44bcce341ff2040176c5c5a3ef.png)
 
-下图列举了 PLA、linear regression、logistic regression模型用来解 linear classification 问题的优点和缺点。通常，我们使用 linear regression 来获得初始化的 ${w_0}$，再用 logistic regression 模型进行最优化解。
+下图列举了 PLA、linear regression、logistic regression 模型用来解 linear classification 问题的优点和缺点。通常，我们使用 linear regression 来获得初始化的 ${w_0}$，再用 logistic regression 模型进行最优化解。
 
 ![Regression for Classification](http://ofqm89vhw.bkt.clouddn.com/82f8e617699a2a9b462266df8ed68985.png)
 
@@ -64,7 +64,7 @@ $${E_{out}^{0/1}(w) \leq \frac{1}{\ln 2}ECEout(w)\leq \frac{1}{\ln 2}EC E_{in}(w
 
 之前介绍的 PLA 算法和 logistic regression 算法，都是用到了迭代操作。PLA 每次迭代只会更新一个点，它每次迭代的时间复杂度是 ${O(1)}$ ；而 logistic regression 每次迭代要对所有 ${N}$ 个点都进行计算，它的每时间复杂度是 ${O(N)}$ 。为了提高 logistic regression 中 gradient descent 算法的速度，可以使用另一种算法：随机梯度下降算法(Stochastic Gradient Descent)。
 
-随机梯度下降算法每次迭代只找到一个点，计算该点的梯度，作为我们下一步更新w的依据。这样就保证了每次迭代的计算量大大减小，我们可以把整体的梯度看成这个随机过程的一个期望值。
+随机梯度下降算法每次迭代只找到一个点，计算该点的梯度，作为我们下一步更新 ${w}$ 的依据。这样就保证了每次迭代的计算量大大减小，我们可以把整体的梯度看成这个随机过程的一个期望值。
 
 ![Logistic Regression Revisited](http://ofqm89vhw.bkt.clouddn.com/fb10331642fcff0a00a373046a0fdaa0.png)
 
@@ -105,11 +105,11 @@ soft classification 的处理过程和之前类似，同样是分别令某类为
 
 ## Multiclass via Binary Classification
 
-上一节，我们介绍了多分类算法 OVA，但是这种方法存在一个问题，就是当类别k很多的时候，造成正负类数据 unbalanced，会影响分类效果，表现不好。现在，我们介绍另一种方法来解决当k很大时，OVA 带来的问题。
+上一节，我们介绍了多分类算法 OVA，但是这种方法存在一个问题，就是当类别 ${k}$ 很多的时候，造成正负类数据 unbalanced，会影响分类效果，表现不好。现在，我们介绍另一种方法来解决当 ${k}$ 很大时，OVA 带来的问题。
 
 这种方法呢，每次只取两类进行 binary classification，取值为 ${\{-1, +1\}}$ 。假如 ${k=4}$，那么总共需要进行 ${C_{2}^{4}=6}$ 次 binary classification。那么，六次分类之后，如果平面有个点，有三个分类器判断它是正方形，一个分类器判断是菱形，另外两个判断是三角形，那么取最多的那个，即判断它属于正方形，我们的分类就完成了。这种形式就如同 ${k}$ 个足球对进行单循环的比赛，每场比赛都有一个队赢，一个队输，赢了得 ${1}$ 分，输了得 ${0}$ 分。那么总共进行了 ${C_k^2}$次的比赛，最终取得分最高的那个队就可以了。
 
-![One-versus-one (OVO) Decomposition](http://ofqm89vhw.bkt.clouddn.com/794997420789a63f67544abe6a72807b.png)
+![One-versus-one(OVO) Decomposition](http://ofqm89vhw.bkt.clouddn.com/794997420789a63f67544abe6a72807b.png)
 
 这种区别于 OVA 的多分类方法叫做 One-Versus-One(OVO)。这种方法的优点是更加高效，因为虽然需要进行的分类次数增加了，但是每次只需要进行两个类别的比较，也就是说单次分类的数量减少了。而且一般不会出现数据 unbalanced 的情况。缺点是需要分类的次数多，时间复杂度和空间复杂度可能都比较高。
 

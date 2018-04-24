@@ -4,7 +4,7 @@
 
 ## Logistic Regression Problem
 
-一个心脏病预测的问题：根据患者的年龄、血压、体重等信息，来预测患者是否会有心脏病。很明显这是一个二分类问题，其输出 ${y}$ 只有 ${\{-1,1\}}$两种情况。
+一个心脏病预测的问题：根据患者的年龄、血压、体重等信息，来预测患者是否会有心脏病。很明显这是一个二分类问题，其输出 ${y}$ 只有 ${\{-1,1\}}$ 两种情况。
 
 二元分类，一般情况下，理想的目标函数 ${f(x) > 0.5}$ ，则判断为正类 ${+1}$；若 ${f(x) < 0.5}$ ，则判断为负类 ${-1}$ 。
 
@@ -40,13 +40,13 @@ $${h(x)= \frac{1}{1+e^{-w^{T}x}}}$$
 
 先介绍一下“似然性”的概念。目标函数 ${f(x) = P(+1|x)}$ ，如果我们找到了 hypothesis 很接近 target function。也就是说，在所有的 hypothesis 集合中找到一个 hypothesis 与 target function 最接近，能产生同样的数据集 ${D}$ ，包含 ${y}$ 输出 label，则称这个 hypothesis 是最大似然 likelihood。
 
-logistic function: ${h(x) = \theta(w^{T}x)}$ 满足一个性质：${1 - h(x)=h(-x)}$ 。那么，似然性h:
+logistic function: ${h(x) = \theta(w^{T}x)}$ 满足一个性质：${1 - h(x)=h(-x)}$ 。那么，似然性 ${h}$:
 
 $${likelihood(h) = P(x_1)h(+x_1) \times P(x_2)h(-x_2)\times \cdots P(x_N)h(-x_N)}$$
 
 ![Likelihood](http://ofqm89vhw.bkt.clouddn.com/b42c8d566e30cce790c2efa5cbb6150d.png)
 
-因为 ${P(x_n)}$ 对所有的h来说，都是一样的，所以我们可以忽略它。那么我们可以得到logistic ${h}$ 正比于所有的 ${h(y_nx)}$ 乘积。我们的目标就是让乘积值最大化。
+因为 ${P(x_n)}$ 对所有的 ${h}$ 来说，都是一样的，所以我们可以忽略它。那么我们可以得到 logistic ${h}$ 正比于所有的 ${h(y_nx)}$ 乘积。我们的目标就是让乘积值最大化。
 
 ![Likelihood of Logistic Hypothesis](http://ofqm89vhw.bkt.clouddn.com/9bd89be6343be6cd5b7977ea52fee5b6.png)
 
@@ -80,7 +80,7 @@ Logistic Regression 的 ${E_{in}}$ 是连续、可微、二次可微的凸曲线
 
 为了计算 ${E_{in}}$ 最小值，我们就要找到让${\nabla E_{in}(w)}$ 等于 ${0}$ 的位置。
 
-上式可以看成 ${\theta(-y_n w^T x_n)}$ 是 ${-y_n x_n}$ 的线性加权。要求 ${\theta(-y_n w^T x_n)}$ 与 ${-y_n x_n}$ 的线性加权和为 ${0}$ ，那么一种情况是线性可分，如果所有的权重 ${\theta(-y_n w^T x_n)}$ 为 ${0}$ ，那就能保证 ${\nabla E_{in}(w) = 0}$。 ${\theta(-y_n w^T x_n)}$ 是 sigmoid function，根据其特性，只要让 ${- y_n w^T x_n \ll 0}$，即 ${y_n w^T x_n \gg 0}$。${y_n w^T x_n \ll 0}$ 表示对于所有的点， ${y_{n}}$ 与 ${w^{T}x_{n}}$ 都是同号的，这表示数据集 ${D}$ 必须是全部线性可分的才能成立。
+上式可以看成 ${\theta(-y_n w^T x_n)}$ 是 ${-y_n x_n}$ 的线性加权。要求 ${\theta(-y_n w^T x_n)}$ 与 ${-y_n x_n}$ 的线性加权和为 ${0}$ ，那么一种情况是线性可分，如果所有的权重 ${\theta(-y_n w^T x_n)}$ 为 ${0}$ ，那就能保证 ${\nabla E_{in}(w) = 0}$。 ${\theta(-y_n w^T x_n)}$ 是 sigmoid function，根据其特性，只要让 ${- y_n w^T x_n \ll 0}$，即 ${y_n w^T x_n \gg 0}$。${y_n w^T x_n \ll 0}$ 表示对于所有的点，${y_{n}}$ 与 ${w^{T}x_{n}}$ 都是同号的，这表示数据集 ${D}$ 必须是全部线性可分的才能成立。
 
 然而，保证所有的权重 ${\theta(-y_n w^T x_n)}$ 为 ${\theta}$ 是不太现实的，总有不等于 ${0}$ 的时候，那么另一种常见的情况是非线性可分，只能通过使加权和为零，来求解 ${w}$。这种情况没有 closed-form 解，与 Linear Regression 不同，只能用迭代方法求解。
 
@@ -104,9 +104,9 @@ ${w}$ 每次更新包含两个内容：一个是每次更新的方向 ${y_{n}x_{
 
 $${E_{in} (wt+ \eta v) \approx E_{in}(wt)+ \eta v^T\nabla E_{in} (wt)}$$
 
-迭代的目的是让 ${E_{in}}$ 越来越小，即让 ${E_{in}(wt+ \eta v) < E_{in}(wt)}$ 。${\eta}$ 是标量，因为如果两个向量方向相反的话，那么他们的内积最小（为负），也就是说如果方向 ${v}$ 与梯度 ${\nabla E_{in} (wt) }$反向的话，那么就能保证每次迭代 ${E_{in}(wt+ \eta v)< E_{in}(wt)}$ 都成立。则，我们令下降方向 ${v}$ 为：
+迭代的目的是让 ${E_{in}}$ 越来越小，即让 ${E_{in}(wt+ \eta v) < E_{in}(wt)}$ 。${\eta}$ 是标量，因为如果两个向量方向相反的话，那么他们的内积最小（为负），也就是说如果方向 ${v}$ 与梯度 ${\nabla E_{in} (wt)}$ 反向的话，那么就能保证每次迭代 ${E_{in}(wt+ \eta v)< E_{in}(wt)}$ 都成立。则，我们令下降方向 ${v}$ 为：
 
-$${ v= - \nabla E_{in} (wt)||\nabla E_{in} (wt)||}$$
+$${v= - \nabla E_{in} (wt)||\nabla E_{in} (wt)||}$$
 
 ${v}$ 是单位向量，${v}$ 每次都是沿着梯度的反方向走，这种方法称为梯度下降（gradient descent）算法。那么每次迭代公式就可以写成：
 
@@ -128,7 +128,7 @@ $${\eta' = \eta||\nabla E_{in}(wt)||}$$
 
 ## 总结
 
-我们今天介绍了 Logistic Regression。首先，从逻辑回归的问题出发，将 ${P(+1|x)}$ 作为目标函数，将 ${θ(w^{T}x)}$ 作为hypothesis。接着，我们定义了 logistic regression 的 err function，称之为 cross-entropy error 交叉熵误差。然后，我们计算logistic regression error 的梯度，最后，通过梯度下降算法，计算 ${\nabla E_{in}(w_t)\approx 0}$ 时对应的 ${w_t}$ 值。
+我们今天介绍了 Logistic Regression。首先，从逻辑回归的问题出发，将 ${P(+1|x)}$ 作为目标函数，将 ${θ(w^{T}x)}$ 作为 hypothesis。接着，我们定义了 logistic regression 的 err function，称之为 cross-entropy error 交叉熵误差。然后，我们计算 logistic regression error 的梯度，最后，通过梯度下降算法，计算 ${\nabla E_{in}(w_t)\approx 0}$ 时对应的 ${w_t}$ 值。
 
 ## 参考
 
