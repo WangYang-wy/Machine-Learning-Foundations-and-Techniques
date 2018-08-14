@@ -98,19 +98,19 @@ g^{-}=limT→∞ G=limT→∞ \frac{1}{T} \sum_{t=1}^{T}g_t=ϵDA(D)
 
 这里写图片描述
 
-上述等式中左边表示演算法误差的期望值；右边第二项表示不同 ${g_t}$ 的平均误差共识，用偏差bias表示；右边第一项表示不同 ${g_t}$ 与共识的差距是多少，反映 ${g_t}$ 之间的偏差，用方差variance表示。也就是说，一个演算法的平均表现可以被拆成两项，一个是所有 ${g_t}$ 的共识，一个是不同 ${g_t}$ 之间的差距是多少，即bias和variance。而uniform blending的操作时求平均的过程，这样就削减弱化了上式第一项variance的值，从而演算法的表现就更好了，能得到更加稳定的表现。
+上述等式中左边表示演算法误差的期望值；右边第二项表示不同 ${g_t}$ 的平均误差共识，用偏差 bias 表示；右边第一项表示不同 ${g_t}$ 与共识的差距是多少，反映 ${g_t}$ 之间的偏差，用方差 variance 表示。也就是说，一个演算法的平均表现可以被拆成两项，一个是所有 ${g_t}$ 的共识，一个是不同 ${g_t}$ 之间的差距是多少，即 bias 和 variance。而 uniform blending 的操作时求平均的过程，这样就削减弱化了上式第一项 variance 的值，从而演算法的表现就更好了，能得到更加稳定的表现。
 
 ## Linear and Any Blending
 
-上一部分讲的是uniform blending，即每个 ${g_t}$ 所占的权重都是 ${1}$，求平均的思想。下面我们将介绍linear blending，每个 ${g_t}$ 赋予的权重 ${\alpha_t}$ 并不相同，其中 ${\alpha_t \geq 0}$。我们最终得到的预测结果等于所有 ${g_t}$ 的线性组合。
+上一部分讲的是 uniform blending，即每个 ${g_t}$ 所占的权重都是 ${1}$，求平均的思想。下面我们将介绍 linear blending，每个 ${g_t}$ 赋予的权重 ${\alpha_t}$ 并不相同，其中 ${\alpha_t \geq 0}$。我们最终得到的预测结果等于所有 ${g_t}$ 的线性组合。
 
 这里写图片描述
 
-如何确定 ${\alpha_t}$ 的值，方法是利用误差最小化的思想，找出最佳的 ${\alpha_t}$，使 ${E_{in}(\alpha)}$ 取最小值。例如对于 linear blending for regression，${E_{in}( \alpha)}$ 可以写成下图左边形式，其中 ${\alpha_t}$ 是带求解参数，${g_t(x_n)}$ 是每个矩得到的预测值，由已知矩得到。这种形式很类似于下图右边的形式，即加上特征转换 ${\Phi_i(x_n)}$ 的 linear regression 模型。两个式子中的 ${g_t(x_n)}$ 对应于 ${\Phi_i(x_n)}$，唯一不同的就是 linear blending for regression中 ${\alpha_t \geq 0}$，而linear regression中 ${w_i}$ 没有限制。
+如何确定 ${\alpha_t}$ 的值，方法是利用误差最小化的思想，找出最佳的 ${\alpha_t}$，使 ${E_{in}(\alpha)}$ 取最小值。例如对于 linear blending for regression，${E_{in}( \alpha)}$ 可以写成下图左边形式，其中 ${\alpha_t}$ 是带求解参数，${g_t(x_n)}$ 是每个矩得到的预测值，由已知矩得到。这种形式很类似于下图右边的形式，即加上特征转换 ${\Phi_i(x_n)}$ 的 linear regression 模型。两个式子中的 ${g_t(x_n)}$ 对应于 ${\Phi_i(x_n)}$，唯一不同的就是 linear blending for regression 中 ${\alpha_t \geq 0}$，而linear regression中 ${w_i}$ 没有限制。
 
 这里写图片描述
 
-这种求解 ${\alpha_t}$ 的方法就像是使用two-level learning，类似于我们之前介绍的probabilistic SVM。这里，我们先计算 ${g_t(x_n)}$，再进行 linear regression 得到 ${\alpha_t}$ 值。总的来说，linear blending 由三个部分组成：LinModel，hypotheses as transform，constraints。其中值得注意的一点就是，计算过程中可以把 ${g_t}$ 当成 feature transform，求解过程就跟之前没有什么不同，除了 ${\alpha \geq 0}$ 的条件限制。
+这种求解 ${\alpha_t}$ 的方法就像是使用 two-level learning，类似于我们之前介绍的probabilistic SVM。这里，我们先计算 ${g_t(x_n)}$，再进行 linear regression 得到 ${\alpha_t}$ 值。总的来说，linear blending 由三个部分组成：LinModel，hypotheses as transform，constraints。其中值得注意的一点就是，计算过程中可以把 ${g_t}$ 当成 feature transform，求解过程就跟之前没有什么不同，除了 ${\alpha \geq 0}$ 的条件限制。
 
 这里写图片描述
 

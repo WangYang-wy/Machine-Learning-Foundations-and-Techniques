@@ -1,6 +1,6 @@
 # Lecture 02 - Dual Support Vector Machine
 
-上节课我们主要介绍了线性支持向量机（Linear Support Vector Machine）。Linear SVM的目标是找出最“胖”的分割线进行正负类的分离，方法是使用二次规划来求出分类线。本节课将从另一个方面入手，研究对偶支持向量机（Dual Support Vector Machine），尝试从新的角度计算得出分类线，推广SVM的应用范围。
+上节课我们主要介绍了线性支持向量机（Linear Support Vector Machine）。Linear SVM 的目标是找出最“胖”的分割线进行正负类的分离，方法是使用二次规划来求出分类线。本节课将从另一个方面入手，研究对偶支持向量机（Dual Support Vector Machine），尝试从新的角度计算得出分类线，推广 SVM 的应用范围。
 
 ## Motivation of Dual SVM
 
@@ -30,11 +30,11 @@ $${L(b,w,\alpha)=\frac{1}{2}w^{T}w+\sum_{n=1}^{N}\alpha_n(1-y_n(w^{T}z_n+b))}$$
 
 ![Starting Point: Constrained to 'Unconstrained'](http://ofqm89vhw.bkt.clouddn.com/a23822410186f3491851ba287414dc97.png)
 
-下面，我们利用拉格朗日函数，把SVM构造成一个非条件问题：
+下面，我们利用拉格朗日函数，把 SVM 构造成一个非条件问题：
 
 ![Claim](http://ofqm89vhw.bkt.clouddn.com/ec7712512d966f2c8c1461fd23fc2840.png)
 
-该最小化问题中包含了最大化问题，怎么解释呢？首先我们规定拉格朗日因子 ${\alpha_n \geq 0}$ ，根据 SVM 的限定条件可得：${(1-y_n(w^{T}z_n+b)) \leq 0}$，如果没有达到最优解，即有不满足 ${(1-y_n(w^{T}z_n+b)) \leq 0}$ 的情况，因为 ${\alpha_n \geq 0}$ ，那么必然有 ${\sum_n\alpha_n(1-y_n(w^{T}z_n+b)) \geq 0}$ 。对于这种大于零的情况，其最大值是无解的。如果对于所有的点，均满足 ${(1-y_n(w^{T}z_n+b)) \leq 0}$ ，那么必然有 ${\sum_n\alpha_n(1-y_n(w^{T}z_n+b)) \leq 0}$，则当 ${\sum_n\alpha_n(1-y_n(w^{T}z_n+b))=0}$ 时，其有最大值，最大值就是我们SVM的目标：${\frac{1}{2}w^{T}w}$。因此，这种转化为非条件的SVM构造函数的形式是可行的。
+该最小化问题中包含了最大化问题，怎么解释呢？首先我们规定拉格朗日因子 ${\alpha_n \geq 0}$ ，根据 SVM 的限定条件可得：${(1-y_n(w^{T}z_n+b)) \leq 0}$，如果没有达到最优解，即有不满足 ${(1-y_n(w^{T}z_n+b)) \leq 0}$ 的情况，因为 ${\alpha_n \geq 0}$ ，那么必然有 ${\sum_n\alpha_n(1-y_n(w^{T}z_n+b)) \geq 0}$ 。对于这种大于零的情况，其最大值是无解的。如果对于所有的点，均满足 ${(1-y_n(w^{T}z_n+b)) \leq 0}$ ，那么必然有 ${\sum_n\alpha_n(1-y_n(w^{T}z_n+b)) \leq 0}$，则当 ${\sum_n\alpha_n(1-y_n(w^{T}z_n+b))=0}$ 时，其有最大值，最大值就是我们 SVM 的目标：${\frac{1}{2}w^{T}w}$。因此，这种转化为非条件的 SVM 构造函数的形式是可行的。
 
 ## Lagrange Dual SVM
 
@@ -46,7 +46,7 @@ $${L(b,w,\alpha)=\frac{1}{2}w^{T}w+\sum_{n=1}^{N}\alpha_n(1-y_n(w^{T}z_n+b))}$$
 
 ![Lagrange Dual Problem](http://ofqm89vhw.bkt.clouddn.com/88afecfb0e02a557567d8985f7c3d185.png)
 
-上述不等式表明，我们对SVM的 ${min}$ 和 ${max}$ 做了对调，满足这样的关系，这叫做 Lagrange dual problem。不等式右边是 SVM 问题的下界，我们接下来的目的就是求出这个下界。
+上述不等式表明，我们对 SVM 的 ${min}$ 和 ${max}$ 做了对调，满足这样的关系，这叫做 Lagrange dual problem。不等式右边是 SVM 问题的下界，我们接下来的目的就是求出这个下界。
 
 已知 ${\geq}$ 是一种弱对偶关系，在二次规划 ${QP}$ 问题中，如果满足以下三个条件：
 
